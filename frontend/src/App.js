@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import axios from 'axios';
+//import Carousel from 'react-material-ui-carousel'
 
 // React functional component
 function App () {
@@ -69,20 +70,47 @@ function App () {
   }, [])
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <button onClick={fetchBase} style={{marginBottom: '1rem'}}> {`GET: http://${url}:8000/`} </button>
-        <button onClick={reset}> Reset DB </button>
-        <form onSubmit={handleSubmit}>
-          <input type="text" value={number} onChange={handleChange}/>
-          <br/>
-          <input type="submit" value="Submit" />
-        </form>
-        <ul>
-          { values.map((value, i) => <li key={i}>{value.value}</li>) }
-        </ul>
+    <div className="Front-div">
+      <header className = "Front-header">
+      <nav>
+        <p>Login</p>
+      </nav>
       </header>
+
+      <body className="Front-body">
+       <h1>Artt.</h1>
+       <img src = "https://via.placeholder.com/100" alt = "placeholder">
+         </img>
+
+      <div>
+        <article className = "tile">
+          <h2>Dallas Museum of Art</h2>
+          <img src = "https://via.placeholder.com/100" alt = "placeholder">
+         </img>
+        </article>
+
+        <article className = "tile">
+          <h2>Perot Museum of Natural History</h2>
+          <img src = "https://via.placeholder.com/100" alt = "placeholder">
+         </img>
+        </article>
+
+        <article className = "tile">
+          <h2>Bush Presidential Center</h2>
+          <img src = "https://via.placeholder.com/100" alt = "placeholder">
+         </img>
+        </article>
+
+        <article className = "tile">
+          <h2>Meadows Museum</h2>
+          <img src = "https://via.placeholder.com/100" alt = "placeholder">
+         </img>
+        </article>
+        </div>
+      </body>
+     
     </div>
+    
   );
 }
 
