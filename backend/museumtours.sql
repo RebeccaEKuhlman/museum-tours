@@ -13,6 +13,7 @@ CREATE TABLE Users(
 	password VARCHAR(50) NOT NULL,
 	email VARCHAR(50) NOT NULL,
 	joinDate Date,
+	photoId INT NOT NULL,
 	FOREIGN KEY (photoId) REFERENCES photos(photoId),
   	uni_affilation VARCHAR(50),
   	is_director bool DEFAULT False,
@@ -21,6 +22,10 @@ CREATE TABLE Users(
 
 CREATE TABLE ratings(
 	rating int NOT NULL,
+	username VARCHAR(30) NOT NULL,
+	tour_Name VARCHAR(30) NOT NULL,
+	theme VARCHAR(30) NOT NULL,
+	museum_name VARCHAR(30) NOT NULL,
 	FOREIGN KEY (username) REFERENCES Users(username),
   	FOREIGN KEY (tour_Name) REFERENCES Museums(tour_Name),
 	content VARCHAR(100),
@@ -33,15 +38,20 @@ CREATE TABLE ratings(
 CREATE TABLE comments(
 	commNum int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	content VARCHAR(100) NOT NULL AUTO_INCREMENT,
+	username VARCHAR(30) NOT NULL,
+	tour_Name VARCHAR(30) NOT NULL,
+	review_id INT NOT NULL,
 	FOREIGN KEY (username) REFERENCES Users(username),
-   FOREIGN KEY (tour_Name) REFERENCES Museums(tour_Name),
-   like_sum int DEFAULT 0,
-   overComment int,
+   	FOREIGN KEY (tour_Name) REFERENCES Museums(tour_Name),
+   	like_sum int DEFAULT 0,
+   	overComment int,
 	FOREIGN KEY(review_id) REFERENCES ratings(ratingNum)
 );
 
 CREATE TABLE Museums(
 	museum_name varchar(30) NOT NULL PRIMARY KEY,
+	photoId INT NOT NULL,
+	username VARCHAR(30) NOT NULL,
 	FOREIGN KEY (director) REFERENCES Users(username),
 	num_exhibits int NOT NULL DEFAULT 0,
 	FOREIGN KEY (photoId) REFERENCES photos(photoId)
@@ -55,6 +65,7 @@ CREATE TABLE Tours(
 	total_space int NOT NULL,
 	tour_description VARCHAR(30),
 	price int,
+	museum_name varchar(30) NOT NULL,
 	FOREIGN KEY (museum) REFERENCES Museums(museum_name),
 	theme VARCHAR(30) NOT NULL
 );
