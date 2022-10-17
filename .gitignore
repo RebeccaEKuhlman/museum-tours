@@ -2,3 +2,4 @@
 .vscode
 *.pem
 *.session.sql
+backend/env
