@@ -78,6 +78,7 @@ function App () {
       </header>
 
       <body className="Front-body">
+        <section id="homeView">
        <h1>Artt.</h1>
        <img src = "https://via.placeholder.com/100" alt = "placeholder">
          </img>
@@ -107,6 +108,7 @@ function App () {
          </img>
         </article>
         </div>
+        </section>
       </body>
      
     </div>
