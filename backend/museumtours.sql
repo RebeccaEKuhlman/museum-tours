@@ -27,7 +27,7 @@ CREATE TABLE ratings(
 	theme VARCHAR(30) NOT NULL,
 	museum_name VARCHAR(30) NOT NULL,
 	FOREIGN KEY (username) REFERENCES Users(username),
-  	FOREIGN KEY (tour_Name) REFERENCES Museums(tour_Name),
+  	FOREIGN KEY (tour_Name) REFERENCES Tours(tour_Name),
 	content VARCHAR(100),
 	FOREIGN KEY (theme) REFERENCES Tours(theme),
 	FOREIGN KEY (museum_name) REFERENCES Museums(museum_name),
@@ -42,7 +42,7 @@ CREATE TABLE comments(
 	tour_Name VARCHAR(30) NOT NULL,
 	review_id INT NOT NULL,
 	FOREIGN KEY (username) REFERENCES Users(username),
-   	FOREIGN KEY (tour_Name) REFERENCES Museums(tour_Name),
+   	FOREIGN KEY (tour_Name) REFERENCES Tours(tour_Name),
    	like_sum int DEFAULT 0,
    	overComment int,
 	FOREIGN KEY(review_id) REFERENCES ratings(ratingNum)
@@ -52,7 +52,7 @@ CREATE TABLE Museums(
 	museum_name varchar(30) NOT NULL PRIMARY KEY,
 	photoId INT NOT NULL,
 	username VARCHAR(30) NOT NULL,
-	FOREIGN KEY (director) REFERENCES Users(username),
+	FOREIGN KEY (username) REFERENCES Users(username),
 	num_exhibits int NOT NULL DEFAULT 0,
 	FOREIGN KEY (photoId) REFERENCES photos(photoId)
 );
@@ -66,6 +66,6 @@ CREATE TABLE Tours(
 	tour_description VARCHAR(30),
 	price int,
 	museum_name varchar(30) NOT NULL,
-	FOREIGN KEY (museum) REFERENCES Museums(museum_name),
+	FOREIGN KEY (museum_name) REFERENCES Museums(museum_name),
 	theme VARCHAR(30) NOT NULL
 );
