@@ -10,6 +10,7 @@
     "@mui/material": "^5.10.9",
     "@mui/styles": "^5.10.9",
     "@mui/system": "^5.10.9",
+    "auto-bind": "^5.0.1",
     "aws-sdk": "^2.1231.0",
     "axios": "^0.26.1",
     "bootstrap": "^5.2.2",
@@ -44,6 +45,7 @@
     "autoprefixer": "^10.4.12",
     "eslint": "^8.25.0",
     "eslint-config-prettier": "^8.5.0",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "react-router-dom": "^6.4.2"
   }
 }
