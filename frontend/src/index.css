@@ -24,8 +24,13 @@ body {
   height: 25rem;
 }
 
-.loginBody h2{
-  color: #323031
+.loginBody #loginView h2{
+  color: #323031;
+}
+
+.loginBody #loginView h4{
+  color: #7F96FF;
+  font-weight: normal;
 }
 
 .loginBody {
