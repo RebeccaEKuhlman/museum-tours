@@ -51,7 +51,7 @@ function App() {
     e.preventDefault();
     console.log(username, password);
     axios
-      .post(`http://${url}:8000/login`, { username: username, password: password})
+      .get(`http://${url}:8000/login`, { username: username, password: password})
       .then((res) => {
         console.log(res);
       })
