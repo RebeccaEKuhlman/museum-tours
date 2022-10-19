@@ -139,7 +139,7 @@ function App() {
               required
               id="username-required"
               label="Username"
-              defaultValue="Username"
+              defaultValue=""
               sx = {{
                 mb: 2
               }}
@@ -154,7 +154,13 @@ function App() {
               autoComplete="current-password"
             />
             <div />
-            <Button variant="submit">Submit</Button>
+            <Button variant="submit" 
+            sx = {{
+              m: 2,
+              background: '#7F96FF',
+              color: 'F6F7EB',
+              p: 1
+            }}>Submit</Button>
           </div>
         </section>
       </body>
