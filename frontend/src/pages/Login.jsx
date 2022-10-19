@@ -1,4 +1,4 @@
-const Login = () => {
+export function Login () {
   return (
     <section id="loginView">
       <h2>Login</h2>
@@ -12,5 +12,3 @@ const Login = () => {
     </section>
   );
 };
-
-export default Login;

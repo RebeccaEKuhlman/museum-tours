@@ -1,21 +1,25 @@
 /* CSS classes */
-.App {
+.Home {
   text-align: center;
 }
 
-.Project { 
-  max-width:100%;
-  position:relative;
-  height:300px;
-  overflow:hidden;
-  padding:20px
+.Content {
+  color: white;
 }
 
-.App-logo {
+.Project { 
+  max-width: 100%;
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+  padding: 20px;
+}
+
+.Home-logo {
   height: 40vmin;
 }
 
-.App-header {
+.Home-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -26,7 +30,7 @@
   color: white;
 }
 
-.App-link {
+.Home-link {
   color: #09d3ac;
 }
 
