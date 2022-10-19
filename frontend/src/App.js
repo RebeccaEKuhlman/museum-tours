@@ -5,6 +5,10 @@ import axios from "axios";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
 //import Carousel from 'react-material-ui-carousel'
 
 // React functional component
@@ -96,37 +100,142 @@ function App() {
 
           <div>
             <section id="carousel">
-              <article className="tile">
-                <h2>Dallas Museum of Art</h2>
-                <img
-                  src="https://via.placeholder.com/100"
-                  alt="placeholder"
-                ></img>
-              </article>
+              <Card
+                sx={{
+                  maxWidth: 400,
+                  margin: "auto",
+                  transition: "0.3s",
+                  m: 5,
+                  p: 5,
+                  boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+                  "&:hover": {
+                    boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)",
+                  },
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  alt="dma"
+                  height="200"
+                  image="https://www.dma.org/sites/default/files/dma-logo.png"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    Dallas Museum of Art
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Art museum with more than 24,000 works of art from around
+                    the world ranging from ancient to modern times. Located in
+                    downtown Dallas.
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="small">Share</Button>
+                  <Button size="small">Learn More</Button>
+                </CardActions>
+              </Card>
 
-              <article className="tile">
-                <h2>Perot Museum of Natural History</h2>
-                <img
-                  src="https://via.placeholder.com/100"
-                  alt="placeholder"
-                ></img>
-              </article>
+              <Card
+                sx={{
+                  maxWidth: 400,
+                  margin: "auto",
+                  transition: "0.3s",
+                  m: 5,
+                  p: 5,
+                  boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+                  "&:hover": {
+                    boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)",
+                  },
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  alt="perot"
+                  height="200"
+                  image="http://photos.prnewswire.com/prnfull/20120531/DC16400LOGO"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    Perot Museum of Natural Science
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Dallas's natural history museum. Focuses on innovation,
+                    archaeology, and curiosity. Located in downtown Dallas.
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="small">Share</Button>
+                  <Button size="small">Learn More</Button>
+                </CardActions>
+              </Card>
 
-              <article className="tile">
-                <h2>Bush Presidential Center</h2>
-                <img
-                  src="https://via.placeholder.com/100"
-                  alt="placeholder"
-                ></img>
-              </article>
+              <Card
+                sx={{
+                  maxWidth: 400,
+                  margin: "auto",
+                  transition: "0.3s",
+                  m: 5,
+                  p: 5,
+                  boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+                  "&:hover": {
+                    boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)",
+                  },
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  alt="bush_center"
+                  height="200"
+                  image="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Official_logo_of_the_George_W._Bush_Presidential_Library.svg/1200px-Official_logo_of_the_George_W._Bush_Presidential_Library.svg.png"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    George Bush Presidential Library
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Presidential Library and think tank of George W. Bush.
+                    Located on the campus of SMU.
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="small">Share</Button>
+                  <Button size="small">Learn More</Button>
+                </CardActions>
+              </Card>
 
-              <article className="tile">
-                <h2>Meadows Museum</h2>
-                <img
-                  src="https://via.placeholder.com/100"
-                  alt="placeholder"
-                ></img>
-              </article>
+              <Card
+                sx={{
+                  maxWidth: 400,
+                  margin: "auto",
+                  transition: "0.3s",
+                  m: 5,
+                  p: 5,
+                  boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+                  "&:hover": {
+                    boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)",
+                  },
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  alt="meadows_museum"
+                  height="200"
+                  image="https://meadowsmuseumdallas.org/wp-content/uploads/2017/02/MUSE_retina.png"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    Meadows Museum
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    The largest collection of Spanish art outside of Spain.
+                    Located on the campus of SMU.
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="small">Share</Button>
+                  <Button size="small">Learn More</Button>
+                </CardActions>
+              </Card>
             </section>
           </div>
         </section>
@@ -135,7 +244,7 @@ function App() {
       <body class="loginBody">
         <section id="loginView">
           <h2>LOGIN</h2>
-          <hr class="break"/>
+          <hr class="break" />
           <div class="form-field required">
             <TextField
               required
@@ -148,7 +257,6 @@ function App() {
                 background: "white",
               }}
             />
-            
 
             <TextField
               required
