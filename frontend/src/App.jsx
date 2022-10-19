@@ -5,6 +5,7 @@ import axios from "axios";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import { Repository } from "./repository";
 
 // React functional component
 function App() {
@@ -21,6 +22,7 @@ function App() {
   // USE localhost OR ec2_url ACCORDING TO ENVIRONMENT
   const url = ec2 ? ec2_url : "localhost";
 
+  var repository = new Repository();
   // handle input field state change
   // const handleChange = (e) => {
   //   setNumber(e.target.value);
@@ -49,15 +51,29 @@ function App() {
   // handle input form submission to backend via POST request
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(username, password);
-    axios
-      .get(`http://${url}:8000/login`, { username: username, password: password})
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
+    repository.getLogin(username, password).then(x => 
+      {
+        if (typeof x.data != "undefined") {
+          alert("Logged in");
+        } else if (x.error) {
+          alert("Invalid Credentials")
+        }
       });
+      // axios
+      // .get(`http://${url}:8000/login`, {
+      //   data: {
+      //     username: username, 
+      //     password: password
+      //   }
+      // })
+      // .then((res) => {
+      //   console.log("res");
+      //   console.log(res);
+      // })
+      // .catch((err) => {
+      //   console.log("logging error");
+      //   console.log(err);
+      // });
     // Do Something With Result (Route to New Location)
   };
 
