@@ -133,15 +133,16 @@ function App() {
 
       <body class="loginBody">
         <section id="loginView">
-          <h2>Login</h2>
+          <h2>LOGIN</h2>
           <div class="form-field required">
             <TextField
               required
               id="username-required"
               label="Username"
               defaultValue=""
-              sx = {{
-                mb: 2
+              sx={{
+                mb: 2,
+                width: 250
               }}
             />
             <div />
@@ -152,15 +153,27 @@ function App() {
               label="Password"
               type="password"
               autoComplete="current-password"
+              sx={{
+                mb: 2,
+                width: 250
+              }}
             />
             <div />
-            <Button variant="submit" 
-            sx = {{
-              m: 2,
-              background: '#7F96FF',
-              color: 'F6F7EB',
-              p: 1
-            }}>Submit</Button>
+            <Button
+              variant="submit"
+              sx={{
+                m: 2,
+                background: "#7F96FF",
+                color: "#F6F7EB",
+                p: 1,
+                width: 250,
+                fontWeight: 'bold',
+                "&:hover": { color: "#7F96FF" },
+              }}
+            >
+              Submit
+            </Button>
+            <h4>New? Register here.</h4>
           </div>
         </section>
       </body>
