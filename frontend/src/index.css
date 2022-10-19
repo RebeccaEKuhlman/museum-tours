@@ -5,7 +5,31 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
 }
+
+
+.loginBody{
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  margin: 5rem;
+  margin-left: auto;
+  margin-right: auto;
+  border-color: #696963;
+  border-width: .25rem;
+  border-style: solid;
+  padding: 1rem;
+}
+
+.loginBody {
+  text-align: center;
+}
+
+.loginBody button{
+  padding: 1rem;
+}
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
