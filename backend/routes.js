@@ -6,6 +6,49 @@ module.exports = function routes(app, logger) {
     res.status(200).send('Go to 0.0.0.0:3000.');
   });
 
+  // GET /login
+  app.get('/login', (req, res) => {
+    var username = req.param("username");
+    var password = req.param("password");
+    // get connection from pool of connections
+    pool.getConnection(function (err, connection) {
+      if (err) {
+        // if error connecting
+        logger.error('Problem obtaining MySQL connection', err);
+        res.status(400).send('Problem obtaining MySQL connection');
+      } else {
+        // no issue connecting
+        connection.query("SELECT username, password FROM users u WHERE username = ? AND password = ?;", [username, password], function (err, rows, fields) {
+          console.log(rows);
+          connection.release();
+          if (err) {
+            logger.error("Error while fetching values: \n", err);
+            res.status(400).json({
+              "data": [],
+              "error": "Error obtaining values"
+            })
+          } else {
+            if (rows.length == 0) {
+              // user does not exist
+              console.log("User does not exist");
+              res.status(200).json({
+                "error": "Invalid Credentials"
+              });
+            } else if (rows.length == 1) {
+              // user does exist
+              console.log("User does exist");
+              res.status(200).json({
+                "data": {
+                  "username": rows[0]["username"]
+                }
+              });
+            }
+          }
+        });
+      }
+    });
+  });
+
   // POST /reset
   app.post('/reset', (req, res) => {
     // obtain a connection from our pool of connections
