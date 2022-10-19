@@ -89,7 +89,7 @@ function App() {
         </nav>
       </header>
 
-      <body className="Front-body">
+      <div className="Front-body">
         <section id="homeView">
           <h1>Artt.</h1>
           <img src="https://via.placeholder.com/100" alt="placeholder"></img>
@@ -130,9 +130,9 @@ function App() {
             </section>
           </div>
         </section>
-      </body>
+      </div>
 
-      <body className="loginBody">
+      <div className="loginBody">
         <section id="loginView">
           <h2>Login</h2>
           <form className="form-field required" onSubmit={handleSubmit}>
@@ -142,7 +142,6 @@ function App() {
               onInput={(e) => setUsername(e.target.value)} 
               id="username-required"
               label="Username"
-              defaultValue=""
               sx = {{ mb: 2 }}
             />
             <Typography />
@@ -161,7 +160,7 @@ function App() {
             </Button>
           </form>
         </section>
-      </body>
+      </div>
     </div>
   );
 }
