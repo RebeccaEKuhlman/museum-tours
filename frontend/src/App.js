@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {Typography } from "@material-ui/core"
+import { Typography } from "@material-ui/core";
 import "./App.css";
 import axios from "axios";
 import Stack from "@mui/material/Stack";
@@ -12,7 +12,6 @@ function App() {
   // state for storage of the information on the webpage of forms and list, uses hooks
   const [number, setNumber] = useState("");
   const [values, setValues] = useState([]);
-  
 
   // ENTER YOUR EC2 PUBLIC IP/URL HERE
   const ec2_url = "";
@@ -136,6 +135,7 @@ function App() {
       <body class="loginBody">
         <section id="loginView">
           <h2>LOGIN</h2>
+          <hr class="break"/>
           <div class="form-field required">
             <TextField
               required
@@ -144,10 +144,11 @@ function App() {
               defaultValue=""
               sx={{
                 mb: 2,
-                width: 250
+                width: 250,
+                background: "white",
               }}
             />
-            <div />
+            
 
             <TextField
               required
@@ -157,7 +158,8 @@ function App() {
               autoComplete="current-password"
               sx={{
                 mb: 2,
-                width: 250
+                width: 250,
+                background: "white",
               }}
             />
             <div />
@@ -169,7 +171,7 @@ function App() {
                 color: "#F6F7EB",
                 p: 1,
                 width: 250,
-                fontWeight: 'bold',
+                fontWeight: "bold",
                 "&:hover": { color: "#7F96FF" },
               }}
             >

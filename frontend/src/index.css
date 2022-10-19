@@ -26,6 +26,7 @@ body {
 
 .loginBody #loginView h2{
   color: #323031;
+  margin-bottom: .5rem;
 }
 
 .loginBody #loginView h4{
@@ -33,12 +34,21 @@ body {
   font-weight: normal;
 }
 
+.loginBody #loginView h4:hover{
+  text-decoration: underline;
+}
+
 .loginBody {
   text-align: center;
+  background-color: #F6F7EB;
 }
 
 .loginBody button{
   padding: 1rem;
+}
+
+.loginBody #loginView hr.break{
+  width: 30%;
 }
 
 
