@@ -4,12 +4,21 @@ app.post('/registration', async (request, response) => {
         console.log('Request has a body / payload containing:', request.body);
         console.log('Request has params containing:', request.query);
       
-        const payload = request.body; // This payload should be an object containing update student data
-        const id = request.query.id; // And pull the ID from the request params
+        const bodyParser = require('body-parser');
+        app.use(bodyParser.json());
+        const payload = request.body; // This payload should be an object containing user data
+        const rawPass = request.query.password;
+        const { createHash } = require('crypto');
+        function hash(string) {
+             return createHash('sha256').update(string).digest('hex');
+        }
+        const hashed = hash(rawPass + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
         const { DBQuery, disconnect } = await connectToDatabase();
-        const results = await DBQuery('POST user SET name = ? WHERE id = ?', [payload.name, id]);
+        const date = new Date();
+        const results = await DBQuery('INSERT INTO users(name) password(hashed) joinDate(date) photoId(0) VALUES (?)'
+        , [payload.name]);
         console.log('Results of my POST statement:', results);
-
+            //aB6nkeF0He3imq4AOhbO5kEljbveRpLn
       /**
        * username VARCHAR(30) NOT NULL PRIMARY KEY,
         password VARCHAR(50) NOT NULL,
@@ -29,7 +38,7 @@ app.post('/registration', async (request, response) => {
         disconnect();
         response.json(newlyCreatedRecord);
     } catch (err) {
-        console.error('There was an error in PUT /students', err);
+        console.error('There was an error in POST /users', err);
         response.status(500).json({ message: err.message });
     }
-};
+});
