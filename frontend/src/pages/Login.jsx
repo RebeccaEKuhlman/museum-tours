@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Typography } from "@material-ui/core";
-import "./App.css";
-import axios from "axios";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -9,13 +7,18 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-//import Carousel from 'react-material-ui-carousel'
+import axios from "axios";
+import "./Login.css";
+import { Repository } from "./repository";
 
 // React functional component
-function App() {
+export function Login () {
+
   // state for storage of the information on the webpage of forms and list, uses hooks
   const [number, setNumber] = useState("");
   const [values, setValues] = useState([]);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   // ENTER YOUR EC2 PUBLIC IP/URL HERE
   const ec2_url = "";
@@ -24,66 +27,80 @@ function App() {
   // USE localhost OR ec2_url ACCORDING TO ENVIRONMENT
   const url = ec2 ? ec2_url : "localhost";
 
+  var repository = new Repository();
   // handle input field state change
-  const handleChange = (e) => {
-    setNumber(e.target.value);
-  };
+  // const handleChange = (e) => {
+  //   setNumber(e.target.value);
+  // };
 
-  const fetchBase = () => {
-    axios.get(`http://${url}:8000/`).then((res) => {
-      alert(res.data);
-    });
-  };
+  // const fetchBase = () => {
+  //   axios.get(`http://${url}:8000/`).then((res) => {
+  //     alert(res.data);
+  //   });
+  // };
 
   // fetches vals of db via GET request
-  const fetchVals = () => {
-    axios
-      .get(`http://${url}:8000/values`)
-      .then((res) => {
-        const values = res.data.data;
-        console.log(values);
-        setValues(values);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const fetchVals = () => {
+  //   axios
+  //     .get(`http://${url}:8000/values`)
+  //     .then((res) => {
+  //       const values = res.data.data;
+  //       console.log(values);
+  //       setValues(values);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   // handle input form submission to backend via POST request
   const handleSubmit = (e) => {
     e.preventDefault();
-    let prod = number * number;
-    axios
-      .post(`http://${url}:8000/multplynumber`, { product: prod })
-      .then((res) => {
-        console.log(res);
-        fetchVals();
-      })
-      .catch((err) => {
-        console.log(err);
+    repository.getLogin(username, password).then(x => 
+      {
+        if (typeof x.data != "undefined") {
+          alert("Logged in");
+        } else if (x.error) {
+          alert("Invalid Credentials")
+        }
       });
-    setNumber("");
+      // axios
+      // .get(`http://${url}:8000/login`, {
+      //   data: {
+      //     username: username, 
+      //     password: password
+      //   }
+      // })
+      // .then((res) => {
+      //   console.log("res");
+      //   console.log(res);
+      // })
+      // .catch((err) => {
+      //   console.log("logging error");
+      //   console.log(err);
+      // });
+    // Do Something With Result (Route to New Location)
   };
 
   // handle intialization and setup of database table, can reinitialize to wipe db
-  const reset = () => {
-    axios
-      .post(`http://${url}:8000/reset`)
-      .then((res) => {
-        console.log(res);
-        fetchVals();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const reset = () => {
+  //   axios
+  //     .post(`http://${url}:8000/reset`)
+  //     .then((res) => {
+  //       console.log(res);
+  //       fetchVals();
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   // tell app to fetch values from db on first load (if initialized)
   // the comment below silences an error that doesn't matter.=
-  useEffect(() => {
-    fetchVals();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   fetchVals();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <div className="Front-div">
@@ -92,12 +109,8 @@ function App() {
           <p>Login</p>
         </nav>
       </header>
-
       <body className="Front-body">
         <section id="homeView">
-          <h1>Artt.</h1>
-          <img src="https://via.placeholder.com/100" alt="placeholder"></img>
-
           <div>
             <section id="carousel">
               <Card
@@ -134,7 +147,6 @@ function App() {
                   <Button size="small">Learn More</Button>
                 </CardActions>
               </Card>
-
               <Card
                 sx={{
                   maxWidth: 400,
@@ -168,7 +180,6 @@ function App() {
                   <Button size="small">Learn More</Button>
                 </CardActions>
               </Card>
-
               <Card
                 sx={{
                   maxWidth: 400,
@@ -202,7 +213,6 @@ function App() {
                   <Button size="small">Learn More</Button>
                 </CardActions>
               </Card>
-
               <Card
                 sx={{
                   maxWidth: 400,
@@ -240,14 +250,15 @@ function App() {
           </div>
         </section>
       </body>
-
-      <body class="loginBody">
+      <body className="loginBody">
         <section id="loginView">
           <h2>LOGIN</h2>
           <hr class="break" />
-          <div class="form-field required">
+          <form class="form-field required" onSubmit={handleSubmit}>
             <TextField
               required
+              value={username} 
+              onInput={(e) => setUsername(e.target.value)} 
               id="username-required"
               label="Username"
               defaultValue=""
@@ -257,9 +268,10 @@ function App() {
                 background: "white",
               }}
             />
-
             <TextField
               required
+              value={password} 
+              onInput={(e) => setPassword(e.target.value)} 
               id="outlined-password-input"
               label="Password"
               type="password"
@@ -273,6 +285,8 @@ function App() {
             <div />
             <Button
               variant="submit"
+              type="submit"
+              label = "Submit"
               sx={{
                 m: 2,
                 background: "#7F96FF",
@@ -281,16 +295,12 @@ function App() {
                 width: 250,
                 fontWeight: "bold",
                 "&:hover": { color: "#7F96FF" },
-              }}
-            >
-              Submit
+              }}> Submit
             </Button>
             <h4>New? Register here.</h4>
-          </div>
+          </form>
         </section>
       </body>
     </div>
   );
-}
-
-export default App;
+};
