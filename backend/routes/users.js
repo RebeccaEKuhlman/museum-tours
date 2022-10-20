@@ -16,7 +16,7 @@ app.post('/registration', async (request, response) => {
         const hashed = hash(rawPass + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
         const { DBQuery, disconnect } = await connectToDatabase();
         const date = new Date();
-        const results = await DBQuery('INSERT INTO users(name) password(hashed) joinDate(date) photoId(0) VALUES (?)'
+        const results = await DBQuery('INSERT INTO users(name) (username, hashed, email, date)'
         , [payload.name]);
         console.log('Results of my POST statement:', results);
             //aB6nkeF0He3imq4AOhbO5kEljbveRpLn
