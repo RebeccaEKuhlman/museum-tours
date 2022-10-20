@@ -12,38 +12,38 @@ router.use(bodyParser.json());
 
 router.put('/', async (req, res, next) => {
     if (req.query.email) {
-        const updateUser = await req.models.users.updateUser(req.body.email, req.body.username);
-        res.json(updateStudent);
+        const updatedUser = await req.models.users.updateUser(req.body.email, req.body.username);
+        res.json(updatedUser);
         next();
     }
 
     if (req.query.password) {
-        const updateUser = await req.models.users.updateUser(req.body.password, req.body.username);
-        res.json(updateStudent);
+        const updatedUser = await req.models.users.updateUser(req.body.password, req.body.username);
+        res.json(updatedUser);
         next();
     }
 
     if (req.query.photoid) {
-        const updateUser = await req.models.users.updateUser(req.body.photoid, req.body.username);
-        res.json(updateStudent);
+        const updatedUser = await req.models.users.updateUser(req.body.photoid, req.body.username);
+        res.json(updatedUser);
         next();
     }
 
     if (req.query.uni_affiliation) {
-        const updateUser = await req.models.users.updateUser(req.body.uni_affiliation, req.body.username);
-        res.json(updateStudent);
+        const updatedUser = await req.models.users.updateUser(req.body.uni_affiliation, req.body.username);
+        res.json(updatedUser);
         next();
     }
 
     if (req.query.is_director) {
-        const updateUser = await req.models.users.updateUser(req.body.is_director, req.body.username);
-        res.json(updateStudent);
+        const updatedUser = await req.models.users.updateUser(req.body.is_director, req.body.username);
+        res.json(updatedUser);
         next();
     }
 
     if (req.query.bio) {
-        const updateUser = await req.models.users.updateUser(req.body.bio, req.body.username);
-        res.json(updateStudent);
+        const updatedUser = await req.models.users.updateUser(req.body.bio, req.body.username);
+        res.json(updatedUser);
         next();
     }
 });
