@@ -8,6 +8,7 @@ app.post('/registration', async (request, response) => {
         app.use(bodyParser.json());
         const payload = request.body; // This payload should be an object containing user data
         const rawPass = request.query.password;
+       // table.string('password_hash');
         const { createHash } = require('crypto');
         function hash(string) {
              return createHash('sha256').update(string).digest('hex');
@@ -34,9 +35,9 @@ app.post('/registration', async (request, response) => {
 
       
         // Since we already know the id we're looking for, let's load the most up to date data
-        const newlyCreatedRecord = await DBQuery('', [id]);
+        const newlyCreatedRecord = await DBQuery('SELECT * FROM student WHERE id = ?', [id]);
         disconnect();
-        response.json(newlyCreatedRecord);
+        response.status(201).json(newlyCreatedRecord);
     } catch (err) {
         console.error('There was an error in POST /users', err);
         response.status(500).json({ message: err.message });
