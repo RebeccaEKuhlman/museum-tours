@@ -27,7 +27,6 @@ CREATE TABLE ratings(
 	museum_name VARCHAR(30) NOT NULL,
 	FOREIGN KEY (username) REFERENCES users(username),
   	FOREIGN KEY (tour_Name) REFERENCES tours(tour_Name),
-	content VARCHAR(100),
 	FOREIGN KEY (museum_name) REFERENCES museums(museum_name),
 	ratingID int NOT NULL,
 	PRIMARY KEY (ratingID)
