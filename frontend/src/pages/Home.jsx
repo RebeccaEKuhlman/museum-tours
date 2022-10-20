@@ -18,7 +18,7 @@ export function Home() {
     let items = [
       <Paper
         className="Project"
-        style={{ backgroundColor: "ivory" }}
+        style={{ backgroundColor: "ivory", alignItems: "center" }}
         elevation={10}
         key={props.item.Name}
       >
@@ -27,12 +27,15 @@ export function Home() {
             className="Image"
             alt="museumlogo"
             src={props.item.Image}
-            style={{ alignItems: "center", height: 100, width: 'auto' }}
+            style={{ alignItems: "center", height: 100, width: "auto" }}
           ></img>
           <Typography
             className="Title"
             style={{
               color: "#696963",
+              fontFamily: "Baskerville",
+              fontWeight: "bold",
+              fontSize: 25,
             }}
           >
             {props.item.Name}
@@ -42,6 +45,7 @@ export function Home() {
             className="Caption"
             style={{
               color: "#696963",
+              fontFamily: "Baskerville",
             }}
           >
             {props.item.Caption}
@@ -49,7 +53,11 @@ export function Home() {
           <Button
             variant="outlined"
             className="ViewButton"
-            style={{ color: "cornflowerblue" }}
+            style={{
+              color: "#F6F7EB",
+              backgroundColor: "cornflowerblue",
+              fontFamily: "Baskerville",
+            }}
           >
             View Now
           </Button>

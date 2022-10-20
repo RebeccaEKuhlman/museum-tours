@@ -12,13 +12,12 @@ import "./Login.css";
 import { Repository } from "./repository";
 
 // React functional component
-export function Login () {
-
+export function Login() {
   // state for storage of the information on the webpage of forms and list, uses hooks
   const [number, setNumber] = useState("");
   const [values, setValues] = useState([]);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   // ENTER YOUR EC2 PUBLIC IP/URL HERE
   const ec2_url = "";
@@ -56,29 +55,28 @@ export function Login () {
   // handle input form submission to backend via POST request
   const handleSubmit = (e) => {
     e.preventDefault();
-    repository.getLogin(username, password).then(x => 
-      {
-        if (typeof x.data != "undefined") {
-          alert("Logged in");
-        } else if (x.error) {
-          alert("Invalid Credentials")
-        }
-      });
-      // axios
-      // .get(`http://${url}:8000/login`, {
-      //   data: {
-      //     username: username, 
-      //     password: password
-      //   }
-      // })
-      // .then((res) => {
-      //   console.log("res");
-      //   console.log(res);
-      // })
-      // .catch((err) => {
-      //   console.log("logging error");
-      //   console.log(err);
-      // });
+    repository.getLogin(username, password).then((x) => {
+      if (typeof x.data != "undefined") {
+        alert("Logged in");
+      } else if (x.error) {
+        alert("Invalid Credentials");
+      }
+    });
+    // axios
+    // .get(`http://${url}:8000/login`, {
+    //   data: {
+    //     username: username,
+    //     password: password
+    //   }
+    // })
+    // .then((res) => {
+    //   console.log("res");
+    //   console.log(res);
+    // })
+    // .catch((err) => {
+    //   console.log("logging error");
+    //   console.log(err);
+    // });
     // Do Something With Result (Route to New Location)
   };
 
@@ -110,7 +108,7 @@ export function Login () {
         </nav>
       </header>
       <body className="Front-body">
-        <section id="homeView">
+        {/* <section id="homeView">
           <div>
             <section id="carousel">
               <Card
@@ -248,7 +246,7 @@ export function Login () {
               </Card>
             </section>
           </div>
-        </section>
+              </section>*/}
       </body>
       <body className="loginBody">
         <section id="loginView">
@@ -257,8 +255,8 @@ export function Login () {
           <form class="form-field required" onSubmit={handleSubmit}>
             <TextField
               required
-              value={username} 
-              onInput={(e) => setUsername(e.target.value)} 
+              value={username}
+              onInput={(e) => setUsername(e.target.value)}
               id="username-required"
               label="Username"
               defaultValue=""
@@ -270,8 +268,8 @@ export function Login () {
             />
             <TextField
               required
-              value={password} 
-              onInput={(e) => setPassword(e.target.value)} 
+              value={password}
+              onInput={(e) => setPassword(e.target.value)}
               id="outlined-password-input"
               label="Password"
               type="password"
@@ -286,7 +284,7 @@ export function Login () {
             <Button
               variant="submit"
               type="submit"
-              label = "Submit"
+              label="Submit"
               sx={{
                 m: 2,
                 background: "#7F96FF",
@@ -295,7 +293,10 @@ export function Login () {
                 width: 250,
                 fontWeight: "bold",
                 "&:hover": { color: "#7F96FF" },
-              }}> Submit
+              }}
+            >
+              {" "}
+              Submit
             </Button>
             <h4>New? Register here.</h4>
           </form>
@@ -303,4 +304,4 @@ export function Login () {
       </body>
     </div>
   );
-};
+}
