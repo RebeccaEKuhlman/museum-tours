@@ -67,3 +67,11 @@ CREATE TABLE tours(
 	FOREIGN KEY (museum_name) REFERENCES museums(museum_name),
 	theme VARCHAR(30) NOT NULL
 );
+
+CREATE TABLE booking(
+    bookingID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	username VARCHAR(30) NOT NULL,
+	tour_Name VARCHAR(30) NOT NULL,
+	FOREIGN KEY (username) REFERENCES users(username),
+   	FOREIGN KEY (tour_Name) REFERENCES tours(tour_Name)
+);
