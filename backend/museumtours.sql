@@ -20,6 +20,28 @@ CREATE TABLE users(
   	FOREIGN KEY (photoId) REFERENCES photos(photoId)
 );
 
+CREATE TABLE museums(
+	museum_name varchar(30) NOT NULL PRIMARY KEY,
+	photoId INT NOT NULL,
+	director VARCHAR(30) NOT NULL,
+	FOREIGN KEY (director) REFERENCES users(username),
+	num_exhibits int NOT NULL DEFAULT 0,
+	FOREIGN KEY (photoId) REFERENCES photos(photoId)
+);
+
+CREATE TABLE tours(
+	tour_Name VARCHAR(30) NOT NULL PRIMARY KEY,
+	tourDate Date NOT NULL,
+	tourTime Time NOT NULL,
+	num_spaces_available int NOT NULL,
+	total_space int NOT NULL,
+	tour_description VARCHAR(30),
+	price int,
+	museum_name varchar(30) NOT NULL,
+	FOREIGN KEY (museum_name) REFERENCES museums(museum_name),
+	theme VARCHAR(30) NOT NULL
+);
+
 CREATE TABLE ratings(
 	rating INT NOT NULL,
 	username VARCHAR(30) NOT NULL,
@@ -43,28 +65,6 @@ CREATE TABLE comments(
    	like_sum int DEFAULT 0,
    	overComment int,
 	FOREIGN KEY(review_id) REFERENCES ratings(ratingID)
-);
-
-CREATE TABLE museums(
-	museum_name varchar(30) NOT NULL PRIMARY KEY,
-	photoId INT NOT NULL,
-	director VARCHAR(30) NOT NULL,
-	FOREIGN KEY (director) REFERENCES users(username),
-	num_exhibits int NOT NULL DEFAULT 0,
-	FOREIGN KEY (photoId) REFERENCES photos(photoId)
-);
-
-CREATE TABLE tours(
-	tour_Name VARCHAR(30) NOT NULL PRIMARY KEY,
-	tourDate Date NOT NULL,
-	tourTime Time NOT NULL,
-	num_spaces_available int NOT NULL,
-	total_space int NOT NULL,
-	tour_description VARCHAR(30),
-	price int,
-	museum_name varchar(30) NOT NULL,
-	FOREIGN KEY (museum_name) REFERENCES museums(museum_name),
-	theme VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE booking(
