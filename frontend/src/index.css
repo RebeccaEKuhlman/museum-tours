@@ -14,26 +14,6 @@ header{
   margin-top: 0;
 }
 
-.tile img{
-  width: 10rem;
-  margin: auto
-}
-
-.tile h2{
-  text-align: center;
-  color:#323031
-}
-
-Card{
-  border-style: solid;
-  border-radius: 5rem;
-  border-color: #EC0B43;
-  border-width: .5rem;
-  margin: auto;
-  max-width: 45rem;
-  margin-bottom: 2rem;
-  padding: .5rem
-}
 
 
 .loginBody{
