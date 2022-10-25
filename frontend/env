@@ -1,0 +1,5 @@
+MYSQL_DB=museumtours
+MYSQL_PORT=3306
+MYSQL_CLOUD_USER=admin
+MYSQL_CLOUD_PASS=F21nQ3M0Jg91
+MYSQL_CLOUD_HOST=museum-tours-database.c16qbv7ccsbb.us-east-1.rds.amazonaws.com
