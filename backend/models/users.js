@@ -1,8 +1,8 @@
 const knex = require('../database/knex');
-const STUDENT_TABLE = 'users';
+const USERS_TABLE = 'users';
 
 const updateUser = async (field, username) => {
-    const query = knex(STUDENT_TABLE).update({ field }).where({ username });
+    const query = knex(USERS_TABLE).update({ field }).where({ username });
     const results = await query;
     return results;
 }
