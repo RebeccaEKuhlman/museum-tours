@@ -1,6 +1,6 @@
 app.post('/registration', async (request, response) => {
     try {
-        console.log('Initiating PUT /registration request');
+        console.log('Initiating POST /registration request');
         console.log('Request has a body / payload containing:', request.body);
         console.log('Request has params containing:', request.query);
       
