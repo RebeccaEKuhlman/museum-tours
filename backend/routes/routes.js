@@ -1,8 +1,6 @@
 const pool = require('../db')
-//app.use('/users', './routes/users');
-// const User = require('./users');
+const knex = require('../database/knex.js')
 module.exports = function routes(app, logger) {
-  // app.use('/users', './routes/users');
   // GET /
   app.get('/', (req, res) => {
     res.status(200).send('Go to 0.0.0.0:3000.');
