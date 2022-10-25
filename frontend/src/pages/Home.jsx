@@ -1,19 +1,13 @@
-import React, { useEffect, useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardActions,
-  Typography,
-  Button,
-  Paper,
-} from "@material-ui/core";
-import Carousel from "react-material-ui-carousel";
-import autoBind from "auto-bind";
-import axios from "axios";
-import "./Home.css";
+import React, { useEffect, useState } from 'react';
+import { Card, CardContent, CardActions, Typography, Paper } from "@material-ui/core";
+import Carousel from 'react-material-ui-carousel'
+import Button from "@mui/material/Button";
+import autoBind from 'auto-bind';
+import axios from 'axios';
+import './Home.css';
 
 // React Functional Component
-export function Home() {
+export const Home = () => {
   function Project(props) {
     let items = [
       <Paper
@@ -150,6 +144,15 @@ export function Home() {
     swipe: true,
   };
 
+  const StyledButton = {
+    backgroundColor: "#7F96FF",
+    padding: "20px 100px",
+    fontSize: "18px",
+    "&:hover": {
+      backgroundColor: "#EC0B43"
+    },
+  };
+  
   return (
     <div className="Home-body">
       {/* <BrowserRouter>
@@ -163,7 +166,9 @@ export function Home() {
       </BrowserRouter> */}
       <header className="Home-header">
         <nav>
-          <p>Login</p>
+          <Button variant="contained" sx={StyledButton}>
+            See Bookings
+          </Button>
         </nav>
       </header>
       <main>

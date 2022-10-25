@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -11,6 +11,7 @@ import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import { Repository } from './repository';
 
 function Copyright() {
   return (
@@ -74,9 +75,78 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// React functional component
 export function Login() {
   const classes = useStyles();
 
+  // state for storage of the information on the webpage of forms and list, uses hooks
+  // const [number, setNumber] = useState("");
+  // const [values, setValues] = useState([]);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  // ENTER YOUR EC2 PUBLIC IP/URL HERE
+  const ec2_url = "";
+  // CHANGE THIS TO TRUE IF HOSTING ON EC2, MAKE SURE TO ADD IP/URL ABOVE
+  const ec2 = false;
+  // USE localhost OR ec2_url ACCORDING TO ENVIRONMENT
+  const url = ec2 ? ec2_url : "localhost";
+
+  var repository = new Repository();
+  // handle input field state change
+  // const handleChange = (e) => {
+  //   setNumber(e.target.value);
+  // };
+
+  // const fetchBase = () => {
+  //   axios.get(`http://${url}:8000/`).then((res) => {
+  //     alert(res.data);
+  //   });
+  // };
+
+  // fetches vals of db via GET request
+  // const fetchVals = () => {
+  //   axios
+  //     .get(`http://${url}:8000/values`)
+  //     .then((res) => {
+  //       const values = res.data.data;
+  //       console.log(values);
+  //       setValues(values);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+
+  // handle input form submission to backend via POST request
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    repository.getLogin(username, password).then(x => 
+      {
+        if (typeof x.data != "undefined") {
+          alert("Logged in");
+        } else if (x.error) {
+          alert("Invalid Credentials")
+        }
+      });
+      // axios
+      // .get(`http://${url}:8000/login`, {
+      //   data: {
+      //     username: username, 
+      //     password: password
+      //   }
+      // })
+      // .then((res) => {
+      //   console.log("res");
+      //   console.log(res);
+      // })
+      // .catch((err) => {
+      //   console.log("logging error");
+      //   console.log(err);
+      // });
+    // Do Something With Result (Route to New Location)
+  };
+  
   return (
     <Grid
       container
