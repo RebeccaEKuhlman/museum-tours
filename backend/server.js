@@ -5,6 +5,7 @@ const mysql = require('mysql');
 const cors = require('cors');
 const { log, ExpressAPILogMiddleware } = require('@rama41222/node-logger');
 const mysqlConnect = require('./db');
+//Add Routes
 const routes = require('./routes/routes');
 const users = require('./routes/users')
 
@@ -28,7 +29,8 @@ app.use(cors({
 }));
 app.use(ExpressAPILogMiddleware(logger, { request: true }));
 
-//include routes
+//include routes 
+//Add new route locs here
 routes(app, logger);
 users(app, logger);
 

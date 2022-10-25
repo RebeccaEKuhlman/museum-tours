@@ -11,7 +11,11 @@ module.exports = function routes(app, logger) {
   // GET /login
   app.get('/login', (req, res) => {
     var username = req.param("username");
-    var password = req.param("password");
+    const { createHash } = require('crypto');
+    function hash(string) {
+      return createHash('sha256').update(string).digest('hex');
+    }
+    var password = hash(req.param("password") + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
     // get connection from pool of connections
     pool.getConnection(function (err, connection) {
       if (err) {
