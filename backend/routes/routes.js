@@ -49,6 +49,8 @@ module.exports = function routes(app, logger) {
     });
   });
 
+
+
   // POST /reset
   app.post('/reset', (req, res) => {
     // obtain a connection from our pool of connections
@@ -110,7 +112,7 @@ module.exports = function routes(app, logger) {
       }
     });
   });
-
+  app.use('/users', './routes/users')
   // GET /checkdb
   app.get('/values', (req, res) => {
     // obtain a connection from our pool of connections
