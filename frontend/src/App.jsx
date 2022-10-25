@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 // import { NoPage } from './pages/NoPage';
 
-function App() {
+export const App = () => {
   return (
     <Router>
       <div className="App">
@@ -24,5 +24,3 @@ function App() {
     </Router>
   );
 }
-
-export default App;
