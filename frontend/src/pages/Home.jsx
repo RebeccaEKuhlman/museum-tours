@@ -1,30 +1,69 @@
-import React, { useEffect, useState } from 'react';
-import { Card, CardContent, Typography, Button, Paper } from "@material-ui/core";
-import Carousel from 'react-material-ui-carousel'
-import autoBind from 'auto-bind';
-import axios from 'axios';
-import './Home.css';
+import React, { useEffect, useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardActions,
+  Typography,
+  Button,
+  Paper,
+} from "@material-ui/core";
+import Carousel from "react-material-ui-carousel";
+import autoBind from "auto-bind";
+import axios from "axios";
+import "./Home.css";
 
 // React Functional Component
-export function Home () {
+export function Home() {
   function Project(props) {
-    let items = [(
+    let items = [
       <Paper
         className="Project"
-        style={{ backgroundColor: props.item.Color }}
+        style={{ backgroundColor: "ivory", alignItems: "center" }}
         elevation={10}
         key={props.item.Name}
       >
         <CardContent className="Content">
-          <Typography className="Title">{props.item.Name}</Typography>
-          <br/>
-          <Typography className="Caption">{props.item.Caption}</Typography>
-          <Button variant="outlined" className="ViewButton" style={{color: 'white'}}>
+          <img
+            className="Image"
+            alt="museumlogo"
+            src={props.item.Image}
+            style={{ alignItems: "center", height: 100, width: "auto" }}
+          ></img>
+          <Typography
+            className="Title"
+            style={{
+              color: "#696963",
+              fontFamily: "Baskerville",
+              fontWeight: "bold",
+              fontSize: 25,
+            }}
+          >
+            {props.item.Name}
+          </Typography>
+          <br />
+          <Typography
+            className="Caption"
+            style={{
+              color: "#696963",
+              fontFamily: "Baskerville",
+            }}
+          >
+            {props.item.Caption}
+          </Typography>
+          <Button
+            variant="outlined"
+            className="ViewButton"
+            style={{
+              color: "#F6F7EB",
+              backgroundColor: "cornflowerblue",
+              fontFamily: "Baskerville",
+            }}
+          >
             View Now
           </Button>
         </CardContent>
-      </Paper>
-    )];
+      </Paper>,
+    ];
 
     // if (props.newProp) console.log(props.newProp);
     // const contentPosition = props.contentPosition
@@ -32,7 +71,7 @@ export function Home () {
     //   : "left";
     // const totalItems = props.length ? props.length : 3;
     // const mediaLength = totalItems - 1;
-  
+
     // for (let i = 0; i < mediaLength; i++) {
     //   const item = props.item.Items[i];
     //   const media = (
@@ -44,7 +83,7 @@ export function Home () {
     //   );
     //   items.push(media);
     // }
-  
+
     // if (contentPosition === "left") {
     //   items.unshift(content);
     // } else if (contentPosition === "right") {
@@ -52,20 +91,20 @@ export function Home () {
     // } else if (contentPosition === "middle") {
     //   items.splice(items.length / 2, 0, content);
     // }
-  
+
     return (
-      <Card raised className="Project">
+      <Card raised className="Card">
         {items}
       </Card>
     );
-
   }
 
   let items = [
     {
       Name: "Dallas Museum of Art",
-      Image: "https://via.placeholder.com/100",
-      Caption: "Wow! A Museum!",
+      Image: "https://www.dma.org/sites/default/files/dma-logo.png",
+      Caption:
+        "Art museum with more than 24,000 works of art from around the world ranging from ancient to modern times. Located in downtown Dallas.",
       Color: "#282c34",
       // Items: [
       //   {
@@ -76,23 +115,28 @@ export function Home () {
     },
     {
       Name: "Perot Museum of Natural History",
-      Image: "https://via.placeholder.com/100",
-      Caption: "Wow! A Museum!",
+      Image: "http://photos.prnewswire.com/prnfull/20120531/DC16400LOGO",
+      Caption:
+        "Dallas's natural history museum. Focuses on innovation, archaeology, and curiosity. Located in downtown Dallas.",
       Color: "#282c34",
     },
     {
       Name: "Bush Presidential Center",
-      Image: "https://via.placeholder.com/100",
-      Caption: "Wow! A Museum!",
+      Image:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Official_logo_of_the_George_W._Bush_Presidential_Library.svg/1200px-Official_logo_of_the_George_W._Bush_Presidential_Library.svg.png",
+      Caption:
+        "Presidential Library and think tank of George W. Bush. Located on the campus of SMU.",
       Color: "#282c34",
     },
     {
       Name: "Meadows Museum",
-      Image: "https://via.placeholder.com/100",
-      Caption: "Wow! A Museum!",
+      Image:
+        "https://meadowsmuseumdallas.org/wp-content/uploads/2017/02/MUSE_retina.png",
+      Caption:
+        "The largest collection of Spanish art outside of Spain. Located on the campus of SMU.",
       Color: "#282c34",
-    }
-  ]
+    },
+  ];
 
   let state = {
     autoPlay: true,
@@ -103,7 +147,7 @@ export function Home () {
     navButtonsAlwaysInvisible: false,
     cycleNavigation: true,
     fullHeightHover: true,
-    swipe: true
+    swipe: true,
   };
 
   return (
@@ -124,27 +168,24 @@ export function Home () {
       </header>
       <main>
         <Carousel
-        className="Example"
-        autoPlay={state.autoPlay}
-        animation={state.animation}
-        indicators={state.indicators}
-        duration={state.duration}
-        cycleNavigation={state.cycleNavigation}
-        navButtonsAlwaysVisible={state.navButtonsAlwaysVisible}
-        navButtonsAlwaysInvisible={state.navButtonsAlwaysInvisible}
-        fullHeightHover={false}
-        navButtonsProps={{style: {backgroundColor: 'cornflowerblue', borderRadius: 0}}}
-        navButtonsWrapperProps={{style: {bottom: '0', top: 'unset', }}}
-        indicatorContainerProps={{style: {margin: "20px"}}}
-        NextIcon='next'
+          className="Example"
+          autoPlay={state.autoPlay}
+          animation={state.animation}
+          indicators={state.indicators}
+          duration={state.duration}
+          cycleNavigation={state.cycleNavigation}
+          navButtonsAlwaysVisible={state.navButtonsAlwaysVisible}
+          navButtonsAlwaysInvisible={state.navButtonsAlwaysInvisible}
+          fullHeightHover={false}
+          navButtonsProps={{
+            style: { backgroundColor: "cornflowerblue", borderRadius: 0 },
+          }}
+          navButtonsWrapperProps={{ style: { bottom: "0", top: "unset" } }}
+          indicatorContainerProps={{ style: { margin: "20px" } }}
+          NextIcon="next"
         >
           {items.map((item, index) => {
-            return (
-              <Project
-                item={item}
-                key={index}
-              />
-            );
+            return <Project item={item} key={index} />;
           })}
         </Carousel>
       </main>
@@ -156,12 +197,11 @@ export function Home () {
 //   flex-direction:row;
 //   justify-content:space-between;
 //   flex-wrap:wrap}
-  
+
 // .Options div {
 //   display:flex;
 //   flex-direction:column
 // }
-
 
 // .Banner {
 //   height:400px;
@@ -201,7 +241,7 @@ export function Home () {
 
 // .Banner .BannerGrid,.Banner .Content {
 //   height:100%;position:relative}
-  
+
 // .Banner .Content{
 //   color:#fff;
 //   background-color:#771818;
@@ -210,35 +250,35 @@ export function Home () {
 
 // .Banner .Content:active,.Banner .Content:hover{
 //   background-color:#571111}
-  
+
 // .Banner .Content:active .ViewButton,.Banner .Content:hover .ViewButton{
 //   background-color:#f1f1f1;
 //   color:#771818}
-  
+
 // .Banner .Content .Title{
 //   font-size:30px;
 //   font-weight:500;
 //   color:#fff}
-  
+
 // .Banner .Content .Caption{
 //   margin-top:10px;font-size:18px;color:#fff}
-  
+
 // .Banner .Content .ViewButton{
 //   margin-top:40px;color:#fff;font-size:25px;border:3px solid #fff;
 //   text-transform:capitalize;transition:.2s}
-  
+
 // .SecondExample{max-width:500px}
 
 // .SecondExample .Project{max-width:100%;
 //   position:relative;height:300px;overflow:hidden;padding:20px}
-  
+
 // .SecondExample .Project *{
 //   color:#fff}
-  
+
 // .SecondExample .Project .CheckButton{
 //   margin-top:40px;color:#fff;font-size:25px;border:3px solid #fff;
 //   text-transform:capitalize}body{margin:0}
-  
+
 // @media(min-width:0px)and (max-width:1279px){
 //   .root{padding:40px!important}
 //   .installation{width:90%!important}}
