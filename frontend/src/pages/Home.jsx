@@ -139,9 +139,13 @@ export const Home = () => {
   };
 
   const StyledButton = {
+    textAlign: 'center',
+    fontFamily: [ "Baskerville" ],
+    fontWeight: 'bold',
     backgroundColor: "#7F96FF",
-    padding: "20px 100px",
-    fontSize: "18px",
+    color: "#F6F7EB",
+    padding: "20px 80px",
+    fontSize: "32px",
     "&:hover": {
       backgroundColor: "#EC0B43"
     },
@@ -159,7 +163,12 @@ export const Home = () => {
         </Routes>
       </BrowserRouter> */}
       <header className="Home-header">
-        <Button variant="contained" sx={StyledButton}>
+        <Button 
+          variant="contained"
+          sx={StyledButton} 
+          component="a"
+          href="/tours"
+        >
           See Bookings
         </Button>
       </header>
@@ -174,7 +183,7 @@ export const Home = () => {
           navButtonsAlwaysVisible={state.navButtonsAlwaysVisible}
           navButtonsAlwaysInvisible={state.navButtonsAlwaysInvisible}
           fullHeightHover={false}
-          navButtonsProps={{ style: { backgroundColor: "cornflowerblue", borderRadius: 0 } }}
+          navButtonsProps={{ style: { backgroundColor: "cornflowerblue", borderRadius: 0 }}}
           navButtonsWrapperProps={{ style: { bottom: "0", top: "unset" } }}
           indicatorContainerProps={{ style: { margin: "20px" } }}
           NextIcon="next"
