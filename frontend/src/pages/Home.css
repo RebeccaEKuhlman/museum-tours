@@ -1,4 +1,10 @@
 /* CSS classes */
+@import url(https://fonts.googleapis.com/css?family=Inter);
+
+*{
+  font-family: 'Inter', sans-serif;
+}
+
 .Home {
   text-align: center;
 }
@@ -21,7 +27,10 @@
 
 .Home-header {
   background-color: #282c34;
-  min-height: 100vh;
+  background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.rd.com%2Fwp-content%2Fuploads%2F2018%2F09%2Ffieldmuseum_maximo-305-Photo-by-Lucy-Hewett-%25C2%25A9-2018-Field-Museum.jpg&f=1&nofb=1&ipt=5a89024cf647a388db0a5ae9db2c98cb3d3ff3f4e73e4352a51ffd99a889ebf9&ipo=images");
+  background-position: center;
+  background-size: 100%;
+  min-height: 110vh;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -187,7 +187,6 @@ export const Home = () => {
           }}
           navButtonsWrapperProps={{ style: { bottom: "0", top: "unset" } }}
           indicatorContainerProps={{ style: { margin: "20px" } }}
-          NextIcon="next"
         >
           {items.map((item, index) => {
             return <Project item={item} key={index} />;
