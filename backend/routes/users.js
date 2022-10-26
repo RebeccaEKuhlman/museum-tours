@@ -10,6 +10,7 @@
         FOREIGN KEY (photoId) REFERENCES photos(photoId)
        * 
        */
+const { raw } = require('body-parser');
 const knex = require('../database/knex.js')
 module.exports = function users(app, logger) {
     app.post('/users/registration', async (request, response) => {
@@ -51,4 +52,39 @@ module.exports = function users(app, logger) {
             response.status(500).json({ message: err.message });
         }
     });
+    // login
+    app.get('/users/login', async (request, response) => {
+        try {
+            console.log('Login Attempt');
+            const bodyParser = require('body-parser');
+            app.use(bodyParser.json());
+            // payload is object containing user data
+            // console.log(request);
+            // const username = 'user90';
+            // const rawPass = 'passpass';
+            const username = request.body.username
+            const rawPass = request.body.password
+            console.log(rawPass);
+
+            // hash and check
+            const { createHash } = require('crypto');
+            function hash(string) {
+                return createHash('sha256').update(string).digest('hex');
+            }
+            //salt: aB6nkeF0He3imq4AOhbO5kEljbveRpLn
+            const hashed = hash(rawPass + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
+            // query database
+            console.log(username);
+            console.log(hashed);
+            const query = knex('users').where({username}).where({password: hashed});
+            const results = await query;
+            console.log('Results of my GET statement: ', results);
+
+            // response
+            response.status(200).json({ username: username});
+        } catch (err) {
+            console.error('There was an error in GET /users', err);
+            response.status(500).json({ message: err.message });
+        }
+    })
 }
