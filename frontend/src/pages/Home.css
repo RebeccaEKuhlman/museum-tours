@@ -60,3 +60,19 @@
 #carousel > h2{
   color: blue;
 }
+
+.App{
+  background-color: #282c34;
+}
+
+.App li{
+  float: left;
+  display: block;
+  text-align: center;
+  padding: 14px 16px;
+  
+}
+
+.App li:hover{
+  background-color: black;
+}
