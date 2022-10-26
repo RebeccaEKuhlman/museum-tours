@@ -19,9 +19,6 @@ body {
 
 .error-container h1 {
   position: relative;
-  -webkit-transform: translateY(-100%);
-  -ms-transform: translateY(-100%);
-  transform: translateY(125%);
 }
 
 .return a {
