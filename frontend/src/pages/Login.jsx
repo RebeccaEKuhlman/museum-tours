@@ -178,6 +178,8 @@ export function Login() {
               label="Username"
               name="username"
               autoComplete="username"
+              value={username}
+              onInput={(e) => setUsername(e.target.value)}
               autoFocus
             />
             <TextField
@@ -189,6 +191,8 @@ export function Login() {
               label="Password"
               type="password"
               id="password"
+              value={password}
+              onInput={(e) => setPassword(e.target.value)}
               autoComplete="current-password"
             />
             <FormControlLabel
