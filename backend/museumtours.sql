@@ -8,6 +8,10 @@ CREATE TABLE photos(
 	is_profile BOOL DEFAULT False
 );
 
+SELECT * FROM users;
+
+INSERT INTO photos VALUES ();
+
 CREATE TABLE users(
 	username VARCHAR(30) NOT NULL PRIMARY KEY,
 	password VARCHAR(50) NOT NULL,

@@ -10,6 +10,7 @@ app.get('/health', (request, response, next) => {
     // next() is how we tell express to continue through the middleware chain
     next();
 });
+
 app.use('/users', userRoutes);
 app.listen(port, () => {
     console.log(`This app is listening on port  ${port}`);

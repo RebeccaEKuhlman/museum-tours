@@ -1,14 +1,19 @@
+const knexConfig = require('../knexfile');
+const knex = require('knex');
+module.exports = knex(knexConfig.development);
+
+// Update with your config settings.
 module.exports = {
     development: {
         client: 'mysql',
         debug: true,
         connection: {
-            host: 'museum-tours-database.c16qbv7ccsbb.us-east-1.rds.amazonaws.com',
-            port: 3306,
-            user: 'admin',
-            password: 'zSpe!0T595Mgs2%9',
+            host: process.env.MYSQL_CLOUD_HOST,
+            port: process.env.MYSQL_PORT,
+            user: process.env.MYSQL_CLOUD_USER,
+            password: process.env.MYSQL_CLOUD_PASS,
             insecureAuth: true,
-            database: 'museumtours'
+            database: process.env.MYSQL_DB
         }
     }
 };

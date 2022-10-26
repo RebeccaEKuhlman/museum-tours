@@ -3,3 +3,4 @@
 *.pem
 *.session.sql
 backend/env
+frontend/env
