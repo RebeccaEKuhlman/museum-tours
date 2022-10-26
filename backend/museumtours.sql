@@ -74,3 +74,5 @@ CREATE TABLE booking(
 	FOREIGN KEY (username) REFERENCES users(username),
    	FOREIGN KEY (tour_Name) REFERENCES tours(tour_Name)
 );
+
+DELETE * FROM photos
