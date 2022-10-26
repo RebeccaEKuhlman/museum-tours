@@ -12,36 +12,5 @@
 
 const knex = require('../database/knex.js')
 module.exports = function users(app, logger) {
-    app.post('/users/registration', async (request, response) => {
-        try {
-            console.log('Initiating POST /registration request');
-            console.log('Request has a body / payload containing:', request.body);
-            console.log('Request has params containing:', request.query);
-            const bodyParser = require('body-parser');
-            app.use(bodyParser.json());
-            const payload = request.body; // This payload should be an object containing user data
-            
-            //Hashing Password
-            const rawPass = payload.password;
-            const { createHash } = require('crypto');
-            function hash(string) {
-                return createHash('sha256').update(string).digest('hex');
-            }
-            //salt: aB6nkeF0He3imq4AOhbO5kEljbveRpLn
-            const hashed = hash(rawPass + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
-
-            //need to set seperate vars
-            const username = payload.username;
-            const email = payload.email;
-            const joinDate = new Date();
-            //Knex
-            const query = knex('users').insert({ username, password: hashed, email, joinDate, photoId: 1})
-            const results = await query;
-            console.log('Results of my POST statement:', results);
-            response.status(201).json(results);
-        } catch (err) {
-            console.error('There was an error in POST /users', err);
-            response.status(500).json({ message: err.message });
-        }
-    });
+    
 }
