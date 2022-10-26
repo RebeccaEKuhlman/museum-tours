@@ -1,0 +1,40 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  background-color: #323031;
+  -moz-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
+}
+
+.error-container {
+  text-align: center;
+  height: 100%;
+  position: relative;
+}
+
+.error-container h1 {
+  position: relative;
+  -webkit-transform: translateY(-100%);
+  -ms-transform: translateY(-100%);
+  transform: translateY(125%);
+}
+
+.return a {
+  font-size: 220px;
+  padding-bottom: 1px;
+  color: #7F96FF;
+  text-decoration: none;
+  -webkit-transition: color .25s;
+  transition: color .25s;
+}
+
+.return a:hover {
+  -webkit-transition: color .25s;
+  transition: color .25s;
+  color: #EC0B43;
+}
