@@ -1,4 +1,6 @@
+import { sizeHeight } from '@mui/system';
 import React from 'react';
+import { render } from 'react-dom';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { AppBar, Toolbar, Typography, makeStyles, Box, Avatar } from "@material-ui/core";
 
@@ -24,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#F6F7EB",
     fontSize: "40px",
     "&:hover": {
-      color: "#EC0B43",
+      backgroundColor: "#EC0B43",
     },
   },
   link: {
