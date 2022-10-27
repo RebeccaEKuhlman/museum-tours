@@ -8,7 +8,6 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import axios from "axios";
-import "./Login.css";
 import { Repository } from "./repository";
 
 
