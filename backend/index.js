@@ -1,10 +1,11 @@
+require('dotenv').config();
 const express = require('express');
-const userRoutes = require('./routes/users' );
-const { createModelsMiddleware  } = require('./middleware/model-middleware' );
+const userRoutes = require('./routes/users');
+const { createModelsMiddleware } = require('./middleware/model-middleware');
 const app = express();
-const port = 3000;
+const port = 8000;
 
-app.use(createModelsMiddleware );
+app.use(createModelsMiddleware);
 app.get('/health', (request, response, next) => {
    const responseBody = { status: 'up', port };
    response.json(responseBody);

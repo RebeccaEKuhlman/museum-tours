@@ -11,37 +11,37 @@ const bodyParser = require('body-parser');
 router.use(bodyParser.json());
 
 router.put('/', async (req, res, next) => {
-    if (req.query.email) {
+    if (req.body.email) {
         const updatedUser = await req.models.users.updateUser(req.body.email, req.body.username);
         res.json(updatedUser);
         next();
     }
 
-    if (req.query.password) {
+    if (req.body.password) {
         const updatedUser = await req.models.users.updateUser(req.body.password, req.body.username);
         res.json(updatedUser);
         next();
     }
 
-    if (req.query.photoid) {
+    if (req.body.photoid) {
         const updatedUser = await req.models.users.updateUser(req.body.photoid, req.body.username);
         res.json(updatedUser);
         next();
     }
 
-    if (req.query.uni_affiliation) {
+    if (req.body.uni_affiliation) {
         const updatedUser = await req.models.users.updateUser(req.body.uni_affiliation, req.body.username);
         res.json(updatedUser);
         next();
     }
 
-    if (req.query.is_director) {
+    if (req.body.is_director) {
         const updatedUser = await req.models.users.updateUser(req.body.is_director, req.body.username);
         res.json(updatedUser);
         next();
     }
 
-    if (req.query.bio) {
+    if (req.body.bio) {
         const updatedUser = await req.models.users.updateUser(req.body.bio, req.body.username);
         res.json(updatedUser);
         next();
