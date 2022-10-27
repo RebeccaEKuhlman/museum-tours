@@ -10,8 +10,8 @@ module.exports = function routes(app, logger) {
 
   // GET /login
   app.get('/login', (req, res) => {
-    var username = req.param("username");
-    var password = req.param("password");
+    const username = req.param("username");
+    const password = req.param("password");
     // get connection from pool of connections
     pool.getConnection(function (err, connection) {
       if (err) {
@@ -20,7 +20,17 @@ module.exports = function routes(app, logger) {
         res.status(400).send('Problem obtaining MySQL connection');
       } else {
         // no issue connecting
-        connection.query("SELECT username, password FROM users u WHERE username = ? AND password = ?;", [username, password], function (err, rows, fields) {
+        // password hashing
+        // hash and check
+        console.log("username", username);
+        const { createHash } = require('crypto');
+        function hash(string) {
+            return createHash('sha256').update(string).digest('hex');
+        }
+        //salt: aB6nkeF0He3imq4AOhbO5kEljbveRpLn
+        const hashed = hash(password + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
+        console.log("hashed", hashed);
+        connection.query("SELECT username, password FROM users u WHERE username = ? AND password = ?;", [username, hashed], function (err, rows, fields) {
           console.log(rows);
           connection.release();
           if (err) {
