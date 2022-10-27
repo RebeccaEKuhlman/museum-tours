@@ -105,7 +105,7 @@ export const Tours = () => {
       container
       spacing={1}
       alignItems="center"
-      justify="center"
+      justifyContent="center"
     >
         <Grid item xs={11}>
           <Card>

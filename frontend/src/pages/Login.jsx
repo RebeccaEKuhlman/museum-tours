@@ -203,7 +203,6 @@ export function Login() {
               type="submit"
               fullWidth
               variant="contained"
-              color="##7F96FF"
               className={classes.submit}
             >
               Sign In
