@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   root: {
-    height: "100vh",
+    height: "calc(100vh - 64px)",
   },
   image: {
     backgroundImage:

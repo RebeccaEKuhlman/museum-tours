@@ -100,7 +100,7 @@ export const Tours = () => {
   ];
 
   return (
-    <div style={{ marginTop: 10 }}>
+    <div style={{ marginTop: 10, maxWidth: '100%' }}>
       <Grid
       container
       spacing={1}
