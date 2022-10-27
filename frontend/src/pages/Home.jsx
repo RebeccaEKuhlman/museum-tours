@@ -97,8 +97,7 @@ export const Home = () => {
     {
       Name: "Dallas Museum of Art",
       Image: "https://www.dma.org/sites/default/files/dma-logo.png",
-      Caption:
-        "Art museum with more than 24,000 works of art from around the world ranging from ancient to modern times. Located in downtown Dallas.",
+      Caption: "Art museum with more than 24,000 works of art from around the world ranging from ancient to modern times. Located in downtown Dallas.",
       Color: "#282c34",
       // Items: [
       //   {
@@ -110,24 +109,19 @@ export const Home = () => {
     {
       Name: "Perot Museum of Natural History",
       Image: "http://photos.prnewswire.com/prnfull/20120531/DC16400LOGO",
-      Caption:
-        "Dallas's natural history museum. Focuses on innovation, archaeology, and curiosity. Located in downtown Dallas.",
+      Caption: "Dallas's natural history museum. Focuses on innovation, archaeology, and curiosity. Located in downtown Dallas.",
       Color: "#282c34",
     },
     {
       Name: "Bush Presidential Center",
-      Image:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Official_logo_of_the_George_W._Bush_Presidential_Library.svg/1200px-Official_logo_of_the_George_W._Bush_Presidential_Library.svg.png",
-      Caption:
-        "Presidential Library and think tank of George W. Bush. Located on the campus of SMU.",
+      Image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Official_logo_of_the_George_W._Bush_Presidential_Library.svg/1200px-Official_logo_of_the_George_W._Bush_Presidential_Library.svg.png",
+      Caption: "Presidential Library and think tank of George W. Bush. Located on the campus of SMU.",
       Color: "#282c34",
     },
     {
       Name: "Meadows Museum",
-      Image:
-        "https://meadowsmuseumdallas.org/wp-content/uploads/2017/02/MUSE_retina.png",
-      Caption:
-        "The largest collection of Spanish art outside of Spain. Located on the campus of SMU.",
+      Image: "https://meadowsmuseumdallas.org/wp-content/uploads/2017/02/MUSE_retina.png",
+      Caption: "The largest collection of Spanish art outside of Spain. Located on the campus of SMU.",
       Color: "#282c34",
     },
   ];
@@ -145,9 +139,13 @@ export const Home = () => {
   };
 
   const StyledButton = {
+    textAlign: 'center',
+    fontFamily: [ "Baskerville" ],
+    fontWeight: 'bold',
     backgroundColor: "#7F96FF",
-    padding: "20px 100px",
-    fontSize: "18px",
+    color: "#F6F7EB",
+    padding: "20px 80px",
+    fontSize: "32px",
     "&:hover": {
       backgroundColor: "#EC0B43"
     },
@@ -165,11 +163,14 @@ export const Home = () => {
         </Routes>
       </BrowserRouter> */}
       <header className="Home-header">
-        <nav>
-          <Button variant="contained" sx={StyledButton}>
-            See Bookings
-          </Button>
-        </nav>
+        <Button 
+          variant="contained"
+          sx={StyledButton} 
+          component="a"
+          href="/tours"
+        >
+          See Bookings
+        </Button>
       </header>
       <main>
         <Carousel
@@ -182,9 +183,7 @@ export const Home = () => {
           navButtonsAlwaysVisible={state.navButtonsAlwaysVisible}
           navButtonsAlwaysInvisible={state.navButtonsAlwaysInvisible}
           fullHeightHover={false}
-          navButtonsProps={{
-            style: { backgroundColor: "cornflowerblue", borderRadius: 0 },
-          }}
+          navButtonsProps={{ style: { backgroundColor: "cornflowerblue", borderRadius: 0 }}}
           navButtonsWrapperProps={{ style: { bottom: "0", top: "unset" } }}
           indicatorContainerProps={{ style: { margin: "20px" } }}
           NextIcon="next"
