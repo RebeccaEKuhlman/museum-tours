@@ -14,5 +14,7 @@ class User {
         const results = await this.DBQuery('SELECT * FROM users WHERE name = ?', [username]);
         return results;
     }
+    
  }
  module.exports = User;
+ 

@@ -10,7 +10,18 @@
     FOREIGN KEY (photoId) REFERENCES photos(photoId)
     * */    
 
-const knex = require('../database/knex.js')
+const knex = require('../database/knex.js');
+
 module.exports = function users(app, logger) {
-    
+    app.get('/users', async (request, response) => {
+            if (req.query.username) {
+                const usersByName = await req.models.student.fetchUsersByName(req.query.name);
+                res.json(usersByName);
+                next();
+            } else {
+                const allUsers = await req.models.student.fetchAllUsers();
+                res.json(allUsers);
+                next();
+        }
+    });
 }
