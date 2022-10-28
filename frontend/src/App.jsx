@@ -1,4 +1,6 @@
-import React from 'react';
+import { sizeHeight } from '@mui/system';
+import React, { useEffect, useState }from 'react';
+import { render } from 'react-dom';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { AppBar, Toolbar, Typography, makeStyles, Box, Avatar } from "@material-ui/core";
 
@@ -53,6 +55,18 @@ const useStyles = makeStyles((theme) => ({
 
 export const App = () => {
   const classes = useStyles();
+  // useEffect(() => {
+  //   const onPageLoad = () => {
+      
+  //   };
+  //   if (document.readyState === 'complete') {
+  //     document.onload
+  //     onPageLoad();
+  //   } else {
+  //     window.addEventListener('load');
+  //     return () => window.removeEventListener('load', onPageLoad);
+  //   }
+  // }, []);
   return (
     <Router>
       <AppBar position="static" style={{ backgroundColor: "#7F96FF" }}>
@@ -63,7 +77,7 @@ export const App = () => {
             href="/"
             noWrap
           > 
-            Museum Tours
+            Artt. Museum Tours
           </Typography>
           <Typography className={classes.link}>
             {/* <Link to="/tours" className={classes.link}>

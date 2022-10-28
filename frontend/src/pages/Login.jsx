@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   root: {
-    height: "100vh",
+    height: "calc(100vh - 64px)",
   },
   image: {
     backgroundImage:
@@ -168,7 +168,7 @@ export function Login() {
           >
             LOGIN
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate onSubmit={handleSubmit}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -178,6 +178,8 @@ export function Login() {
               label="Username"
               name="username"
               autoComplete="username"
+              value={username}
+              onInput={(e) => setUsername(e.target.value)}
               autoFocus
             />
             <TextField
@@ -189,6 +191,8 @@ export function Login() {
               label="Password"
               type="password"
               id="password"
+              value={password}
+              onInput={(e) => setPassword(e.target.value)}
               autoComplete="current-password"
             />
             <FormControlLabel
@@ -199,7 +203,6 @@ export function Login() {
               type="submit"
               fullWidth
               variant="contained"
-              color="##7F96FF"
               className={classes.submit}
             >
               Sign In

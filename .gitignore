@@ -4,3 +4,4 @@
 *.session.sql
 backend/env
 frontend/env
+.idea
