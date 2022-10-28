@@ -39,10 +39,6 @@ module.exports = function users(app, logger) {
             const query = knex('users').insert({ username, password: hashed, email, joinDate, photoId: 1})
             const results = await query;
             console.log('Results of my POST statement:', results);
-                
-
-
-        
             // Since we already know the id we're looking for, let's load the most up to date data
             // const newlyCreatedRecord = await DBQuery('SELECT * FROM student WHERE id = ?', [id]);
             // disconnect();

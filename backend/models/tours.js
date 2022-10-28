@@ -1,3 +1,5 @@
+const { fetchAllUsers } = require("./users");
+
 /**
  * tours(
 	tour_Name VARCHAR(30) NOT NULL PRIMARY KEY,
@@ -24,13 +26,23 @@ class Tour {
         const results = await this.DBQuery('SELECT * FROM tours');
         return results;
     }
-    async fetchUsersByName (tour_Name) {
+    async fetchToursByName (tour_Name) {
         const results = await this.DBQuery('SELECT * FROM tours WHERE tour_Name = ?', [tour_Name]);
         return results;
     }
-    async fetchUsersByMuseum_name (museum_name) {
+    async fetchToursByMuseum_name (museum_name) {
+        const results = await this.DBQuery('SELECT * FROM tours WHERE museum_name = ?', [museum_name]);
+        return results;
+    }
+    async updateTourSlots (tour_Name, numSlots) {
         const results = await this.DBQuery('SELECT * FROM tours WHERE museum_name = ?', [museum_name]);
         return results;
     }
  }
- module.exports = Tour;
+ module.exports = {
+    fetchAllTours,
+    fetchToursByName,
+    fetchToursByMuseum_name,
+    fetchAllTours,
+    updateTourSlots
+ }
