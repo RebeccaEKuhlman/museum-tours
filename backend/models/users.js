@@ -1,3 +1,5 @@
+const { nextTick } = require('process');
+
 class User {
     constructor(_DBQuery, _disconnect) {
         this.DBQuery = _DBQuery;
@@ -15,7 +17,14 @@ class User {
         return results;
     }
     async updatePassword (username, newPass) { //AAAAAA
-        const query = knex('users').update({name}).where({username});
+        const { createHash } = require('crypto');
+        function hash(string) {
+            return createHash('sha256').update(string).digest('hex');
+        }
+        const hashed = hash(newPass + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
+        const query = knex('users')
+            .where({ username: username })
+            .update({ password: hashed })
         const results = await query;
         return results;
     }
@@ -49,6 +58,7 @@ class User {
     fetchAllUsers,
     fetchUsersByName,
     updatePassword,
+    authenticateUser,
     deleteUser
  }
  
