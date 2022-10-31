@@ -16,23 +16,6 @@ class User {
         const results = await this.DBQuery('SELECT * FROM users WHERE name = ?', [username]);
         return results;
     }
-    async updatePassword (username, newPass) { //AAAAAA
-        const { createHash } = require('crypto');
-        function hash(string) {
-            return createHash('sha256').update(string).digest('hex');
-        }
-        const hashed = hash(newPass + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
-        const query = knex('users')
-            .where({ username: username })
-            .update({ password: hashed })
-        const results = await query;
-        return results;
-    }
-    async deleteUser (username){
-        const query = knex('users').delete().where({username});
-        const results = await query;
-        return results;
-    }
     async authenticateUser  (username, password) {
         const users = await fetchUsersByName(username);
         console.log('Results of users query', users);
@@ -57,8 +40,6 @@ class User {
  module.exports = {
     fetchAllUsers,
     fetchUsersByName,
-    updatePassword,
-    authenticateUser,
-    deleteUser
+    authenticateUser
  }
  
