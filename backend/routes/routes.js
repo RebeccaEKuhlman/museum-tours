@@ -1,8 +1,6 @@
 const pool = require('../db')
-//app.use('/users', './routes/users');
-// const User = require('./users');
+const knex = require('../database/knex.js')
 module.exports = function routes(app, logger) {
-  // app.use('/users', './routes/users');
   // GET /
   app.get('/', (req, res) => {
     res.status(200).send('Go to 0.0.0.0:3000.');
@@ -10,8 +8,7 @@ module.exports = function routes(app, logger) {
 
   // GET /login
   app.get('/login', (req, res) => {
-    const username = req.param("username");
-    const password = req.param("password");
+    var username = req.param("username");
     // get connection from pool of connections
     pool.getConnection(function (err, connection) {
       if (err) {
@@ -27,8 +24,8 @@ module.exports = function routes(app, logger) {
         function hash(string) {
             return createHash('sha256').update(string).digest('hex');
         }
+        var hashed = hash(req.param("password") + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
         //salt: aB6nkeF0He3imq4AOhbO5kEljbveRpLn
-        const hashed = hash(password + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
         console.log("hashed", hashed);
         connection.query("SELECT username, password FROM users u WHERE username = ? AND password = ?;", [username, hashed], function (err, rows, fields) {
           console.log(rows);
