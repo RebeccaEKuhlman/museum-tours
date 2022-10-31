@@ -9,11 +9,6 @@ module.exports = function routes(app, logger) {
   // GET /login
   app.get('/login', (req, res) => {
     var username = req.param("username");
-    const { createHash } = require('crypto');
-    function hash(string) {
-      return createHash('sha256').update(string).digest('hex');
-    }
-    var password = hash(req.param("password") + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
     // get connection from pool of connections
     pool.getConnection(function (err, connection) {
       if (err) {
@@ -29,8 +24,8 @@ module.exports = function routes(app, logger) {
         function hash(string) {
             return createHash('sha256').update(string).digest('hex');
         }
+        var hashed = hash(req.param("password") + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
         //salt: aB6nkeF0He3imq4AOhbO5kEljbveRpLn
-        const hashed = hash(password + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
         console.log("hashed", hashed);
         connection.query("SELECT username, password FROM users u WHERE username = ? AND password = ?;", [username, hashed], function (err, rows, fields) {
           console.log(rows);
