@@ -1,4 +1,6 @@
 const { nextTick } = require('process');
+const jwt = require('jsonwebtoken' );
+const accessTokenSecret  = 'mysupercoolsecret' ;
 
 class User {
     constructor(_DBQuery, _disconnect) {
@@ -31,10 +33,11 @@ class User {
         const hashed = hash(password + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
         const validPassword = await bcrypt.compare(hashed, user.password);
         if (validPassword) {
-            delete user.password;
-            return user;
+            const accessToken = jwt.sign({ ...users[0], claims: ['user'] }, accessTokenSecret );
+            return accessToken;
         }
         return null;
+        
      }
  }
  module.exports = {
