@@ -69,6 +69,21 @@ module.exports = function users(app, logger) {
             response.status(500).json({ message: err.message });
         }
     })
+    app.put('/users/updateBio', async (request, response) => {
+        try {
+            const username = request.body.username
+            const newBio = request.body.bio
+            const query = knex('users')
+                .where({ username: username })
+                .update({ bio: newBio })
+        const results = await query;
+        console.log('Results of my PUT statement: ', results);
+        response.status(200).json({ username: username, bio: newBio});
+        } catch (err) {
+            console.error('There was an error in PUT /users/updateBio', err);
+            response.status(500).json({ message: err.message });
+        }
+    })
     app.delete('/users', async (request, response) => {
         try {
             console.log('Initiating DELETE /users request');
