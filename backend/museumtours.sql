@@ -14,7 +14,7 @@ INSERT INTO photos VALUES ();
 
 CREATE TABLE users(
 	username VARCHAR(30) NOT NULL PRIMARY KEY,
-	password VARCHAR(50) NOT NULL,
+	password VARCHAR(100) NOT NULL,
 	email VARCHAR(50) NOT NULL,
 	joinDate DATE NOT NULL,
 	photoId INT NOT NULL,
