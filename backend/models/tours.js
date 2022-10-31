@@ -39,10 +39,4 @@ class Tour {
         return results;
     }
  }
- module.exports = {
-    fetchAllTours,
-    fetchToursByName,
-    fetchToursByMuseum_name,
-    fetchAllTours,
-    updateTourSlots
- }
+ module.exports = Tour;

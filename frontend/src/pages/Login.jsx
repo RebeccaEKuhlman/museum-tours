@@ -121,6 +121,7 @@ export function Login() {
   // handle input form submission to backend via POST request
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     repository.getLogin(username, password).then(x => 
       {
         if (typeof x.data != "undefined") {

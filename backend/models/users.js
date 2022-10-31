@@ -40,9 +40,5 @@ class User {
         
      }
  }
- module.exports = {
-    fetchAllUsers,
-    fetchUsersByName,
-    authenticateUser
- }
+ module.exports = User;
  
