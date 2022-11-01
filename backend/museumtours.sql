@@ -4,13 +4,11 @@ USE museumtours;
 
 CREATE TABLE photos(
 	photoId INT PRIMARY KEY AUTO_INCREMENT,
-  	photo_data VARCHAR(100),
+  	photo_data VARCHAR(250),
+  	caption VARCHAR(150),
 	is_profile BOOL DEFAULT False
 );
 
-SELECT * FROM users;
-
-INSERT INTO photos VALUES ();
 
 CREATE TABLE users(
 	username VARCHAR(30) NOT NULL PRIMARY KEY,
