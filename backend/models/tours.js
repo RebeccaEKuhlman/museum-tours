@@ -35,8 +35,9 @@ class Tour {
         return results;
     }
     async updateTourSlots (tour_Name, numSlots) {
-        const results = await this.DBQuery('SELECT * FROM tours WHERE museum_name = ?', [museum_name]);
-        return results;
+        return knex('tours')
+            .where({ tour_Name: tour_Name })
+            .update({ num_spaces_available: numSlots })
     }
  }
  module.exports = Tour;
