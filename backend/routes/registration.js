@@ -17,8 +17,6 @@
                 console.log('Initiating POST /registration request');
                 console.log('Request has a body / payload containing:', request.body);
                 console.log('Request has params containing:', request.query);
-                const bodyParser = require('body-parser');
-                app.use(bodyParser.json());
                 const payload = request.body; // This payload should be an object containing user data
                 
                 //Hashing Password

@@ -10,7 +10,6 @@
         FOREIGN KEY (photoId) REFERENCES photos(photoId)
        * 
        */
-const { raw } = require('body-parser');
 const knex = require('../database/knex.js');
 const bcrypt = require('bcrypt');
 module.exports = function users(app, logger) {
@@ -19,9 +18,7 @@ module.exports = function users(app, logger) {
             console.log('Initiating POST /registration request');
             console.log('Request has a body / payload containing:', request.body);
             console.log('Request has params containing:', request.query);
-        
-            const bodyParser = require('body-parser');
-            app.use(bodyParser.json());
+    
             const payload = request.body; // This payload should be an object containing user data
             const rawPass = request.query.password;
         // table.string('password_hash');

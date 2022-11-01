@@ -1,4 +1,4 @@
-const { raw } = require('body-parser');
+
 const knex = require('../database/knex.js');
 const express = require('express');
 const pool = require('../db');
@@ -8,8 +8,6 @@ module.exports = function museums(app, logger) {
   //not in models\tours: fetchTourByPrice
   app.get('/museums', async (request, response) => {
       try {
-          const bodyParser = require('body-parser');
-          app.use(bodyParser.json());
 
           // if(request.body.tour_Name){
           //     const results = await knex('tours').select().where( {'tour_Name':request.body.tour_Name} );

@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const { createModelsMiddleware  } = require('./middleware/model-middleware' );
 const app = express();
+const bodyParser = require('body-parser');
 const port = 8000;
 const { log, ExpressAPILogMiddleware } = require('@rama41222/node-logger');
 
@@ -24,7 +25,8 @@ app.use(cors({
    origin: '*'
  }));
 
-app.use(createModelsMiddleware );
+app.use(bodyParser.json());
+app.use(createModelsMiddleware);
 app.get('/health', (request, response, next) => {
    const responseBody = { status: 'up', port };
    response.json(responseBody);
