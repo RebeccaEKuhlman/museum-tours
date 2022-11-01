@@ -13,6 +13,7 @@
 
 const { raw } = require('body-parser');
 const knex = require('../database/knex.js');
+const express = require('express');
 
 module.exports = function users(app, logger) {
 
@@ -21,17 +22,20 @@ module.exports = function users(app, logger) {
         try {
             console.log('Initiating GET /tours request');
             const bodyParser = require('body-parser');
-            const results;
+            app.use(bodyParser.json());
 
-            if(request.query.tour_Name)
-                results = await request.models.tour.fetchToursByName(request.query.tour_Name);
-            else if(request.query.museum_name)
-                results = await request.models.tour.fetchToursByMuseum_name(request.query.museum_name);
-            else
-                results = await request.models.tour.fetchAllTours();
-
-            console.log('Results of my GET statement:', results);
-            response.status(201).json(results);
+            if(request.body.tour_Name){
+                const results = await request.models.tour.fetchToursByName(request.body.tour_Name);
+                response.status(201).json(results);
+            }
+            else if(request.query.museum_name){
+                const results = await request.models.tour.fetchToursByMuseum_name(request.body.museum_name);
+                response.status(201).json(results);
+            }
+            else{
+                const results = await request.models.tour.fetchAllTours();
+                response.status(201).json(results);
+            }
         } catch (err) {
             console.error('There was an error in GET /tours', err);
             response.status(500).json({ message: err.message });

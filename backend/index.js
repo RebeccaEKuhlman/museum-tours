@@ -5,6 +5,7 @@ const app = express();
 // const port = 3000;
 const { log, ExpressAPILogMiddleware } = require('@rama41222/node-logger');
 const routes = require('./routes/routes');
+const TourRoutes = require('./routes/tours');
 
 // set up some configs for express.
 const config = {
@@ -26,6 +27,7 @@ app.get('/health', (request, response, next) => {
 
 routes(app, logger);
 app.use('/users', UserRoutes);
+app.use('/tours', TourRoutes);
 
 app.listen(config.port, () => {
     console.log(`This app is listening on port  ${config.port}`);
