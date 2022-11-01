@@ -3,6 +3,7 @@ import React, { useEffect, useState }from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { AppBar, Toolbar, Typography, makeStyles, Box, Avatar } from "@material-ui/core";
+import { Repository } from './pages/repository';
 
 import { NoPage } from './pages/NoPage';
 import { Home } from './pages/Home';
@@ -55,6 +56,54 @@ const useStyles = makeStyles((theme) => ({
 
 export const App = () => {
   const classes = useStyles();
+
+  const [ museums, setMuseums ] = useState(undefined);
+  useEffect(() => {
+    var repository = new Repository();
+    repository.getMuseums().then(x => setMuseums(x));
+  }, []);
+
+  if (!museums) {
+    return <></>;
+  }
+
+  // console.log(museums);
+
+  // let museumsEX = [ // Get From Backend
+  //   {
+  //     Name: "Dallas Museum of Art",
+  //     Image: "https://www.dma.org/sites/default/files/dma-logo.png",
+  //     Caption: "Art museum with more than 24,000 works of art from around the world ranging from ancient to modern times. Located in downtown Dallas.",
+  //     Color: "#282c34",
+  //     // Items: [
+  //     //   {
+  //     //     Name: "Dallas Museum of Art",
+  //     //     Image: "https://via.placeholder.com/100"
+  //     //   }
+  //     // ]
+  //   },
+  //   {
+  //     Name: "Perot Museum of Natural History",
+  //     Image: "http://photos.prnewswire.com/prnfull/20120531/DC16400LOGO",
+  //     Caption: "Dallas's natural history museum. Focuses on innovation, archaeology, and curiosity. Located in downtown Dallas.",
+  //     Color: "#282c34",
+  //   },
+  //   {
+  //     Name: "Bush Presidential Center",
+  //     Image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Official_logo_of_the_George_W._Bush_Presidential_Library.svg/1200px-Official_logo_of_the_George_W._Bush_Presidential_Library.svg.png",
+  //     Caption: "Presidential Library and think tank of George W. Bush. Located on the campus of SMU.",
+  //     Color: "#282c34",
+  //   },
+  //   {
+  //     Name: "Meadows Museum",
+  //     Image: "https://meadowsmuseumdallas.org/wp-content/uploads/2017/02/MUSE_retina.png",
+  //     Caption: "The largest collection of Spanish art outside of Spain. Located on the campus of SMU.",
+  //     Color: "#282c34",
+  //   },
+  // ];
+
+  // console.log(museumsEX)
+
   // useEffect(() => {
   //   const onPageLoad = () => {
       
@@ -94,10 +143,10 @@ export const App = () => {
       </AppBar>
       <Routes>
         <Route path="*" element={< NoPage />} />
-        <Route exact path='/' element={< Home />}></Route>
+        <Route exact path='/' element={< Home museums={museums} />}></Route>
         <Route exact path='/login' element={< Login />}></Route>
         <Route exact path='/profile' element={< Profile />}></Route>
-        <Route exact path='/tours' element={< Tours />}></Route>
+        <Route exact path='/tours' element={< Tours museums={museums} />}></Route>
       </Routes>
     </Router>
   );

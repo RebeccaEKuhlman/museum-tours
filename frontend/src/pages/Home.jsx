@@ -7,14 +7,14 @@ import axios from 'axios';
 import './Home.css';
 
 // React Functional Component
-export const Home = () => {
+export const Home = ({ museums }) => {
   function Project(props) {
     let items = [
       <Paper
         className="Project"
         style={{ backgroundColor: "ivory", alignItems: "center" }}
         elevation={10}
-        key={props.item.Name}
+        key={props.item.museum_name}
       >
         <CardContent className="Content">
           <img
@@ -32,7 +32,7 @@ export const Home = () => {
               fontSize: 25,
             }}
           >
-            {props.item.Name}
+            {props.item.museum_name}
           </Typography>
           <br />
           <Typography
@@ -92,39 +92,6 @@ export const Home = () => {
       </Card>
     );
   }
-
-  let items = [
-    {
-      Name: "Dallas Museum of Art",
-      Image: "https://www.dma.org/sites/default/files/dma-logo.png",
-      Caption: "Art museum with more than 24,000 works of art from around the world ranging from ancient to modern times. Located in downtown Dallas.",
-      Color: "#282c34",
-      // Items: [
-      //   {
-      //     Name: "Dallas Museum of Art",
-      //     Image: "https://via.placeholder.com/100"
-      //   }
-      // ]
-    },
-    {
-      Name: "Perot Museum of Natural History",
-      Image: "http://photos.prnewswire.com/prnfull/20120531/DC16400LOGO",
-      Caption: "Dallas's natural history museum. Focuses on innovation, archaeology, and curiosity. Located in downtown Dallas.",
-      Color: "#282c34",
-    },
-    {
-      Name: "Bush Presidential Center",
-      Image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Official_logo_of_the_George_W._Bush_Presidential_Library.svg/1200px-Official_logo_of_the_George_W._Bush_Presidential_Library.svg.png",
-      Caption: "Presidential Library and think tank of George W. Bush. Located on the campus of SMU.",
-      Color: "#282c34",
-    },
-    {
-      Name: "Meadows Museum",
-      Image: "https://meadowsmuseumdallas.org/wp-content/uploads/2017/02/MUSE_retina.png",
-      Caption: "The largest collection of Spanish art outside of Spain. Located on the campus of SMU.",
-      Color: "#282c34",
-    },
-  ];
 
   let state = {
     autoPlay: true,
@@ -187,7 +154,7 @@ export const Home = () => {
           navButtonsWrapperProps={{ style: { bottom: "0", top: "unset" } }}
           indicatorContainerProps={{ style: { margin: "20px" } }}
         >
-          {items.map((item, index) => {
+          {museums.map((item, index) => {
             return <Project item={item} key={index} />;
           })}
         </Carousel>
