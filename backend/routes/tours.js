@@ -19,17 +19,23 @@ const pool = require('../db');
 module.exports = function users(app, logger) {
 
     //fetchToursByName, fetchToursByMuseum_name, and fetchAllTours
+    //not in models\tours: fetchTourByPrice
     app.get('/tours', async (request, response) => {
         try {
             const bodyParser = require('body-parser');
             app.use(bodyParser.json());
 
             if(request.body.tour_Name){
-                const results = await knex("tours").select().where( {'tour_Name':request.body.tour_Name} );
+                const results = await knex('tours').select().where( {'tour_Name':request.body.tour_Name} );
                 response.status(201).json(results);
             }
             else if(request.body.museum_name){
-                const results = await knex("tours").select().where( {'museum_name':request.body.museum_name} );
+                const results = await knex('tours').select().where( {'museum_name':request.body.museum_name} );
+                response.status(201).json(results);
+            }
+            else if(request.body.price){
+                //returns all tours that are at the requested price and below
+                const results = await knex('tours').select().whereBetween('price', [0, request.body.price]);
                 response.status(201).json(results);
             }
             else{
