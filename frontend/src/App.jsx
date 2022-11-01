@@ -57,43 +57,52 @@ const useStyles = makeStyles((theme) => ({
 export const App = () => {
   const classes = useStyles();
 
-  // const [ museums, setMuseums ] = useState({});
-  // useEffect(() => {
-  //   Repository.getMuseums().then(x => setMuseums(x));
-  // }, []);
+  const [ museums, setMuseums ] = useState(undefined);
+  useEffect(() => {
+    var repository = new Repository();
+    repository.getMuseums().then(x => setMuseums(x));
+  }, []);
 
-  let museums = [ // Get From Backend
-    {
-      Name: "Dallas Museum of Art",
-      Image: "https://www.dma.org/sites/default/files/dma-logo.png",
-      Caption: "Art museum with more than 24,000 works of art from around the world ranging from ancient to modern times. Located in downtown Dallas.",
-      Color: "#282c34",
-      // Items: [
-      //   {
-      //     Name: "Dallas Museum of Art",
-      //     Image: "https://via.placeholder.com/100"
-      //   }
-      // ]
-    },
-    {
-      Name: "Perot Museum of Natural History",
-      Image: "http://photos.prnewswire.com/prnfull/20120531/DC16400LOGO",
-      Caption: "Dallas's natural history museum. Focuses on innovation, archaeology, and curiosity. Located in downtown Dallas.",
-      Color: "#282c34",
-    },
-    {
-      Name: "Bush Presidential Center",
-      Image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Official_logo_of_the_George_W._Bush_Presidential_Library.svg/1200px-Official_logo_of_the_George_W._Bush_Presidential_Library.svg.png",
-      Caption: "Presidential Library and think tank of George W. Bush. Located on the campus of SMU.",
-      Color: "#282c34",
-    },
-    {
-      Name: "Meadows Museum",
-      Image: "https://meadowsmuseumdallas.org/wp-content/uploads/2017/02/MUSE_retina.png",
-      Caption: "The largest collection of Spanish art outside of Spain. Located on the campus of SMU.",
-      Color: "#282c34",
-    },
-  ];
+  if (!museums) {
+    return <></>;
+  }
+
+  // console.log(museums);
+
+  // let museumsEX = [ // Get From Backend
+  //   {
+  //     Name: "Dallas Museum of Art",
+  //     Image: "https://www.dma.org/sites/default/files/dma-logo.png",
+  //     Caption: "Art museum with more than 24,000 works of art from around the world ranging from ancient to modern times. Located in downtown Dallas.",
+  //     Color: "#282c34",
+  //     // Items: [
+  //     //   {
+  //     //     Name: "Dallas Museum of Art",
+  //     //     Image: "https://via.placeholder.com/100"
+  //     //   }
+  //     // ]
+  //   },
+  //   {
+  //     Name: "Perot Museum of Natural History",
+  //     Image: "http://photos.prnewswire.com/prnfull/20120531/DC16400LOGO",
+  //     Caption: "Dallas's natural history museum. Focuses on innovation, archaeology, and curiosity. Located in downtown Dallas.",
+  //     Color: "#282c34",
+  //   },
+  //   {
+  //     Name: "Bush Presidential Center",
+  //     Image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Official_logo_of_the_George_W._Bush_Presidential_Library.svg/1200px-Official_logo_of_the_George_W._Bush_Presidential_Library.svg.png",
+  //     Caption: "Presidential Library and think tank of George W. Bush. Located on the campus of SMU.",
+  //     Color: "#282c34",
+  //   },
+  //   {
+  //     Name: "Meadows Museum",
+  //     Image: "https://meadowsmuseumdallas.org/wp-content/uploads/2017/02/MUSE_retina.png",
+  //     Caption: "The largest collection of Spanish art outside of Spain. Located on the campus of SMU.",
+  //     Color: "#282c34",
+  //   },
+  // ];
+
+  // console.log(museumsEX)
 
   // useEffect(() => {
   //   const onPageLoad = () => {

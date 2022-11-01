@@ -14,7 +14,7 @@ export const Home = ({ museums }) => {
         className="Project"
         style={{ backgroundColor: "ivory", alignItems: "center" }}
         elevation={10}
-        key={props.item.Name}
+        key={props.item.museum_name}
       >
         <CardContent className="Content">
           <img
@@ -32,7 +32,7 @@ export const Home = ({ museums }) => {
               fontSize: 25,
             }}
           >
-            {props.item.Name}
+            {props.item.museum_name}
           </Typography>
           <br />
           <Typography
