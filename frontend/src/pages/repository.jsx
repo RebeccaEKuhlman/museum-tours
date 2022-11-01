@@ -24,4 +24,19 @@ export class Repository {
                 })
         });
     }
+    
+    getMuseums() {
+        return new Promise((resolve, reject) => {
+            console.log("Get Museums");
+            axios.get( `http://${ this.url }:8000/login`, { 
+            } )
+                .then(x => {
+                    resolve(x.data);
+                })
+                .catch(err => {
+                    alert(err);
+                    reject(err);
+                })
+        });
+    }
 }
