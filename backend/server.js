@@ -9,6 +9,7 @@ const mysqlConnect = require('./db');
 const routes = require('./routes/routes');
 const users = require('./routes/users');
 const registration = require('./routes/registration');
+const tours = require('./routes/tours');
 
 // set up some configs for express.
 const config = {
@@ -35,6 +36,7 @@ app.use(ExpressAPILogMiddleware(logger, { request: true }));
 routes(app, logger);
 users(app, logger);
 registration(app, logger);
+tours(app, logger);
 
 // connecting the express object to listen on a particular port as defined in the config object.
 app.listen(config.port, config.host, (e) => {
