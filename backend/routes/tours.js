@@ -19,7 +19,6 @@ const pool = require('../db');
 module.exports = function users(app, logger) {
 
     //fetchToursByName, fetchToursByMuseum_name, and fetchAllTours
-    //getting an error
     app.get('/tours', async (request, response) => {
         try {
             const bodyParser = require('body-parser');
