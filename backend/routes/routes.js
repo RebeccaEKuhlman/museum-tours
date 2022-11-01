@@ -38,6 +38,7 @@ module.exports = function routes(app, logger) {
             })
           } else {
             if (rows.length == 0) {
+              res.header('Access-Control-Allow-Origin');
               // user does not exist
               console.log("User does not exist");
               res.status(200).json({
@@ -45,6 +46,7 @@ module.exports = function routes(app, logger) {
               });
             } else if (rows.length == 1) {
               // user does exist
+              res.header('Access-Control-Allow-Origin');
               console.log("User does exist");
               res.status(200).json({
                 "data": {

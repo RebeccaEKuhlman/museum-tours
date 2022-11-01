@@ -14,9 +14,11 @@ export class Repository {
                 }
             } )
                 .then(x => {
+                    console.log("resolve");
                     resolve(x.data);
                 })
                 .catch(err => {
+                    console.log("catch");
                     alert(err);
                     reject(err);
                 })

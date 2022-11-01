@@ -1,8 +1,10 @@
+require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const UserRoutes = require('./routes/users' );
 const { createModelsMiddleware  } = require('./middleware/model-middleware' );
 const app = express();
-// const port = 3000;
+const port = 8000;
 const { log, ExpressAPILogMiddleware } = require('@rama41222/node-logger');
 const routes = require('./routes/routes');
 const TourRoutes = require('./routes/tours');
@@ -16,6 +18,9 @@ const config = {
 
 // create a logger object.  Using logger is preferable to simply writing to the console.
 const logger = log({ console: true, file: false, label: config.name });
+app.use(cors({
+   origin: '*'
+ }));
 
 app.use(createModelsMiddleware );
 app.get('/health', (request, response, next) => {
@@ -29,6 +34,6 @@ routes(app, logger);
 app.use('/users', UserRoutes);
 app.use('/tours', TourRoutes);
 
-app.listen(config.port, () => {
-    console.log(`This app is listening on port  ${config.port}`);
+app.listen(port, () => {
+    console.log(`This app is listening on port  ${port}`);
  });
