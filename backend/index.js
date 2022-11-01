@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const UserRoutes = require('./routes/users' );
 const { createModelsMiddleware  } = require('./middleware/model-middleware' );
 const app = express();
@@ -16,6 +17,9 @@ const config = {
 
 // create a logger object.  Using logger is preferable to simply writing to the console.
 const logger = log({ console: true, file: false, label: config.name });
+app.use(cors({
+   origin: '*'
+ }));
 
 app.use(createModelsMiddleware );
 app.get('/health', (request, response, next) => {
