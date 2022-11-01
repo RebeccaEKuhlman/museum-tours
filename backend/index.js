@@ -1,8 +1,9 @@
+require('dotenv').config();
 const express = require('express');
 const UserRoutes = require('./routes/users' );
 const { createModelsMiddleware  } = require('./middleware/model-middleware' );
 const app = express();
-// const port = 3000;
+const port = 8000;
 const { log, ExpressAPILogMiddleware } = require('@rama41222/node-logger');
 const routes = require('./routes/routes');
 
@@ -27,6 +28,6 @@ app.get('/health', (request, response, next) => {
 routes(app, logger);
 app.use('/users', UserRoutes);
 
-app.listen(config.port, () => {
-    console.log(`This app is listening on port  ${config.port}`);
+app.listen(port, () => {
+    console.log(`This app is listening on port  ${port}`);
  });
