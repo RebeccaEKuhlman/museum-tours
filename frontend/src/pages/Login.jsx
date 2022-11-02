@@ -121,8 +121,10 @@ export function Login() {
   // handle input form submission to backend via POST request
   const handleSubmit = (e) => {
     e.preventDefault();
+    // TODO: username should actually be an email, see user stories
     repository.getLogin(username, password).then(x => 
       {
+        console.log(x.data[0]);
         if (typeof x.data != "undefined") {
           alert("Logged in");
         } else if (x.error) {

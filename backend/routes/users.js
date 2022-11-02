@@ -46,6 +46,32 @@ module.exports = function users(app, logger) {
             response.status(500).json({ message: err.message });
         }
     });
+    app.get('/users/login', async (request, response) => {
+        try {
+            console.log('Initiating GET /login request');
+            console.log('Request has a body / payload containing:', request.body);
+            console.log('Request has params containing:', request.query);
+    
+            const payload = request.query; // This payload should be an object containing user data
+            const rawPass = request.query.password;
+
+            const { createHash } = require('crypto');
+            function hash(string) {
+                return createHash('sha256').update(string).digest('hex');
+            }
+            const email = payload.email;
+            //salt: aB6nkeF0He3imq4AOhbO5kEljbveRpLn
+            const hashed = hash(rawPass + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
+
+            const results = await knex('users').where({email: email}).where({password: hashed});
+            console.log('Results of my GET statement:', results);
+
+            response.status(200).json(results);
+        } catch (err) {
+            console.error('There was an error in GET /users/login', err);
+            response.status(500).json({ message: err.message });
+        }
+    });
     app.put('/users/updatePassword', async (request, response) => {
         try {
             const username = request.body.username

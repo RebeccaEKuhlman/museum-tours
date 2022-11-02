@@ -6,14 +6,14 @@ export class Repository {
     getLogin(username, password) {
         return new Promise((resolve, reject) => {
             console.log("Get Login");
-            axios.get( `http://${ this.url }:8000/login`, {
+            axios.get( `http://${ this.url }:8000/users/login`, {
                 params: {
-                    username: username,
+                    email: username,
                     password: password
                 }
             })
                 .then(x => {
-                    console.log("resolve");
+                    console.log(x.data);
                     resolve(x.data);
                 })
                 .catch(err => {
