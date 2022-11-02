@@ -3,13 +3,12 @@ import axios from 'axios';
 export class Repository {
     url = "localhost";
 
-    getLogin(username, password) {
+    getLogin(email, password) {
         return new Promise((resolve, reject) => {
             console.log("Get Login");
-            // TODO: username should actually be an email, see user stories
             axios.post( `http://${ this.url }:8000/users/login`, {
                 data: {
-                    email: username,
+                    email: email,
                     password: password
                 }
             })

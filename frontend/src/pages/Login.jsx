@@ -82,7 +82,7 @@ export function Login() {
   // state for storage of the information on the webpage of forms and list, uses hooks
   // const [number, setNumber] = useState("");
   // const [values, setValues] = useState([]);
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   // ENTER YOUR EC2 PUBLIC IP/URL HERE
@@ -121,8 +121,7 @@ export function Login() {
   // handle input form submission to backend via POST request
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: username should actually be an email, see user stories
-    repository.getLogin(username, password).then(x => 
+    repository.getLogin(email, password).then(x => 
       {
         if (typeof x.error != "undefined") {
           alert("Invalid Credentials")
@@ -175,12 +174,12 @@ export function Login() {
               margin="normal"
               required
               fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoComplete="username"
-              value={username}
-              onInput={(e) => setUsername(e.target.value)}
+              id="email"
+              label="Email"
+              name="email"
+              autoComplete="email"
+              value={email}
+              onInput={(e) => setEmail(e.target.value)}
               autoFocus
             />
             <TextField
