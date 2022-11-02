@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const port = 8000;
 const { log, ExpressAPILogMiddleware } = require('@rama41222/node-logger');
 
-const routes = require('./routes/routes');
 const users = require('./routes/users');
 const museums = require('./routes/museums');
 const tours = require('./routes/tours');
@@ -34,7 +33,6 @@ app.get('/health', (request, response, next) => {
    next();
 });
 
-routes(app, logger);
 users(app, logger);
 museums(app, logger);
 tours(app, logger);
