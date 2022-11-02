@@ -43,8 +43,6 @@
   "devDependencies": {
     "@types/react": "^17.0.50",
     "autoprefixer": "^10.4.12",
-    "eslint": "^8.25.0",
-    "eslint-config-prettier": "^8.5.0",
     "prettier": "^2.7.1",
     "react-router-dom": "^6.4.2"
   }
