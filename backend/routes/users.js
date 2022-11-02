@@ -128,4 +128,30 @@ module.exports = function users(app, logger) {
             response.status(500).json({ message: err.message });
         }
     });
+    app.get('/users', async (request, response) => {
+        try {
+            const bodyParser = require('body-parser');
+            app.use(bodyParser.json());
+
+            if(request.body.username){
+                const results = await knex('users').select().where( {'username':request.body.username} );
+                response.status(200).json(results);
+            }
+            else if(request.body.uni_affilation){
+                const results = await knex('users').select().where( {'uni_affilation':request.body.uni_affilation} );
+                response.status(200).json(results);
+            }
+            else if(request.body.is_director){
+                const results = await knex('users').select().where( {'is_director':request.body.is_director} );
+                response.status(200).json(results);
+            }
+            else{
+                const results = await knex("users").select();
+                response.status(200).json(results);
+            }
+        } catch (err) {
+            console.error('There was an error in GET /users', err);
+            response.status(500).json({ message: err.message });
+        }
+    });
 }
