@@ -6,14 +6,15 @@ export class Repository {
     getLogin(username, password) {
         return new Promise((resolve, reject) => {
             console.log("Get Login");
-            axios.get( `http://${ this.url }:8000/users/login`, {
-                params: {
+            // TODO: username should actually be an email, see user stories
+            axios.post( `http://${ this.url }:8000/users/login`, {
+                data: {
                     email: username,
                     password: password
                 }
             })
                 .then(x => {
-                    console.log(x.data);
+                    console.log("x.data", x.data);
                     resolve(x.data);
                 })
                 .catch(err => {

@@ -124,11 +124,10 @@ export function Login() {
     // TODO: username should actually be an email, see user stories
     repository.getLogin(username, password).then(x => 
       {
-        console.log(x.data[0]);
-        if (typeof x.data != "undefined") {
-          alert("Logged in");
-        } else if (x.error) {
+        if (typeof x.error != "undefined") {
           alert("Invalid Credentials")
+        } else {
+          alert("Logged in");
         }
       });
       // axios
