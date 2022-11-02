@@ -46,6 +46,38 @@ module.exports = function users(app, logger) {
             response.status(500).json({ message: err.message });
         }
     });
+    app.post('/users/login', async (request, response) => {
+        try {
+            console.log('Initiating POST /login request');
+            console.log('Request has a body / payload containing:', request.body);
+            console.log('Request has params containing:', request.query);
+    
+            const payload = request.body.data; // This payload should be an object containing user data
+            const rawPass = request.body.data.password;
+
+            const { createHash } = require('crypto');
+            function hash(string) {
+                return createHash('sha256').update(string).digest('hex');
+            }
+            const email = request.body.data.email;
+            //salt: aB6nkeF0He3imq4AOhbO5kEljbveRpLn
+            const hashed = hash(rawPass + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
+            const results = await knex('users').where({email: email}).where({password: hashed});
+
+            if (typeof results[0] != "undefined") {
+                // if user exists
+                response.status(200).json(results);
+            } else {
+                response.status(200).json({
+                    "error": "Invalid Credentials"
+                  });
+            }
+            response.status(200).json();
+        } catch (err) {
+            console.error('There was an error in POST /users/login', err);
+            response.status(500).json({ message: err.message });
+        }
+    });
     app.put('/users/updatePassword', async (request, response) => {
         try {
             const username = request.body.username
