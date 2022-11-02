@@ -125,6 +125,7 @@ export function Login() {
       {
         if (typeof x.error != "undefined") {
           alert("Invalid Credentials")
+
         } else {
           alert("Logged in");
         }
@@ -204,6 +205,7 @@ export function Login() {
               fullWidth
               variant="contained"
               className={classes.submit}
+              href = "/profile"
             >
               Sign In
             </Button>
