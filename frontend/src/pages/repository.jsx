@@ -3,17 +3,17 @@ import axios from 'axios';
 export class Repository {
     url = "localhost";
 
-    getLogin(username, password) {
+    getLogin(email, password) {
         return new Promise((resolve, reject) => {
             console.log("Get Login");
-            axios.get( `http://${ this.url }:8000/login`, {
-                params: {
-                    username: username,
+            axios.post( `http://${ this.url }:8000/users/login`, {
+                data: {
+                    email: email,
                     password: password
                 }
             })
                 .then(x => {
-                    console.log("resolve");
+                    console.log("x.data", x.data);
                     resolve(x.data);
                 })
                 .catch(err => {
