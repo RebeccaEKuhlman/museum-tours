@@ -10,6 +10,7 @@ import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 import { Profile } from './pages/Profile';
 import { Tours } from './pages/Tours';
+import { Registration } from './pages/Registration';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -118,7 +119,7 @@ export const App = () => {
   // }, []);
   return (
     <Router>
-      <AppBar position="static" style={{ backgroundColor: "#7F96FF" }}>
+      <AppBar position="static" style={{ backgroundColor: "#323031" }}>
         <Toolbar disableGutters className={classes.toolbar}>
           <Typography 
             className={classes.headlink}
@@ -126,7 +127,7 @@ export const App = () => {
             href="/"
             noWrap
           > 
-            Artt. Museum Tours
+            <img src="Artt.png"></img>
           </Typography>
           <Typography className={classes.link}>
             {/* <Link to="/tours" className={classes.link}>
@@ -147,6 +148,7 @@ export const App = () => {
         <Route exact path='/login' element={< Login />}></Route>
         <Route exact path='/profile' element={< Profile />}></Route>
         <Route exact path='/tours' element={< Tours museums={museums} />}></Route>
+        <Route exact path='/Registration' element={< Registration />}></Route>
       </Routes>
     </Router>
   );

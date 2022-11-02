@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // React functional component
-export function Login() {
+export function Registration() {
   const classes = useStyles();
 
   // state for storage of the information on the webpage of forms and list, uses hooks
@@ -121,14 +121,7 @@ export function Login() {
   // handle input form submission to backend via POST request
   const handleSubmit = (e) => {
     e.preventDefault();
-    repository.getLogin(email, password).then(x => 
-      {
-        if (typeof x.error != "undefined") {
-          alert("Invalid Credentials")
-        } else {
-          alert("Logged in");
-        }
-      });
+    console.log("register");
       // axios
       // .get(`http://${url}:8000/login`, {
       //   data: {
@@ -166,7 +159,7 @@ export function Login() {
               fontFamily: "Baskerville",
             }}
           >
-            LOGIN
+            REGISTER
           </Typography>
           <form className={classes.form} noValidate onSubmit={handleSubmit}>
             <TextField
@@ -205,20 +198,8 @@ export function Login() {
               variant="contained"
               className={classes.submit}
             >
-              Sign In
+              Sign Up
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="/Registration" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
             <Box mt={5}>
               <Copyright />
             </Box>
