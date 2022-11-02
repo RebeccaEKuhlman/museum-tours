@@ -4,11 +4,11 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
+import Input from '@mui/material/Input';
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Grid from "@material-ui/core/Grid";
-import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
@@ -50,22 +50,61 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Baskerville",
     backgroundColor: "#F6F7EB",
   },
-  typography: {
-    fontFamily: "Baskerville",
-  },
+  form : {
+    position: "absolute",
+    display: "inline-block",
+    // width: "100%",
+    // height: "100%",
+    zIndex: 10,
+  }
 }));
 
 export function Profile() {
   const classes = useStyles();
+
+  const [ showForm, setShowForm ] = useState(false);
+  const [ userForm, setuserForm ] = useState({
+    userName: "",
+    password: "",
+  });
+
+  const toggleForm = () => { 
+    console.log("Toggle");
+    setShowForm(!showForm); 
+  }
+
   return (
-    <div className="profile">
+    <div className="profile" style={{ textAlign: "center" }}>
+      {showForm && (
+        <form className={classes.form}>
+          <h2 style={{ color: "darkred" }}>Login</h2>
+          <Input
+            type="email"
+            value={userForm.userName}
+            placeholder={"User Name"}
+            onChange={(e) => {
+              setuserForm({ ...userForm, userName: e.target.value });
+            }}
+          />
+          <Input
+            type="password"
+            value={userForm.password}
+            placeholder={"Password"}
+            onChange={(e) => {
+              setuserForm({ ...userForm, password: e.target.value });
+            }}
+          />
+          <Button type="submit" text="Submit" />
+          {/* onClick={onValidation}  */}
+        </form>
+      )}
       <Grid
         container
         className={classes.root}
         spacing={0}
         direction="column"
         alignItems="center"
-        justify="center"
+        justifyContent="center"
         style={{ minHeight: "100vh", padding: "0" }}
         
       >
@@ -96,7 +135,6 @@ export function Profile() {
               <Typography
                 className={classes.typography}
                 variant="body2"
-                color="palette.text.secondary"
               >
                 This is a sentence about the person.
               </Typography>
@@ -121,9 +159,8 @@ export function Profile() {
               <Typography
                 className={classes.typography}
                 variant="body2"
-                color="palette.text.secondary"
               >
-                <List dense={false}>
+                {/* <List dense={false}>
                   {generate(
                     <ListItem>
                       <ListItemText
@@ -133,15 +170,11 @@ export function Profile() {
                       />
                     </ListItem>
                   )}
-                </List>
+                </List> */}
               </Typography>
               <Button
-                sx={{
-                  color: "cornflowerblue",
-                }}
-                onClick={() => {
-                  alert("Change Password");
-                }}
+                sx={{ color: "cornflowerblue" }}
+                onClick={toggleForm}
               >
                 Change Password
               </Button>
