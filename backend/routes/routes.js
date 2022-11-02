@@ -1,8 +1,6 @@
 const pool = require('../db')
-//app.use('/users', './routes/users');
-// const User = require('./users');
+const knex = require('../database/knex.js')
 module.exports = function routes(app, logger) {
-  // app.use('/users', './routes/users');
   // GET /
   app.get('/', (req, res) => {
     res.status(200).send('Go to 0.0.0.0:3000.');
@@ -11,7 +9,6 @@ module.exports = function routes(app, logger) {
   // GET /login
   app.get('/login', (req, res) => {
     var username = req.param("username");
-    var password = req.param("password");
     // get connection from pool of connections
     pool.getConnection(function (err, connection) {
       if (err) {
@@ -20,7 +17,17 @@ module.exports = function routes(app, logger) {
         res.status(400).send('Problem obtaining MySQL connection');
       } else {
         // no issue connecting
-        connection.query("SELECT username, password FROM users u WHERE username = ? AND password = ?;", [username, password], function (err, rows, fields) {
+        // password hashing
+        // hash and check
+        console.log("username", username);
+        const { createHash } = require('crypto');
+        function hash(string) {
+            return createHash('sha256').update(string).digest('hex');
+        }
+        var hashed = hash(req.param("password") + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
+        //salt: aB6nkeF0He3imq4AOhbO5kEljbveRpLn
+        console.log("hashed", hashed);
+        connection.query("SELECT username, password FROM users u WHERE username = ? AND password = ?;", [username, hashed], function (err, rows, fields) {
           console.log(rows);
           connection.release();
           if (err) {
@@ -31,6 +38,7 @@ module.exports = function routes(app, logger) {
             })
           } else {
             if (rows.length == 0) {
+              res.header('Access-Control-Allow-Origin');
               // user does not exist
               console.log("User does not exist");
               res.status(200).json({
@@ -38,6 +46,7 @@ module.exports = function routes(app, logger) {
               });
             } else if (rows.length == 1) {
               // user does exist
+              res.header('Access-Control-Allow-Origin');
               console.log("User does exist");
               res.status(200).json({
                 "data": {

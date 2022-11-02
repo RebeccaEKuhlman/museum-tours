@@ -10,16 +10,15 @@
         FOREIGN KEY (photoId) REFERENCES photos(photoId)
        * 
        */
-const knex = require('../database/knex.js')
+const knex = require('../database/knex.js');
+const bcrypt = require('bcrypt');
 module.exports = function users(app, logger) {
     app.post('/users/registration', async (request, response) => {
         try {
             console.log('Initiating POST /registration request');
             console.log('Request has a body / payload containing:', request.body);
             console.log('Request has params containing:', request.query);
-        
-            const bodyParser = require('body-parser');
-            app.use(bodyParser.json());
+    
             const payload = request.body; // This payload should be an object containing user data
             const rawPass = request.query.password;
         // table.string('password_hash');
@@ -38,16 +37,62 @@ module.exports = function users(app, logger) {
             const query = knex('users').insert({ username, password: hashed, email, joinDate, photoId: 1})
             const results = await query;
             console.log('Results of my POST statement:', results);
-                
-
-
-        
             // Since we already know the id we're looking for, let's load the most up to date data
             // const newlyCreatedRecord = await DBQuery('SELECT * FROM student WHERE id = ?', [id]);
             // disconnect();
             response.status(201).json(results);
         } catch (err) {
             console.error('There was an error in POST /users', err);
+            response.status(500).json({ message: err.message });
+        }
+    });
+    app.put('/users/updatePassword', async (request, response) => {
+        try {
+            const username = request.body.username
+            const newPass = request.body.password
+            const { createHash } = require('crypto');
+        function hash(string) {
+            return createHash('sha256').update(string).digest('hex');
+        }
+        const hashed = hash(newPass + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
+        const query = knex('users')
+            .where({ username: username })
+            .update({ password: hashed })
+        const results = await query;
+        console.log('Results of my PUT statement: ', results);
+        response.status(200).json({ username: username});
+        } catch (err) {
+            console.error('There was an error in PUT /users/updatePassword', err);
+            response.status(500).json({ message: err.message });
+        }
+    })
+    app.put('/users/updateBio', async (request, response) => {
+        try {
+            const username = request.body.username
+            const newBio = request.body.bio
+            const query = knex('users')
+                .where({ username: username })
+                .update({ bio: newBio })
+        const results = await query;
+        console.log('Results of my PUT statement: ', results);
+        response.status(200).json({ username: username, bio: newBio});
+        } catch (err) {
+            console.error('There was an error in PUT /users/updateBio', err);
+            response.status(500).json({ message: err.message });
+        }
+    })
+    app.delete('/users', async (request, response) => {
+        try {
+            console.log('Initiating DELETE /users request');
+            console.log('Request has a body / payload containing:', request.body);
+            console.log('Request has params containing:', request.query);
+            const username = request.body.username
+            const query = knex('users').delete().where({username});
+            const results = await query;
+            console.log('Results of my DELETE statement:', results);
+            response.status(200).json(results);
+        } catch (err) {
+            console.error('There was an error in DELETE /users', err);
             response.status(500).json({ message: err.message });
         }
     });

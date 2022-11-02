@@ -1,4 +1,16 @@
 /* CSS classes */
+@import url(https://fonts.googleapis.com/css?family=Inter);
+  
+*::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  font-family: 'Inter', sans-serif;
+}
+
 .Home {
   text-align: center;
 }
@@ -20,8 +32,11 @@
 }
 
 .Home-header {
-  background-color: #323031;
-  min-height: 100vh;
+  background-color: #282c34;
+  background-image: url("../home-bckgrnd-modified.png");
+  background-position: center;
+  background-size: 100%;
+  min-height: 110vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -50,4 +65,20 @@
 
 #carousel > h2{
   color: blue;
+}
+
+.App{
+  background-color: #282c34;
+}
+
+.App li{
+  float: left;
+  display: block;
+  text-align: center;
+  padding: 14px 16px;
+  
+}
+
+.App li:hover{
+  background-color: black;
 }
