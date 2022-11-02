@@ -10,7 +10,19 @@ import CardMedia from "@mui/material/CardMedia";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
+import Box from "@mui/material/Box";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
 import { Repository } from "./repository";
+
+function generate(element) {
+  return [0, 1, 2].map((value) =>
+    React.cloneElement(element, {
+      key: value,
+    })
+  );
+}
 
 const useStyles = makeStyles((theme) => ({
   typography: {
@@ -54,17 +66,25 @@ export function Profile() {
         direction="column"
         alignItems="center"
         justify="center"
-        style={{ minHeight: "100vh", backgroundcolor: "#F6F7EB" }}
+        style={{ minHeight: "100vh", padding: "0" }}
+        
       >
-        <Grid item xs={3}>
-          <Card className={classes.card} sx={{ maxWidth: 345 }}>
+        <Grid item xs="auto" sm={6}>
+          <Card
+            className={classes.card}
+            sx={{ maxWidth: 345, backgroundcolor: "#FFFFFF" }}
+          >
             <CardMedia
               component="img"
-              height="auto"
+              height="500vh"
+              width="auto"
               image="https://upload.wikimedia.org/wikipedia/commons/9/95/Josh_Allen_SEPT2021_%28cropped2%29.jpg"
               alt="profile"
             />
-            <CardContent className={classes.card}>
+            <CardContent
+              className={classes.card}
+              sx={{ backgroundColor: "#FFFFFF" }}
+            >
               <Typography
                 className={classes.typography}
                 gutterBottom
@@ -84,9 +104,12 @@ export function Profile() {
           </Card>
         </Grid>
 
-        <Grid item xs={10}>
-          <Card className={classes.card} sx={{ maxWidth: 690 }}>
-            <CardContent className={classes.card}>
+        <Grid item xs={9}>
+          <Card className={classes.card} sx={{ width: 1000}}>
+            <CardContent
+              className={classes.card}
+              sx={{ backgroundColor: "#FFFFFF" }}
+            >
               <Typography
                 className={classes.typography}
                 gutterBottom
@@ -95,6 +118,41 @@ export function Profile() {
               >
                 My Tours
               </Typography>
+              <Typography
+                className={classes.typography}
+                variant="body2"
+                color="palette.text.secondary"
+              >
+                <List dense={false}>
+                  {generate(
+                    <ListItem>
+                      <ListItemText
+                        className={classes.typography}
+                        primary="Tour Name"
+                        secondary="Date"
+                      />
+                    </ListItem>
+                  )}
+                </List>
+              </Typography>
+              <Button
+                sx={{
+                  color: "cornflowerblue",
+                }}
+                onClick={() => {
+                  alert("Change Password");
+                }}
+              >
+                Change Password
+              </Button>
+              <Button
+                sx={{ color: "cornflowerblue" }}
+                onClick={() => {
+                  alert("Change Bio");
+                }}
+              >
+                Change Bio
+              </Button>
             </CardContent>
           </Card>
         </Grid>
