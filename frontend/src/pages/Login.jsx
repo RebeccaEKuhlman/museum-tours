@@ -127,7 +127,7 @@ export function Login() {
           alert("Invalid Credentials")
 
         } else {
-          alert("Logged in");
+          window.location.href = "/profile";
         }
       });
       // axios
@@ -205,7 +205,6 @@ export function Login() {
               fullWidth
               variant="contained"
               className={classes.submit}
-              href = "/profile"
             >
               Sign In
             </Button>
