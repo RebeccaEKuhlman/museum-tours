@@ -3,9 +3,9 @@ import axios from 'axios';
 export class Repository {
     url = "localhost";
 
-    getLogin(email, password) {
+    postLogin(email, password) {
         return new Promise((resolve, reject) => {
-            console.log("Get Login");
+            console.log("Post Login");
             axios.post( `http://${ this.url }:8000/users/login`, {
                 data: {
                     email: email,
@@ -22,8 +22,61 @@ export class Repository {
                     reject(err);
                 })
         });
+        //         // Save JWT in localStorage form the memory
+        //         localStorage.setItem("token", token);
+        //         // Send the request with JWT
+        //         const headers = {
+        //             Authorization: `JWT ${token}`
+        //         }
+        //         const updateProfileRes = await axios.post('/api/profile/', {
+        //             body: data
+        //         },{
+        //             headers: headers
+        // });
     }
-    
+
+    postRegristration(email, password) {
+        return new Promise((resolve, reject) => {
+            console.log("Post Registration");
+            axios.post( `http://${ this.url }:8000/users/registration`, {
+                data: {
+                    email: email,
+                    password: password
+                }
+            })
+                .then(x => {
+                    console.log("x.data", x.data);
+                    resolve(x.data);
+                })
+                .catch(err => {
+                    console.log("catch");
+                    alert(err);
+                    reject(err);
+                })
+        });
+    }
+
+    putPassword(email, newPass) {
+        return new Promise((resolve, reject) => {
+            console.log("Put Password");
+            axios.post( `http://${ this.url }:8000/users/updatePassword`, {
+                data: {
+                    email: email,
+                    newPass: newPass
+                }
+            })
+                .then(x => {
+                    console.log("x.data", x.data);
+                    resolve(x.data);
+                })
+                .catch(err => {
+                    console.log("catch");
+                    alert(err);
+                    reject(err);
+                })
+        });
+    }
+
     getMuseums() {
         return new Promise((resolve, reject) => {
             console.log("Get Museums");

@@ -121,10 +121,11 @@ export function Login() {
   // handle input form submission to backend via POST request
   const handleSubmit = (e) => {
     e.preventDefault();
-    repository.getLogin(email, password).then(x => 
+    repository.postLogin(email, password).then(x => 
       {
         if (typeof x.error != "undefined") {
           alert("Invalid Credentials")
+
         } else {
           alert("Logged in");
         }
@@ -204,6 +205,7 @@ export function Login() {
               fullWidth
               variant="contained"
               className={classes.submit}
+              href = "/profile"
             >
               Sign In
             </Button>
