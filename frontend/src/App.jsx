@@ -58,9 +58,13 @@ export const App = () => {
   const classes = useStyles();
 
   const [ museums, setMuseums ] = useState(undefined);
+  const [ photos, setPhotos ] = useState(undefined);
+
   useEffect(() => {
     var repository = new Repository();
     repository.getMuseums().then(x => setMuseums(x));
+    repository.getPhotos().then(x => setPhotos(x));
+    //
   }, []);
 
   if (!museums) {
