@@ -7,13 +7,11 @@ export class Repository {
         return new Promise((resolve, reject) => {
             console.log("Post Login");
             axios.post( `http://${ this.url }:8000/users/login`, {
-                data: {
                     email: email,
                     password: password
-                }
             })
                 .then(x => {
-                    console.log("x.data", x.data);
+                    console.log("x", x.data);
                     resolve(x.data);
                 })
                 .catch(err => {
