@@ -10,6 +10,7 @@ const { log, ExpressAPILogMiddleware } = require('@rama41222/node-logger');
 const users = require('./routes/users');
 const museums = require('./routes/museums');
 const tours = require('./routes/tours');
+const photos = require('./routes/photos');
 
 // set up some configs for express.
 const config = {
@@ -36,6 +37,7 @@ app.get('/health', (request, response, next) => {
 users(app, logger);
 museums(app, logger);
 tours(app, logger);
+photos(app, logger);
 // app.use('/users', UserRoutes);
 // app.use('/tours', TourRoutes);
 
