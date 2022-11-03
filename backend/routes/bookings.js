@@ -24,7 +24,7 @@ router.get('/', async (req, res, next) => {
             next();
         }
     } catch (err) {
-        console.error('There was an error in POST /users/login', err);
+        console.error('There was an error in GET /bookings', err);
         response.status(500).json({ message: err.message });
     }
 });
@@ -40,7 +40,7 @@ router.post('/', async (req, res, next) => {
             throw new Error('Make sure all needed data is encluded\n');
         }
     } catch (err) {
-        console.error('There was an error in POST /users/login', err);
+        console.error('There was an error in POST /bookings', err);
         response.status(500).json({ message: err.message });
     }
 });
@@ -65,7 +65,7 @@ router.delete('/', async (req, res, next) => {
             next();
         }
     } catch (err) {
-        console.error('There was an error in POST /users/login', err);
+        console.error('There was an error in DELETE /bookings', err);
         response.status(500).json({ message: err.message });
     }
 });
