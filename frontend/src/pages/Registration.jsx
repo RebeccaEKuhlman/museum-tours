@@ -84,6 +84,7 @@ export function Registration() {
   // const [values, setValues] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmpassword, setConfirmPassword] = useState('');
 
   // ENTER YOUR EC2 PUBLIC IP/URL HERE
   const ec2_url = "";
@@ -121,7 +122,20 @@ export function Registration() {
   // handle input form submission to backend via POST request
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("register");
+    if(password !== confirmpassword){
+      alert("passwords must match")
+    }
+    else{
+      repository.postRegristration(email, password).then(x => 
+        {
+          if (typeof x.error != "undefined") {
+            alert("error: unable to sign up")
+
+          } else {
+            window.location.href = "/login";
+          }
+        });
+    }
       // axios
       // .get(`http://${url}:8000/login`, {
       //   data: {
@@ -188,9 +202,17 @@ export function Registration() {
               onInput={(e) => setPassword(e.target.value)}
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="confirm-password"
+              label="confirm-Password"
+              type="password"
+              id="confirm-password"
+              value={confirmpassword}
+              onInput={(e) => setConfirmPassword(e.target.value)}
             />
             <Button
               type="submit"

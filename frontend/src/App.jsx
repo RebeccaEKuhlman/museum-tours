@@ -136,8 +136,9 @@ export const App = () => {
             component="a"
             href="/"
             noWrap
+            src="../Artt.png"
           > 
-            <img src="Artt.png"></img>
+            <img src="../Artt.png" />
           </Typography>
           <Typography className={classes.link}>
             {/* <Link to="/tours" className={classes.link}>
