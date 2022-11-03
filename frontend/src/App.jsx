@@ -68,6 +68,16 @@ export const App = () => {
     return <></>;
   }
 
+  const requireAuth = (nextState, replace, next) => {
+    // if (!authenticated) {
+    //   replace({
+    //     pathname: "/login",
+    //     state: {nextPathname: nextState.location.pathname}
+    //   });
+    // }
+    // next();
+  };
+
   // console.log(museums);
 
   // let museumsEX = [ // Get From Backend
@@ -146,7 +156,7 @@ export const App = () => {
         <Route path="*" element={< NoPage />} />
         <Route exact path='/' element={< Home museums={museums} />}></Route>
         <Route exact path='/login' element={< Login />}></Route>
-        <Route exact path='/profile' element={< Profile />}></Route>
+        <Route exact path='/profile' element={< Profile />} onEnter={requireAuth}></Route>
         <Route exact path='/tours' element={< Tours museums={museums} />}></Route>
         <Route exact path='/Registration' element={< Registration />}></Route>
       </Routes>
