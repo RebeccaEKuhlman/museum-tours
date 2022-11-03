@@ -34,12 +34,12 @@ app.get('/health', (request, response, next) => {
    next();
 });
 
-// users(app, logger);
-// museums(app, logger);
-// tours(app, logger);
+users(app, logger);
+museums(app, logger);
+tours(app, logger);
 // photos(app, logger);
-app.use('/users', users);
-app.use('/tours', tours);
+// app.use('/users', users);
+// app.use('/tours', tours);
 app.use('/photos', photos)
 
 app.listen(port, () => {
