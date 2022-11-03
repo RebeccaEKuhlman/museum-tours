@@ -11,6 +11,7 @@ const users = require('./routes/users');
 const museums = require('./routes/museums');
 const tours = require('./routes/tours');
 const bookings = require('./routes/bookings');
+const photos = require('./routes/photos');
 
 // set up some configs for express.
 const config = {
@@ -39,6 +40,7 @@ museums(app, logger);
 tours(app, logger);
 // bookings(app, logger);
 app.use('/bookings', bookings);
+photos(app, logger);
 // app.use('/users', UserRoutes);
 // app.use('/tours', TourRoutes);
 
