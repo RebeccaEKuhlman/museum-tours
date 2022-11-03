@@ -1,13 +1,12 @@
 const knex = require('../database/knex');
-const USERS_TABLE = 'users';
+const BOOKINGS_TABLE = 'bookings';
 
-const updateUser = async (email, username) => {
-    console.log(username)
-    const query = knex(USERS_TABLE).update({ email }).where({ username });
+const insert_booking = async (username, tour_name) => {
+    const query = knex(BOOKINGS_TABLE).insert({ username, tour_name });
     const results = await query;
     return results;
 }
 
 module.exports = {
-    updateUser
+    insert_booking
 }
