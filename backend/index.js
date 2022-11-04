@@ -10,6 +10,7 @@ const { log, ExpressAPILogMiddleware } = require('@rama41222/node-logger');
 const users = require('./routes/users');
 const museums = require('./routes/museums');
 const tours = require('./routes/tours');
+const bookings = require('./routes/bookings');
 const photos = require('./routes/photos');
 
 // set up some configs for express.
@@ -37,10 +38,11 @@ app.get('/health', (request, response, next) => {
 users(app, logger);
 museums(app, logger);
 tours(app, logger);
-// photos(app, logger);
-// app.use('/users', users);
-// app.use('/tours', tours);
 app.use('/photos', photos)
+// bookings(app, logger);
+app.use('/bookings', bookings);
+// app.use('/users', UserRoutes);
+// app.use('/tours', TourRoutes);
 
 app.listen(port, () => {
    console.log(`This app is listening on port  ${port}`);
