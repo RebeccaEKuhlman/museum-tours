@@ -1,15 +1,31 @@
-const knex = require('../database/knex.js');
 const express = require('express');
-const pool = require('../db');
+const router = express.Router();
 
-module.exports = function photos(app, logger) {
-    app.get('/photos', async (request, response) => {
-        try {
-            const results = await knex('photos').select();
-            response.status(200).json(results);
-        } catch (err) {
-            console.error('There was an error in GET /photos', err);
-            response.status(500).json({ message: err.message });
-        }
-    });
-}
+const bodyParser = require('body-parser');
+const { getPhotosByMuseum } = require('../models/photos');
+router.use(bodyParser.json());
+
+router.get('/', async (req, res, next) => {
+    try {
+        const all_photos = await req.models.photo.getAllPhotos();
+        res.status(200).json(all_photos);
+        console.log(res)
+        next();
+    } catch (err) {
+        console.error('There was an error in GET /photos', err);
+        res.status(500).json({ message: err.message });
+    }
+});
+
+router.get('/museums', async (req, res, next) => {
+    try {
+        const photosByMuseum = await req.models.photo.getPhotosByMuseum(req.query.museum);
+        res.status(200).json(photosByMuseum);
+        next();
+    } catch (err) {
+        console.error('There was an error in GET /photos/museums', err);
+        res.status(500).json({ message: err.message });
+    }
+});
+
+module.exports = router;
