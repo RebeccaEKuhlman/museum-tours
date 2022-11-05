@@ -92,7 +92,7 @@ module.exports = function tours(app, logger) {
     });
 
     //POST: addTour
-    app.post('/tours/addNewTour', async (request, response) => {
+    app.post('/tours', async (request, response) => {
         try {
             console.log('Initiating POST /addNewTour request');
             console.log('Request has a body containing:', request.body);
@@ -135,4 +135,17 @@ module.exports = function tours(app, logger) {
     });
 
     //DELETE: removeTour
+    app.delete('/tours', async (request, response) => {
+        try {
+            console.log('Initiating DELETE /tours request');
+            console.log('Request has params containing:', request.query);
+
+            const results = await knex('tours').delete().where({'tour_Name':request.query.tour_Name});
+            console.log('Results of my DELETE statement:', results);
+            response.status(200).json(results);
+        } catch (err) {
+            console.error('There was an error in DELETE /users', err);
+            response.status(500).json({ message: err.message });
+        }
+    });
 }
