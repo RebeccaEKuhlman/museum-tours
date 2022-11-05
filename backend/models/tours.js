@@ -34,6 +34,10 @@ class Tour {
         const results = await this.DBQuery('SELECT * FROM tours WHERE museum_name = ?', [museum_name]);
         return results;
     }
+    async fetchToursByPrice (price) {
+        const results = await this.DBQuery('SELECT * FROM tours WHERE price BETWEEN 0 AND ?', [price]);
+        return results;
+    }
     async updateTourSlots (tour_Name, numSlots) {
         return knex('tours')
             .where({ tour_Name: tour_Name })

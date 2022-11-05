@@ -17,8 +17,8 @@ const pool = require('../db');
 
 module.exports = function tours(app, logger) {
 
-    //fetchToursByName, fetchToursByMuseum_name, and fetchAllTours
-    //not in models\tours: fetchTourByPrice
+    //GET: fetchToursByName, fetchToursByMuseum_name, and fetchAllTours, fetchTourByPrice
+    //need to fetch by days, weeks, years, and themes?
     app.get('/tours', async (request, response) => {
         try {
 
@@ -41,9 +41,31 @@ module.exports = function tours(app, logger) {
                 const results = await knex("tours").select();
                 response.status(201).json(results);
             }
+
         } catch (err) {
             console.error('There was an error in GET /tours', err);
             response.status(500).json({ message: err.message });
         }
     });
+
+    //POST: addTour
+
+    //PUT: updateTourSlots
+    app.put('/tours/updateTourSlots', async (request, response) => {
+        try {
+            console.log('Initiating PUT /tours request');
+            console.log('Request has body containing:', request.body);
+
+            const tour = request.body.tour_Name;
+            const newSlots = request.body.num_spaces_available;
+
+            const results = await knex('tours').where({'tour_Name':tour}).update({'num_spaces_available':newSlots});
+            response.status(200).json(results);
+        } catch (err) {
+            console.error('There was an error in PUT /tours/updateTourSlots', err);
+            response.status(500).json({ message: err.message });
+        }
+    });
+
+    //DELETE: removeTour
 }
