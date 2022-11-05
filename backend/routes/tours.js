@@ -22,23 +22,25 @@ module.exports = function tours(app, logger) {
     app.get('/tours', async (request, response) => {
         try {
 
-            // if(request.body.tour_Name){
-            //     const results = await knex('tours').select().where( {'tour_Name':request.body.tour_Name} );
-            //     response.status(201).json(results);
-            // }
-            // else if(request.body.museum_name){
-            //     const results = await knex('tours').select().where( {'museum_name':request.body.museum_name} );
-            //     response.status(201).json(results);
-            // }
-            // else if(request.body.price){
-            //     //returns all tours that are at the requested price and below
-            //     const results = await knex('tours').select().whereBetween('price', [0, request.body.price]);
-            //     response.status(201).json(results);
-            // }
-            // else{
-            const results = await knex("tours").select();
-            response.status(201).json(results);
-            // }
+            console.log('Initiating GET /tours request');
+            console.log('Request has params containing:', request.query);
+            if(request.query.tour_Name){
+                const results = await knex('tours').select().where( {'tour_Name':request.query.tour_Name} );
+                response.status(201).json(results);
+            }
+            else if(request.query.museum_name){
+                const results = await knex('tours').select().where( {'museum_name':request.query.museum_name} );
+                response.status(201).json(results);
+            }
+            else if(request.query.price){
+                //returns all tours that are at the requested price and below
+                const results = await knex('tours').select().whereBetween('price', [0, request.query.price]);
+                response.status(201).json(results);
+            }
+            else{
+                const results = await knex("tours").select();
+                response.status(201).json(results);
+            }
         } catch (err) {
             console.error('There was an error in GET /tours', err);
             response.status(500).json({ message: err.message });
