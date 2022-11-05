@@ -17,8 +17,7 @@ const express = require('express');
 
 module.exports = function tours(app, logger) {
 
-    /* GET: fetchToursByName, fetchToursByMuseum_name, and fetchAllTours, fetchTourByPrice, fetchTourByDay,
-     * fetchToursByMonth, fetchToursByYear, */
+    /* GET tours: allTours, byName, byMuseum_name, byPrice, byDay, byMonth, byYear, byWeek, byTheme */
     //need to fetch by weeks, and themes?
     app.get('/tours', async (request, response) => {
         try {
@@ -56,6 +55,14 @@ module.exports = function tours(app, logger) {
                 //returns all tours scheduled at the requested year
                 //query params: year = #
                 const results = await knex('tours').select().andWhereRaw('YEAR(tourDate) = ?', request.query.year);
+                response.status(201).json(results);
+            }
+            else if(request.query.startDate && request.query.endDate){
+                //returns all tours scheduled in between startDate and endDate
+                //query params: startDate = 'YYYY-MM-DD', endDate = 'YYYY-MM-DD'
+                //note: make sure that the order of dates is correct
+                const results = await knex('tours').select().whereBetween('tourDate', [request.query.startDate,
+                                                                                       request.query.endDate]);
                 response.status(201).json(results);
             }
             else{
