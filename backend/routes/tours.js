@@ -11,14 +11,15 @@
 	theme VARCHAR(30) NOT NULL
 **/
 
+const { tourTable } = require('../models/tours');
 const knex = require('../database/knex.js');
 const express = require('express');
-const pool = require('../db');
 
 module.exports = function tours(app, logger) {
 
-    //GET: fetchToursByName, fetchToursByMuseum_name, and fetchAllTours, fetchTourByPrice
-    //need to fetch by days, weeks, years, and themes?
+    /* GET: fetchToursByName, fetchToursByMuseum_name, and fetchAllTours, fetchTourByPrice, fetchTourByDay,
+     * fetchToursByMonth, fetchToursByYear, */
+    //need to fetch by weeks, and themes?
     app.get('/tours', async (request, response) => {
         try {
 
@@ -34,7 +35,27 @@ module.exports = function tours(app, logger) {
             }
             else if(request.query.price){
                 //returns all tours that are at the requested price and below
+                //query params: price = #
                 const results = await knex('tours').select().whereBetween('price', [0, request.query.price]);
+                response.status(201).json(results);
+            }
+            else if(request.query.month && request.query.day){
+                //returns all tours scheduled at the requested day (needs a month to specify which day)
+                //query params: month = # between 1-12, day = # between 1-31
+                const results = await knex('tours').select().andWhereRaw('MONTH(tourDate) = ? AND DAY(tourDate) = ?',
+                                                                         [request.query.month, request.query.day]);
+                response.status(201).json(results);
+            }
+            else if(request.query.month){
+                //returns all tours scheduled at the requested month
+                //query params: month = # between 1-12
+                const results = await knex('tours').select().andWhereRaw('MONTH(tourDate) = ?', request.query.month);
+                response.status(201).json(results);
+            }
+            else if(request.query.year){
+                //returns all tours scheduled at the requested year
+                //query params: year = #
+                const results = await knex('tours').select().andWhereRaw('YEAR(tourDate) = ?', request.query.year);
                 response.status(201).json(results);
             }
             else{
