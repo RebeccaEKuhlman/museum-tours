@@ -17,7 +17,7 @@ const express = require('express');
 
 module.exports = function tours(app, logger) {
 
-    /* GET tours: allTours, byName, byMuseum_name, byPrice, byDay, byMonth, byYear, byWeek, byTheme */
+    /* GET tours: allTours, byName, byMuseum_name, byPrice, byDay, byMonth, byYear, byWeek, byDate, byTheme */
     app.get('/tours', async (request, response) => {
         try {
 
@@ -72,6 +72,12 @@ module.exports = function tours(app, logger) {
                 //returns all tours that belong to the requested theme
                 //query params: theme = 'example string'
                 const results = await knex('tours').select().where( {'theme':request.query.theme} );
+                response.status(201).json(results);
+            }
+            else if(request.query.date){
+                //returns all tours scheduled at the requested date
+                //query params: date = 'YYYY-MM-DD'
+                const results = await knex('tours').select().where( {'tourDate':request.query.date} );
                 response.status(201).json(results);
             }
             else{
