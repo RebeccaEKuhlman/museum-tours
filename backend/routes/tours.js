@@ -92,6 +92,30 @@ module.exports = function tours(app, logger) {
     });
 
     //POST: addTour
+    app.post('/tours/addNewTour', async (request, response) => {
+        try {
+            console.log('Initiating POST /addNewTour request');
+            console.log('Request has a body containing:', request.body);
+
+            const tour_Name = request.body.tour_Name;
+            const tourDate = new Date(request.body.tourDate);
+            const tourTime = request.body.tourTime;
+            const num_spaces_available = request.body.spaces_available;
+            const total_space = request.body.total_space;
+            const tour_description = request.body.description;
+            const price = request.body.price;
+            const museum_name = request.body.museum_name;
+            const theme = request.body.theme;
+
+            const query = knex('tours').insert({tour_Name, tourDate, tourTime, num_spaces_available, total_space,
+                                                tour_description, price, museum_name, theme});
+            const results = await query;
+            response.status(200).json(results);
+        } catch (err) {
+            console.error('There was an error in POST /users/login', err);
+            response.status(500).json({ message: err.message });
+        }
+    });
 
     //PUT: updateTourSlots
     app.put('/tours/updateTourSlots', async (request, response) => {
