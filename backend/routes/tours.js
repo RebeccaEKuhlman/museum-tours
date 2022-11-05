@@ -18,23 +18,26 @@ const express = require('express');
 module.exports = function tours(app, logger) {
 
     /* GET tours: allTours, byName, byMuseum_name, byPrice, byDay, byMonth, byYear, byWeek, byTheme */
-    //need to fetch by weeks, and themes?
     app.get('/tours', async (request, response) => {
         try {
 
             console.log('Initiating GET /tours request');
             console.log('Request has params containing:', request.query);
+
             if(request.query.tour_Name){
+                //query params: tour_Name = 'example string'
                 const results = await knex('tours').select().where( {'tour_Name':request.query.tour_Name} );
                 response.status(201).json(results);
             }
             else if(request.query.museum_name){
+                //returns all tours scheduled at the requested museum
+                //query params: museum_name = 'example string'
                 const results = await knex('tours').select().where( {'museum_name':request.query.museum_name} );
                 response.status(201).json(results);
             }
             else if(request.query.price){
                 //returns all tours that are at the requested price and below
-                //query params: price = #
+                //query params: price = integer
                 const results = await knex('tours').select().whereBetween('price', [0, request.query.price]);
                 response.status(201).json(results);
             }
@@ -63,6 +66,12 @@ module.exports = function tours(app, logger) {
                 //note: make sure that the order of dates is correct
                 const results = await knex('tours').select().whereBetween('tourDate', [request.query.startDate,
                                                                                        request.query.endDate]);
+                response.status(201).json(results);
+            }
+            else if(request.query.theme){
+                //returns all tours that belong to the requested theme
+                //query params: theme = 'example string'
+                const results = await knex('tours').select().where( {'theme':request.query.theme} );
                 response.status(201).json(results);
             }
             else{
