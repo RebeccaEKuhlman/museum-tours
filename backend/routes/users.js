@@ -12,6 +12,7 @@
        */
 const knex = require('../database/knex.js');
 const bcrypt = require('bcrypt');
+const { rejects } = require('assert');
 module.exports = function users(app, logger) {
     app.post('/users/registration', async (request, response) => {
         try {
@@ -66,7 +67,17 @@ module.exports = function users(app, logger) {
 
             if (typeof results[0] != "undefined") {
                 // if user exists
+                const JTW = jwt.makeJWT(result.insertId)
                 response.status(200).json(results);
+                res.status(201).cookie("session", JWT, {httpOnly: true, path: "/", maxAge: 500, sameSite: "lax", secure: process.env})
+                .send({
+                    message: "User created",
+                    success: true, 
+                    username, 
+                    id: result.insertId
+                }) 
+                
+                
             } else {
                 response.status(200).json({
                     "error": "Invalid Credentials"
