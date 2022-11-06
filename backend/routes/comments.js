@@ -25,4 +25,20 @@
                 response.status(500).json({ message: err.message });
             }
         });    
+
+        app.post('/comments/newComments', async (request, response) => {
+            try {
+                console.log('Initiating POST /comments/newComments request');
+                console.log('Request has a body / payload containing:', request.body);
+                console.log('Request has params containing:', request.query);
+                const payload = request.body; // This payload should be an object containing user data
+                const query = knex('comments').insert({ payload})
+                const results = await query;
+                console.log('Results of my POST statement:', results);
+                response.status(201).json(results);
+            } catch (err) {
+                console.error('There was an error in POST /comments', err);
+                response.status(500).json({ message: err.message });
+            }
+        });
     }

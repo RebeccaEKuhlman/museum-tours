@@ -12,7 +12,7 @@
 
 const knex = require('../database/knex.js');
 
-module.exports = function tours(app, logger) {
+module.exports = function ratings(app, logger) {
     
     app.get('/ratings', async (request, response) => {
         try {
@@ -24,6 +24,19 @@ module.exports = function tours(app, logger) {
         }
     });
 
-    
-
+    app.post('/ratings/newRating', async (request, response) => {
+        try {
+            console.log('Initiating POST /ratings/newRating request');
+            console.log('Request has a body / payload containing:', request.body);
+            console.log('Request has params containing:', request.query);
+            const payload = request.body; // This payload should be an object containing user data
+            const query = knex('ratings').insert({ payload})
+            const results = await query;
+            console.log('Results of my POST statement:', results);
+            response.status(201).json(results);
+        } catch (err) {
+            console.error('There was an error in POST /ratings', err);
+            response.status(500).json({ message: err.message });
+        }
+    });
 }
