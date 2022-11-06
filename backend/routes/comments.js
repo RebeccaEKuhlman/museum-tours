@@ -32,7 +32,14 @@
                 console.log('Request has a body / payload containing:', request.body);
                 console.log('Request has params containing:', request.query);
                 const payload = request.body; // This payload should be an object containing user data
-                const query = knex('comments').insert({ payload})
+                const query = knex('comments').insert({ 
+                    content: 'content',
+                    username: 'username',
+                    tour_name: 'tour_name',
+                    review_id: 'review_id',
+                    like_sum: 'likesum',
+                    overComment: 'overComment'
+                })
                 const results = await query;
                 console.log('Results of my POST statement:', results);
                 response.status(201).json(results);
