@@ -53,14 +53,14 @@ module.exports = function users(app, logger) {
             console.log('Request has a body / payload containing:', request.body);
             console.log('Request has params containing:', request.query);
     
-            const payload = request.body.data; // This payload should be an object containing user data
-            const rawPass = request.body.data.password;
+            const payload = request.body; // This payload should be an object containing user data
+            const rawPass = request.body.password;
 
             const { createHash } = require('crypto');
             function hash(string) {
                 return createHash('sha256').update(string).digest('hex');
             }
-            const email = request.body.data.email;
+            const email = request.body.email;
             //salt: aB6nkeF0He3imq4AOhbO5kEljbveRpLn
             const hashed = hash(rawPass + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
             const results = await knex('users').where({email: email}).where({password: hashed});
