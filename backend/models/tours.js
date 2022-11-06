@@ -1,5 +1,3 @@
-const { fetchAllUsers } = require("./users");
-
 /**
  * tours(
 	tour_Name VARCHAR(30) NOT NULL PRIMARY KEY,
