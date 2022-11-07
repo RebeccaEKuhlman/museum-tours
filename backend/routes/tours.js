@@ -43,27 +43,27 @@ module.exports = function tours(app, logger) {
             }
             else if(request.query.month && request.query.day){
                 //returns all tours scheduled at the requested day (needs a month to specify which day)
-                //query params: month = # between 1-12, day = # between 1-31
+                //query params: month = integer between 1-12, day = integer between 1-31
                 const results = await knex('tours').select().andWhereRaw('MONTH(tourDate) = ? AND DAY(tourDate) = ?',
                                                                          [request.query.month, request.query.day]);
                 response.status(201).json(results);
             }
             else if(request.query.month){
                 //returns all tours scheduled at the requested month
-                //query params: month = # between 1-12
+                //query params: month = integer between 1-12
                 const results = await knex('tours').select().andWhereRaw('MONTH(tourDate) = ?', request.query.month);
                 response.status(201).json(results);
             }
             else if(request.query.year){
                 //returns all tours scheduled at the requested year
-                //query params: year = #
+                //query params: year = integer
                 const results = await knex('tours').select().andWhereRaw('YEAR(tourDate) = ?', request.query.year);
                 response.status(201).json(results);
             }
             else if(request.query.startDate && request.query.endDate){
                 //returns all tours scheduled in between startDate and endDate
                 //query params: startDate = 'YYYY-MM-DD', endDate = 'YYYY-MM-DD'
-                //note: make sure that the order of dates is correct
+                //note: make sure that the order of dates is correct to get accurate results
                 const results = await knex('tours').select().whereBetween('tourDate', [request.query.startDate,
                                                                                        request.query.endDate]);
                 response.status(201).json(results);
@@ -139,8 +139,8 @@ module.exports = function tours(app, logger) {
             console.log('Request has body containing:', request.body);
 
             const tour = request.body.tour_Name;
-            const newDate = request.body.tourDate; //format: "YYYY-MM-DD"
-            const newTime = request.body.tourTime; //format: "hr:mi:sc" in military time
+            const newDate = request.body.tourDate; //format: YYYY-MM-DD"
+            const newTime = request.body.tourTime; //format: "00:00:00" hr:min:sec in military time
 
             if(newDate && newTime){
                 const results = await knex('tours').where({'tour_Name':tour}).update({'tourDate':newDate, 'tourTime':newTime});
@@ -185,7 +185,7 @@ module.exports = function tours(app, logger) {
             console.log('Request has body containing:', request.body);
 
             const tour = request.body.tour_Name;
-            const newPrice = request.body.price;
+            const newPrice = request.body.price; //format: "price":an integer
 
             const results = await knex('tours').where({'tour_Name':tour}).update({'price':newPrice});
             response.status(200).json(results);
