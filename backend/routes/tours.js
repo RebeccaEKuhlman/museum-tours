@@ -185,9 +185,9 @@ module.exports = function tours(app, logger) {
             console.log('Request has body containing:', request.body);
 
             const tour = request.body.tour_Name;
-            const newSlots = request.body.num_spaces_available;
+            const newPrice = request.body.price;
 
-            const results = await knex('tours').where({'tour_Name':tour}).update({'num_spaces_available':newSlots});
+            const results = await knex('tours').where({'tour_Name':tour}).update({'price':newPrice});
             response.status(200).json(results);
         } catch (err) {
             console.error('There was an error in PUT /tours/updateTourPrice', err);
@@ -200,9 +200,9 @@ module.exports = function tours(app, logger) {
             console.log('Request has body containing:', request.body);
 
             const tour = request.body.tour_Name;
-            const newSlots = request.body.num_spaces_available;
+            const newTheme = request.body.theme;
 
-            const results = await knex('tours').where({'tour_Name':tour}).update({'num_spaces_available':newSlots});
+            const results = await knex('tours').where({'tour_Name':tour}).update({'theme':newTheme});
             response.status(200).json(results);
         } catch (err) {
             console.error('There was an error in PUT /tours/updateTourTheme', err);
