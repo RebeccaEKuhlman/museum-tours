@@ -117,10 +117,86 @@ module.exports = function tours(app, logger) {
         }
     });
 
-    //PUT: updateTourSlots
+    //PUT: updateTourSlots, updateTourDateTime, updateTourDescription, updateTourPrice, updateTourTheme
     app.put('/tours/updateTourSlots', async (request, response) => {
         try {
-            console.log('Initiating PUT /tours request');
+            console.log('Initiating PUT /tours/updateTourSlots request');
+            console.log('Request has body containing:', request.body);
+
+            const tour = request.body.tour_Name;
+            const newSlots = request.body.num_spaces_available;
+
+            const results = await knex('tours').where({'tour_Name':tour}).update({'num_spaces_available':newSlots});
+            response.status(200).json(results);
+        } catch (err) {
+            console.error('There was an error in PUT /tours/updateTourSlots', err);
+            response.status(500).json({ message: err.message });
+        }
+    });
+    app.put('/tours/updateTourDateTime', async (request, response) => {
+        try {
+            console.log('Initiating PUT /tours/updateTourDateTime request');
+            console.log('Request has body containing:', request.body);
+
+            const tour = request.body.tour_Name;
+            const newDate = request.body.tourDate; //format: "YYYY-MM-DD"
+            const newTime = request.body.tourTime; //format: "hr:mi:sc" in military time
+
+            if(newDate && newTime){
+                const results = await knex('tours').where({'tour_Name':tour}).update({'tourDate':newDate, 'tourTime':newTime});
+                response.status(200).json(results);
+            }
+            else if(newDate){
+                const results = await knex('tours').where({'tour_Name':tour}).update({'tourDate':newDate});
+                response.status(200).json(results);
+            }
+            else if(newTime){
+                const results = await knex('tours').where({'tour_Name':tour}).update({'tourTime':newTime});
+                response.status(200).json(results);
+            }
+            else{
+                response.status(400).json(); //if there's nothing in the body
+                console.log('There was an error in PUT /tours/updateTourDateTime', request.body);
+            }
+
+        } catch (err) {
+            console.error('There was an error in PUT /tours/updateTourDateTime', err);
+            response.status(500).json({ message: err.message });
+        }
+    });
+    app.put('/tours/updateTourDescription', async (request, response) => {
+        try {
+            console.log('Initiating PUT /tours/updateTourDateTime request');
+            console.log('Request has body containing:', request.body);
+
+            const tour = request.body.tour_Name;
+            const newSlots = request.body.num_spaces_available;
+
+            const results = await knex('tours').where({'tour_Name':tour}).update({'num_spaces_available':newSlots});
+            response.status(200).json(results);
+        } catch (err) {
+            console.error('There was an error in PUT /tours/updateTourSlots', err);
+            response.status(500).json({ message: err.message });
+        }
+    });
+    app.put('/tours/updateTourPrice', async (request, response) => {
+        try {
+            console.log('Initiating PUT /tours/updateTourDateTime request');
+            console.log('Request has body containing:', request.body);
+
+            const tour = request.body.tour_Name;
+            const newSlots = request.body.num_spaces_available;
+
+            const results = await knex('tours').where({'tour_Name':tour}).update({'num_spaces_available':newSlots});
+            response.status(200).json(results);
+        } catch (err) {
+            console.error('There was an error in PUT /tours/updateTourSlots', err);
+            response.status(500).json({ message: err.message });
+        }
+    });
+    app.put('/tours/updateTourTheme', async (request, response) => {
+        try {
+            console.log('Initiating PUT /tours/updateTourDateTime request');
             console.log('Request has body containing:', request.body);
 
             const tour = request.body.tour_Name;
@@ -134,7 +210,8 @@ module.exports = function tours(app, logger) {
         }
     });
 
-    //DELETE: removeTour
+
+    //DELETE: deleteTour
     app.delete('/tours', async (request, response) => {
         try {
             console.log('Initiating DELETE /tours request');
