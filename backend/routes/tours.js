@@ -27,38 +27,38 @@ module.exports = function tours(app, logger) {
             if(request.query.tour_Name){
                 //query params: tour_Name = 'example string'
                 const results = await knex('tours').select().where( {'tour_Name':request.query.tour_Name} );
-                response.status(201).json(results);
+                response.status(200).json(results);
             }
             else if(request.query.museum_name){
                 //returns all tours scheduled at the requested museum
                 //query params: museum_name = 'example string'
                 const results = await knex('tours').select().where( {'museum_name':request.query.museum_name} );
-                response.status(201).json(results);
+                response.status(200).json(results);
             }
             else if(request.query.price){
                 //returns all tours that are at the requested price and below
                 //query params: price = integer
                 const results = await knex('tours').select().whereBetween('price', [0, request.query.price]);
-                response.status(201).json(results);
+                response.status(200).json(results);
             }
             else if(request.query.month && request.query.day){
                 //returns all tours scheduled at the requested day (needs a month to specify which day)
                 //query params: month = integer between 1-12, day = integer between 1-31
                 const results = await knex('tours').select().andWhereRaw('MONTH(tourDate) = ? AND DAY(tourDate) = ?',
                                                                          [request.query.month, request.query.day]);
-                response.status(201).json(results);
+                response.status(200).json(results);
             }
             else if(request.query.month){
                 //returns all tours scheduled at the requested month
                 //query params: month = integer between 1-12
                 const results = await knex('tours').select().andWhereRaw('MONTH(tourDate) = ?', request.query.month);
-                response.status(201).json(results);
+                response.status(200).json(results);
             }
             else if(request.query.year){
                 //returns all tours scheduled at the requested year
                 //query params: year = integer
                 const results = await knex('tours').select().andWhereRaw('YEAR(tourDate) = ?', request.query.year);
-                response.status(201).json(results);
+                response.status(200).json(results);
             }
             else if(request.query.startDate && request.query.endDate){
                 //returns all tours scheduled in between startDate and endDate
@@ -66,23 +66,23 @@ module.exports = function tours(app, logger) {
                 //note: make sure that the order of dates is correct to get accurate results
                 const results = await knex('tours').select().whereBetween('tourDate', [request.query.startDate,
                                                                                        request.query.endDate]);
-                response.status(201).json(results);
+                response.status(200).json(results);
             }
             else if(request.query.theme){
                 //returns all tours that belong to the requested theme
                 //query params: theme = 'example string'
                 const results = await knex('tours').select().where( {'theme':request.query.theme} );
-                response.status(201).json(results);
+                response.status(200).json(results);
             }
             else if(request.query.date){
                 //returns all tours scheduled at the requested date
                 //query params: date = 'YYYY-MM-DD'
                 const results = await knex('tours').select().where( {'tourDate':request.query.date} );
-                response.status(201).json(results);
+                response.status(200).json(results);
             }
             else{
                 const results = await knex("tours").select();
-                response.status(201).json(results);
+                response.status(200).json(results);
             }
 
         } catch (err) {
@@ -94,7 +94,7 @@ module.exports = function tours(app, logger) {
     //POST: addTour
     app.post('/tours', async (request, response) => {
         try {
-            console.log('Initiating POST /addNewTour request');
+            console.log('Initiating POST /tours request');
             console.log('Request has a body containing:', request.body);
 
             const tour_Name = request.body.tour_Name;
@@ -110,9 +110,9 @@ module.exports = function tours(app, logger) {
             const query = knex('tours').insert({tour_Name, tourDate, tourTime, num_spaces_available, total_space,
                                                 tour_description, price, museum_name, theme});
             const results = await query;
-            response.status(200).json(results);
+            response.status(201).json(results);
         } catch (err) {
-            console.error('There was an error in POST /users/login', err);
+            console.error('There was an error in POST /tours', err);
             response.status(500).json({ message: err.message });
         }
     });
