@@ -1,5 +1,3 @@
-const { fetchAllUsers } = require("./users");
-
 /**
  * tours(
 	tour_Name VARCHAR(30) NOT NULL PRIMARY KEY,
@@ -14,6 +12,9 @@ const { fetchAllUsers } = require("./users");
 	theme VARCHAR(30) NOT NULL
 );
  **/
+
+const knex = require('../database/knex');
+
 class Tour {
     constructor(_DBQuery, _disconnect) {
         this.DBQuery = _DBQuery;
@@ -32,6 +33,10 @@ class Tour {
     }
     async fetchToursByMuseum_name (museum_name) {
         const results = await this.DBQuery('SELECT * FROM tours WHERE museum_name = ?', [museum_name]);
+        return results;
+    }
+    async fetchToursByPrice (price) {
+        const results = await this.DBQuery('SELECT * FROM tours WHERE price BETWEEN 0 AND ?', [price]);
         return results;
     }
     async updateTourSlots (tour_Name, numSlots) {
