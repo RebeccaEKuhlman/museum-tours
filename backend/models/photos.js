@@ -31,6 +31,12 @@ const getAllPhotos = async () => {
     return results;
 }
 
+const getPhotoData = async (photoId) => {
+    const query = knex('photos').where({ photoId: photoId }).select('photo_data');
+    const results = await query;
+    return results;
+}
+
 const getPhotosByMuseum = async (museum) => {
     const query = knex('photos').join('museums', 'photos.photoId', '=', 'museums.photoId')
         .select('photos.photo_data').where('museums.museum_name', '=', museum);;
@@ -50,6 +56,7 @@ module.exports = {
     updatePhotoCaption,
     updatePhotois_profile,
     getAllPhotos,
+    getPhotoData,
     getPhotosByMuseum,
     deletePhoto
 }

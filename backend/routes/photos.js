@@ -44,10 +44,16 @@ router.put('/', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
     try {
-        const all_photos = await req.models.photo.getAllPhotos();
-        res.status(200).json(all_photos);
-        console.log(res)
-        next();
+        if (req.query.photoId) {
+            const photo = await req.models.photo.getPhotoData(req.query.photoId);
+            res.status(200).json(photo);
+            next();
+        } else {
+            const all_photos = await req.models.photo.getAllPhotos();
+            res.status(200).json(all_photos);
+            console.log(res)
+            next();
+        }
     } catch (err) {
         console.error('There was an error in GET /photos', err);
         res.status(500).json({ message: err.message });
