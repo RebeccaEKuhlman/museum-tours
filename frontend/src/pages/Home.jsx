@@ -49,7 +49,7 @@ export const Home = ({ museums }) => {
             className="ViewButton"
             style={{
               color: "#F6F7EB",
-              backgroundColor: "cornflowerblue",
+              backgroundColor: "#7F96FF",
               fontFamily: "Baskerville",
             }}
           >
@@ -141,7 +141,7 @@ export const Home = ({ museums }) => {
       </header>
       <main>
         <Carousel
-          className="Example"
+          className="rounded"
           autoPlay={state.autoPlay}
           animation={state.animation}
           indicators={state.indicators}
@@ -150,8 +150,8 @@ export const Home = ({ museums }) => {
           navButtonsAlwaysVisible={state.navButtonsAlwaysVisible}
           navButtonsAlwaysInvisible={state.navButtonsAlwaysInvisible}
           fullHeightHover={false}
-          navButtonsProps={{ style: { backgroundColor: "cornflowerblue", borderRadius: 0 }}}
-          navButtonsWrapperProps={{ style: { bottom: "0", top: "unset" } }}
+          navButtonsProps={{ style: { backgroundColor: "#7F96FF", borderRadius: 100 }}}
+          navButtonsWrapperProps={{ style: { bottom: "0", marginRight: 10, marginLeft: 10 } }}
           indicatorContainerProps={{ style: { margin: "20px" } }}
         >
           {museums.map((item, index) => {
