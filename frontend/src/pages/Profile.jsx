@@ -20,6 +20,7 @@ import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
+import Modal from '@mui/material/Modal';
 import { Repository } from "./repository";
 
 function generate(element) {
@@ -74,13 +75,16 @@ const useStyles = makeStyles((theme) => ({
 export function Profile() {
   const classes = useStyles();
 
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const [ newpass, setNewPass ] = useState('');
   const [ oldpass, setOldPass ] = useState('');
   const [ newPhotoId, setNewPhotoId ] = useState('');
   const [ photos, setPhotos ] = useState('');
   const [ university, setUniversity ] = useState('');
   const [ bio, setBio ] = useState('');
-  const [ darken, setDarken ] = useState(false);
   const [ showForm, setShowForm ] = useState(false);
   const [ userForm, setuserForm ] = useState({
     userName: "",
@@ -112,18 +116,16 @@ export function Profile() {
       });
   };
 
-  const toggleForm = () => { 
-    console.log("Toggle");
-    setShowForm(!showForm);
-    if (!darken) setDarken(['brightness(0.3)', 'linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))', 'none']);
-    else setDarken(false);
-  }
-
   return (
     <div className="profile" style={{ textAlign: "center" }}>
-      {showForm && (
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
         <Card className={classes.form}>
-          <h2 style={{ fontFamily: "Baskerville", margin: 10 }}>Update Password</h2>
+          <h2 style={{ fontFamily: "Baskerville", margin: 10, textAlign: "center" }}>Update Password</h2>
           <TextField
             variant="outlined"
             margin="normal"
@@ -146,24 +148,24 @@ export function Profile() {
             value={newpass}
             onInput={(e) => setNewPass(e.target.value)}
           />
-          <div style={{ margin: 12 }}>
+          <div style={{ margin: 12, textAlign: "center" }}>
             <Button
-              onClick={toggleForm}
+              onClick={handleClose}
               type="submit"
               variant="contained"
             >
               Confirm
             </Button>
           </div>
-          <div style={{ marginTop: 16 }}>
+          <div style={{ marginTop: 16, textAlign: "center"}}>
             <Button
-              onClick={toggleForm}
+              onClick={handleClose}
             >
               Cancel
             </Button>
           </div>
         </Card>
-      )}
+      </Modal>
       <Grid
         container
         className={classes.root}
@@ -171,9 +173,8 @@ export function Profile() {
         direction="column"
         alignItems="center"
         justifyContent="center"
-        style={{ padding: "0", filter: darken[0], background: darken[1], pointerEvents: darken[2] }}
+        style={{ padding: "0" }}
       >
-        <Grid item xs={false} sm={4} md={7} className={classes.image} />
         <Grid item xs={false}>
           <Card
             className={classes.card}
@@ -186,6 +187,28 @@ export function Profile() {
               image={photos[13].photo_data}
               alt="profile"
             />
+            <div style={{ marginTop: 10, marginBottom: 20 }}>
+              <Typography
+                className={classes.typography}
+                gutterBottom
+                variant="h4"
+                component="div"
+              >
+                <b className={classes.typography}>{photos[2].caption}</b>
+              </Typography>
+              <Typography
+                className={classes.typography}
+                variant="body1"
+              >
+                <b className={classes.typography}>University:</b> Southern Methodist University
+              </Typography>
+              <Typography
+                className={classes.typography}
+                variant="body1"
+              >
+                <b className={classes.typography}>Bio:</b> This is a sentence about the person.
+              </Typography>
+            </div>
           </Card>
         </Grid>
         <Grid item xs={false}>
@@ -200,18 +223,12 @@ export function Profile() {
               <Typography
                 className={classes.typography}
                 gutterBottom
-                variant="h5"
+                variant="h4"
                 component="div"
               >
-                {photos[2].caption}
+                <b className={classes.typography}>Change Fields</b>
               </Typography>
-              <Typography
-                className={classes.typography}
-                variant="body2"
-              >
-                This is a sentence about the person.
-              </Typography>
-              <FormControl sx={{ mt: 4 }} size="large">
+              <FormControl sx={{ mt: 1 }} size="large">
                 <form noValidate onSubmit={handleSubmit}>
                   <InputLabel id="photo">Photo</InputLabel>
                   <Select
@@ -243,7 +260,7 @@ export function Profile() {
                     onInput={(e) => setUniversity(e.target.value)}
                   />
                   <TextField
-                    sx={{mb: 4, mt: 1}}
+                    sx={{mb: 3, mt: 1 }}
                     variant="outlined"
                     margin="normal"
                     fullWidth
@@ -260,12 +277,12 @@ export function Profile() {
                     variant="contained"
                     className={classes.submit}
                   >
-                    Update Credentials
+                    Confirm Changes
                   </Button>
                 </form>
                 <Button
-                  sx={{ color: "cornflowerblue", mt: 2 }}
-                  onClick={toggleForm}
+                  sx={{ color: "cornflowerblue", mt: 1 }}
+                  onClick={handleOpen}
                 >
                   Change Password
                 </Button>
@@ -295,11 +312,56 @@ export function Profile() {
                     </ListItem>
                   )}
                 </List> */}
-                </Typography>
+              </Typography>
             </CardContent>
           </Card>
         </Grid>
       </Grid>
+    </div>
+  );
+}
+
+// import * as React from 'react';
+// import Box from '@mui/material/Box';
+// import Button from '@mui/material/Button';
+// import Typography from '@mui/material/Typography';
+// import Modal from '@mui/material/Modal';
+
+// const style = {
+//   position: 'absolute',
+//   top: '50%',
+//   left: '50%',
+//   transform: 'translate(-50%, -50%)',
+//   width: 400,
+//   bgcolor: 'background.paper',
+//   border: '2px solid #000',
+//   boxShadow: 24,
+//   p: 4,
+// };
+
+export default function BasicModal() {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  return (
+    <div>
+      <Button onClick={handleOpen}>Open modal</Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Text in a modal
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+          </Typography>
+        </Box>
+      </Modal>
     </div>
   );
 }
