@@ -41,6 +41,7 @@ users(app, logger);
 museums(app, logger);
 tours(app, logger);
 ratings(app, logger);
+comments(app, logger);
 
 app.use('/photos', photos)
 // bookings(app, logger);

@@ -31,10 +31,11 @@ module.exports = function ratings(app, logger) {
             console.log('Request has params containing:', request.query);
             const payload = request.body; // This payload should be an object containing user data
             const query = knex('ratings').insert({ 
-                rating: 'rating',
-                username: 'username',
-                tour_name: 'tour_name',
-                museum_name: 'museum_name'
+                rating: request.body.rating,
+                username: request.body.username,
+                tour_name: request.body.tour_name,
+                museum_name: request.body.museum_name,
+                ratingID: request.body.ratingID,
             })
             const results = await query;
             console.log('Results of my POST statement:', results);

@@ -33,8 +33,8 @@ class User {
         const hashed = hash(password + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
         const validPassword = await bcrypt.compare(hashed, user.password);
         if (validPassword) {
-      //      const accessToken = jwt.sign({ ...users[0], claims: ['user'] }, accessTokenSecret );
-       //     return accessToken;
+            const accessToken = jwt.sign({ ...users[0], claims: ['user'] }, accessTokenSecret );
+            return accessToken;
         }
         return null;
         
