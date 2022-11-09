@@ -76,6 +76,51 @@ const insertTour = async (tour_Name, tourDate, tourTime, num_spaces_available, t
     return results;
 }
 
+const updateTourName = async (tour, new_name) => {
+    const results = await knex(TOUR_TABLE).where({'tour_Name':tour}).update({'tour_Name':new_name});
+    return results;
+}
+
+const updateTourSlots = async (tour, newSlots) => {
+    const results = await knex(TOUR_TABLE).where({'tour_Name':tour}).update({'num_spaces_available':newSlots});
+    return results;
+}
+
+const updateTourDateTime = async (tour, newDate, newTime) => {
+    const results = await knex(TOUR_TABLE).where({'tour_Name':tour}).update({'tourDate':newDate, 'tourTime':newTime});
+    return results;
+}
+
+const updateTourDate = async (tour, newDate) => {
+    const results = await knex(TOUR_TABLE).where({'tour_Name':tour}).update({'tourDate':newDate});
+    return results;
+}
+
+const updateTourTime = async (tour, newTime) => {
+    const results = await knex(TOUR_TABLE).where({'tour_Name':tour}).update({'tourTime':newTime});
+    return results;
+}
+
+const updateTourDescription = async (tour, new_description) => {
+    const results = await knex(TOUR_TABLE).where({'tour_Name':tour}).update({'tour_description':new_description});
+    return results;
+}
+
+const updateTourPrice = async (tour, new_price) => {
+    const results = await knex(TOUR_TABLE).where({'tour_Name':tour}).update({'price':new_price});
+    return results;
+}
+
+const updateTourTheme = async (tour, new_theme) => {
+    const results = await knex(TOUR_TABLE).where({'tour_Name':tour}).update({'theme':new_theme});
+    return results;
+}
+
+const deleteTour = async (tour) => {
+    const results = await knex(TOUR_TABLE).delete().where({'tour_Name':tour});
+    return results;
+}
+
 module.exports = {
     getAllTours,
     getToursbyName,
@@ -87,5 +132,14 @@ module.exports = {
     getToursbyWeek,
     getToursbyDate,
     getToursbyTheme,
-    insertTour
+    insertTour,
+    updateTourName,
+    updateTourSlots,
+    updateTourDateTime,
+    updateTourDate,
+    updateTourTime,
+    updateTourDescription,
+    updateTourPrice,
+    updateTourTheme,
+    deleteTour
 }

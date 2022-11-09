@@ -108,122 +108,144 @@ router.post('/', async(request, response, next) => {
         const results = await request.models.tour.insertTour(tour_Name, tourDate, tourTime, num_spaces_available,
                                                              total_space, tour_description, price, museum_name, theme);
         response.status(201).json(results);
+        next();
     } catch (err) {
         console.error('There was an error in POST /tours', err);
         response.status(500).json({ message: err.message });
     }
 });
 
-module.exports = router;
+//PUT tours: TourName, TourSlots, TourDateTime, TourDescription, TourPrice, TourTheme
+router.put('/updateTourName', async(request, response, next) => {
+    try {
+        console.log('Initiating PUT /tours/updateTourName request');
+        console.log('Request has body containing:', request.body);
 
-// module.exports = function tours(app, logger) {
-//
-//     //PUT: updateTourSlots, updateTourDateTime, updateTourDescription, updateTourPrice, updateTourTheme
-//     app.put('/tours/updateTourSlots', async (request, response) => {
-//         try {
-//             console.log('Initiating PUT /tours/updateTourSlots request');
-//             console.log('Request has body containing:', request.body);
-//
-//             const tour = request.body.tour_Name;
-//             const newSlots = request.body.num_spaces_available;
-//
-//             const results = await knex('tours').where({'tour_Name':tour}).update({'num_spaces_available':newSlots});
-//             response.status(200).json(results);
-//         } catch (err) {
-//             console.error('There was an error in PUT /tours/updateTourSlots', err);
-//             response.status(500).json({ message: err.message });
-//         }
-//     });
-//     app.put('/tours/updateTourDateTime', async (request, response) => {
-//         try {
-//             console.log('Initiating PUT /tours/updateTourDateTime request');
-//             console.log('Request has body containing:', request.body);
-//
-//             const tour = request.body.tour_Name;
-//             const newDate = request.body.tourDate; //format: YYYY-MM-DD"
-//             const newTime = request.body.tourTime; //format: "00:00:00" hr:min:sec in military time
-//
-//             if(newDate && newTime){
-//                 const results = await knex('tours').where({'tour_Name':tour}).update({'tourDate':newDate, 'tourTime':newTime});
-//                 response.status(200).json(results);
-//             }
-//             else if(newDate){
-//                 const results = await knex('tours').where({'tour_Name':tour}).update({'tourDate':newDate});
-//                 response.status(200).json(results);
-//             }
-//             else if(newTime){
-//                 const results = await knex('tours').where({'tour_Name':tour}).update({'tourTime':newTime});
-//                 response.status(200).json(results);
-//             }
-//             else{
-//                 response.status(400).json(); //if there's nothing in the body
-//                 console.log('There was an error in PUT /tours/updateTourDateTime', request.body);
-//             }
-//
-//         } catch (err) {
-//             console.error('There was an error in PUT /tours/updateTourDateTime', err);
-//             response.status(500).json({ message: err.message });
-//         }
-//     });
-//     app.put('/tours/updateTourDescription', async (request, response) => {
-//         try {
-//             console.log('Initiating PUT /tours/updateTourDescription request');
-//             console.log('Request has body containing:', request.body);
-//
-//             const tour = request.body.tour_Name;
-//             const newSummary = request.body.tour_description;
-//
-//             const results = await knex('tours').where({'tour_Name':tour}).update({'tour_description':newSummary});
-//             response.status(200).json(results);
-//         } catch (err) {
-//             console.error('There was an error in PUT /tours/updateTourDescription', err);
-//             response.status(500).json({ message: err.message });
-//         }
-//     });
-//     app.put('/tours/updateTourPrice', async (request, response) => {
-//         try {
-//             console.log('Initiating PUT /tours/updateTourPrice request');
-//             console.log('Request has body containing:', request.body);
-//
-//             const tour = request.body.tour_Name;
-//             const newPrice = request.body.price; //format: "price":an integer
-//
-//             const results = await knex('tours').where({'tour_Name':tour}).update({'price':newPrice});
-//             response.status(200).json(results);
-//         } catch (err) {
-//             console.error('There was an error in PUT /tours/updateTourPrice', err);
-//             response.status(500).json({ message: err.message });
-//         }
-//     });
-//     app.put('/tours/updateTourTheme', async (request, response) => {
-//         try {
-//             console.log('Initiating PUT /tours/updateTourTheme request');
-//             console.log('Request has body containing:', request.body);
-//
-//             const tour = request.body.tour_Name;
-//             const newTheme = request.body.theme;
-//
-//             const results = await knex('tours').where({'tour_Name':tour}).update({'theme':newTheme});
-//             response.status(200).json(results);
-//         } catch (err) {
-//             console.error('There was an error in PUT /tours/updateTourTheme', err);
-//             response.status(500).json({ message: err.message });
-//         }
-//     });
-//
-//
-//     //DELETE: deleteTour
-//     app.delete('/tours', async (request, response) => {
-//         try {
-//             console.log('Initiating DELETE /tours request');
-//             console.log('Request has params containing:', request.query);
-//
-//             const results = await knex('tours').delete().where({'tour_Name':request.query.tour_Name});
-//             console.log('Results of my DELETE statement:', results);
-//             response.status(200).json(results);
-//         } catch (err) {
-//             console.error('There was an error in DELETE /users', err);
-//             response.status(500).json({ message: err.message });
-//         }
-//     });
-// }
+        const tour = request.body.tour_Name;
+        const newName = request.body.new_name;
+
+        const results = await request.models.tour.updateTourName(tour, newName);
+        response.status(200).json(results);
+        next();
+    } catch (err) {
+            console.error('There was an error in PUT /tours/updateTourName', err);
+            response.status(500).json({ message: err.message });
+    }
+});
+
+router.put('/updateTourSlots', async(request, response, next) => {
+    try {
+        console.log('Initiating PUT /tours/updateTourSlots request');
+        console.log('Request has body containing:', request.body);
+
+        const tour = request.body.tour_Name;
+        const newSlots = request.body.num_spaces_available;
+
+        const results = await request.models.tour.updateTourSlots(tour, newSlots);
+        response.status(200).json(results);
+        next();
+    } catch (err) {
+            console.error('There was an error in PUT /tours/updateTourSlots', err);
+            response.status(500).json({ message: err.message });
+    }
+});
+
+router.put('/updateTourDateTime', async (request, response, next) => {
+    try {
+        console.log('Initiating PUT /tours/updateTourDateTime request');
+        console.log('Request has body containing:', request.body);
+
+        const tour = request.body.tour_Name;
+        const newDate = request.body.tourDate; //format: YYYY-MM-DD"
+        const newTime = request.body.tourTime; //format: "00:00:00" hr:min:sec in military time
+
+        if(newDate && newTime){
+            const results = await request.models.tour.updateTourDateTime(tour, newDate, newTime);
+            response.status(200).json(results);
+        }
+        else if(newDate){
+            const results = await request.models.tour.updateTourDate(tour, newDate);
+            response.status(200).json(results);
+        }
+        else if(newTime){
+            const results = await request.models.tour.updateTourTime(tour, newTime);
+            response.status(200).json(results);
+        }
+        else{
+            response.status(400).json(); //if there's nothing in the body
+            console.log('There was an error in PUT /tours/updateTourDateTime', request.body);
+        }
+        next();
+    } catch (err) {
+        console.error('There was an error in PUT /tours/updateTourDateTime', err);
+        response.status(500).json({ message: err.message });
+    }
+});
+
+router.put('/updateTourDescription', async(request, response, next) => {
+    try {
+        console.log('Initiating PUT /tours/updateTourDescription request');
+        console.log('Request has body containing:', request.body);
+
+        const tour = request.body.tour_Name;
+        const newSummary = request.body.tour_description;
+
+        const results = await request.models.tour.updateTourDescription(tour, newSummary);
+        response.status(200).json(results);
+        next();
+    } catch (err) {
+            console.error('There was an error in PUT /tours/updateTourDescription', err);
+            response.status(500).json({ message: err.message });
+    }
+});
+
+router.put('/updateTourPrice', async(request, response, next) => {
+    try {
+        console.log('Initiating PUT /tours/updateTourPrice request');
+        console.log('Request has body containing:', request.body);
+
+        const tour = request.body.tour_Name;
+        const newPrice = request.body.price;
+
+        const results = await request.models.tour.updateTourPrice(tour, newPrice);
+        response.status(200).json(results);
+        next();
+    } catch (err) {
+            console.error('There was an error in PUT /tours/updateTourPrice', err);
+            response.status(500).json({ message: err.message });
+    }
+});
+
+router.put('/updateTourTheme', async(request, response, next) => {
+    try {
+        console.log('Initiating PUT /tours/updateTourTheme request');
+        console.log('Request has body containing:', request.body);
+
+        const tour = request.body.tour_Name;
+        const newTheme = request.body.theme;
+
+        const results = await request.models.tour.updateTourTheme(tour, newTheme);
+        response.status(200).json(results);
+        next();
+    } catch (err) {
+            console.error('There was an error in PUT /tours/updateTourTheme', err);
+            response.status(500).json({ message: err.message });
+    }
+});
+
+router.delete('/', async (request, response, next) => {
+    try {
+       console.log('Initiating DELETE /tours request');
+       console.log('Request has params containing:', request.query);
+
+       const results = await request.models.tour.deleteTour(request.query.tour_Name);
+       console.log('Results of my DELETE statement:', results);
+       response.status(200).json(results);
+       next();
+    } catch (err) {
+        console.error('There was an error in DELETE /tours', err);
+        response.status(500).json({ message: err.message });
+    }
+});
+
+module.exports = router;
