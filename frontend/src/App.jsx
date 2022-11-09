@@ -160,6 +160,7 @@ export const App = () => {
         <Route exact path='/profile' element={< Profile />} onEnter={requireAuth}></Route>
         <Route exact path='/tours' element={< Tours museums={museums} />}></Route>
         <Route exact path='/Registration' element={< Registration />}></Route>
+        <Route exact path='/indvTour' element={< indvTour />}></Route>
       </Routes>
     </Router>
   );
