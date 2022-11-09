@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Grid, Card, CardContent, CardMedia, CardActions, Typography, Paper } from "@material-ui/core";
 import Button from '@mui/material/Button';
 
-export const Tours = ({ museums }) => {
+export const Tours = ({ museums, photos }) => {
 
   function GridItem(props) {
     let items = [
@@ -16,7 +16,7 @@ export const Tours = ({ museums }) => {
           <img
             className="Image"
             alt="museumlogo"
-            src={props.item.Image}
+            src={props.item.photo_data}
             style={{ alignItems: "center", height: 100, width: "auto" }}
           ></img>
           <Typography
