@@ -20,7 +20,7 @@ module.exports = function users(app, logger) {
             console.log('Request has params containing:', request.query);
     
             const payload = request.body; // This payload should be an object containing user data
-            const rawPass = request.query.password;
+            const rawPass = request.body.password;
         // table.string('password_hash');
             const { createHash } = require('crypto');
             function hash(string) {
