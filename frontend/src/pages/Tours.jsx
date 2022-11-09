@@ -16,7 +16,7 @@ export const Tours = ({ museums, photos }) => {
           <img
             className="Image"
             alt="museumlogo"
-            src={props.item.photo_data}
+            src={"https://apod.nasa.gov/apod/image/2210/CocoonWide_Ermolli_5937.jpg"}
             style={{ alignItems: "center", height: 100, width: "auto" }}
           ></img>
           <Typography

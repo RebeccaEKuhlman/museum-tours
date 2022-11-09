@@ -20,7 +20,7 @@ export const Home = ({ museums }) => {
           <img
             className="Image"
             alt="museumlogo"
-            src={props.item.Image}
+            src={"https://apod.nasa.gov/apod/image/2210/CocoonWide_Ermolli_5937.jpg"}
             style={{ alignItems: "center", height: 100, width: "auto" }}
           ></img>
           <Typography
