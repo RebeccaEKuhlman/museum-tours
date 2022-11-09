@@ -1,7 +1,6 @@
 
 const knex = require('../database/knex.js');
 const express = require('express');
-const pool = require('../db');
 module.exports = function museums(app, logger) {
 
   //fetchToursByName, fetchToursByMuseum_name, and fetchAllTours
