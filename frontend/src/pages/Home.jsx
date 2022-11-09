@@ -7,7 +7,7 @@ import axios from 'axios';
 import './Home.css';
 
 // React Functional Component
-export const Home = ({ museums }) => {
+export const Home = ({ museums, photos }) => {
   function Project(props) {
     let items = [
       <Paper
@@ -20,7 +20,7 @@ export const Home = ({ museums }) => {
           <img
             className="Image"
             alt="museumlogo"
-            src={"https://apod.nasa.gov/apod/image/2210/CocoonWide_Ermolli_5937.jpg"}
+            src={props.item.photo_data}
             style={{ alignItems: "center", height: 100, width: "auto" }}
           ></img>
           <Typography
@@ -98,8 +98,8 @@ export const Home = ({ museums }) => {
     animation: "slide",
     indicators: true,
     duration: 500,
-    navButtonsAlwaysVisible: true,
-    navButtonsAlwaysInvisible: false,
+    navButtonsAlwaysVisible: false,
+    navButtonsAlwaysInvisible: true,
     cycleNavigation: true,
     fullHeightHover: true,
     swipe: true,

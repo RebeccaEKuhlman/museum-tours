@@ -4,6 +4,16 @@ import Button from '@mui/material/Button';
 
 export const Tours = ({ museums, photos }) => {
 
+  
+    // const [museum, setMuseum] = useState({});
+    // const [photo, setPhoto] = useState([])
+  
+    // useEffect(() => {
+    //   getMuseum(1).then(setMuseum);
+    //   getPhoto(1).then(setPhoto);
+    // }, []);
+  
+
   function GridItem(props) {
     let items = [
       <Paper
@@ -16,7 +26,7 @@ export const Tours = ({ museums, photos }) => {
           <img
             className="Image"
             alt="museumlogo"
-            src={"https://apod.nasa.gov/apod/image/2210/CocoonWide_Ermolli_5937.jpg"}
+            src={props.item.photo_data}
             style={{ alignItems: "center", height: 100, width: "auto" }}
           ></img>
           <Typography
