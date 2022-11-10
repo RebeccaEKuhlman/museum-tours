@@ -46,135 +46,132 @@ export const Tours = ({ museums, photos }) => {
     let items = [
       <Paper
         className="Project"
-        style={{ backgroundColor: "ivory", alignItems: "center" }}
+        style={{ backgroundColor: "ivory", alignItems: "center", marginBottom: 10 }}
         elevation={10}
         key={props.item.museum_name}
       >
-        <body>
-          {/* <CardContent className="Content">
-            <img
-              className="Image"
-              alt="museumlogo"
-              src="https://via.placeholder.com/300x150"
-              style={{ alignItems: "center", height: 100, width: "auto" }}
-            ></img>
-            <Typography
-              className="Title"
-              style={{
-                color: "#696963",
-                fontFamily: "Baskerville",
-                fontWeight: "bold",
-                fontSize: 25,
-              }}
-            >
-              {props.item.museum_name}
-            </Typography>
+        {/* <CardContent className="Content">
+          <img
+            className="Image"
+            alt="museumlogo"
+            src="https://via.placeholder.com/300x150"
+            style={{ alignItems: "center", height: 100, width: "auto" }}
+          ></img>
+          <Typography
+            className="Title"
+            style={{
+              color: "#696963",
+              fontFamily: "Baskerville",
+              fontWeight: "bold",
+              fontSize: 25,
+            }}
+          >
+            {props.item.museum_name}
+          </Typography>
+          <Typography
+            className="Caption"
+            style={{
+              color: "#696963",
+              fontFamily: "Baskerville",
+            }}
+          >
+            {props.item.Caption}
+          </Typography>
+          <Typography
+            className="Caption"
+            style={{
+              color: "#696963",
+              fontFamily: "Baskerville",
+            }}
+          >
+            Current Director: {props.item.director}
+          </Typography>
+          <Typography
+            className="Caption"
+            style={{
+              color: "#696963",
+              fontFamily: "Baskerville",
+            }}
+          >
+            Exhibits on Display: {props.item.num_exhibits}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button
+            variant="outlined"
+            className="ViewButton"
+            style={{
+              color: "#F6F7EB",
+              backgroundColor: "cornflowerblue",
+              fontFamily: "Baskerville",
+            }}
+          >
+            View Now
+          </Button>
+        </CardActions>
+          */}
+        <Card sx={{ maxWidth: 345 }}>
+          <CardHeader
+            className="Caption"
+            style={{
+              color: "#696963",
+              fontFamily: "Baskerville",
+            }}
+            title={props.item.museum_name}
+          />
+          <CardMedia
+            component="img"
+            height="150"
+            width="300"
+            image="https://via.placeholder.com/300x150"
+          />
+          <CardContent>
             <Typography
               className="Caption"
               style={{
                 color: "#696963",
                 fontFamily: "Baskerville",
               }}
+              variant="body2"
             >
-              {props.item.Caption}
-            </Typography>
-            <Typography
-              className="Caption"
-              style={{
-                color: "#696963",
-                fontFamily: "Baskerville",
-              }}
-            >
-              Current Director: {props.item.director}
-            </Typography>
-            <Typography
-              className="Caption"
-              style={{
-                color: "#696963",
-                fontFamily: "Baskerville",
-              }}
-            >
-              Exhibits on Display: {props.item.num_exhibits}
+              Address?
             </Typography>
           </CardContent>
-          <CardActions>
-            <Button
-              variant="outlined"
-              className="ViewButton"
-              style={{
-                color: "#F6F7EB",
-                backgroundColor: "cornflowerblue",
-                fontFamily: "Baskerville",
-              }}
+          <CardActions disableSpacing>
+            <ExpandMore
+              expand={expanded}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label="show more"
             >
-              View Now
-            </Button>
+              <ExpandMoreIcon />
+            </ExpandMore>
           </CardActions>
-           */}
-          <Card sx={{ maxWidth: 345 }}>
-            <CardHeader
-              className="Caption"
-              style={{
-                color: "#696963",
-                fontFamily: "Baskerville",
-              }}
-              title={props.item.museum_name}
-            />
-            <CardMedia
-              component="img"
-              height="150"
-              width="300"
-              image="https://via.placeholder.com/300x150"
-            />
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
               <Typography
+                paragraph
                 className="Caption"
                 style={{
                   color: "#696963",
                   fontFamily: "Baskerville",
                 }}
-                variant="body2"
-                color="text.secondary"
               >
-                Address?
+                Current Director: {props.item.director}
+              </Typography>
+              <Typography
+                paragraph
+                className="Caption"
+                style={{
+                  color: "#696963",
+                  fontFamily: "Baskerville",
+                }}
+              >
+                Exhibits on Display: {props.item.num_exhibits}
               </Typography>
             </CardContent>
-            <CardActions disableSpacing>
-              <ExpandMore
-                expand={expanded}
-                onClick={handleExpandClick}
-                aria-expanded={expanded}
-                aria-label="show more"
-              >
-                <ExpandMoreIcon />
-              </ExpandMore>
-            </CardActions>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
-              <CardContent>
-                <Typography
-                  paragraph
-                  className="Caption"
-                  style={{
-                    color: "#696963",
-                    fontFamily: "Baskerville",
-                  }}
-                >
-                  Current Director: {props.item.director}
-                </Typography>
-                <Typography
-                  paragraph
-                  className="Caption"
-                  style={{
-                    color: "#696963",
-                    fontFamily: "Baskerville",
-                  }}
-                >
-                  Exhibits on Display: {props.item.num_exhibits}
-                </Typography>
-              </CardContent>
-            </Collapse>
-          </Card>
-        </body>
+          </Collapse>
+        </Card>
       </Paper>,
     ];
     return (
@@ -242,10 +239,10 @@ export const Tours = ({ museums, photos }) => {
 
   return (
     <div style={{ marginTop: 10, maxWidth: "100%" }}>
-      <Grid container spacing={1} alignItems="center" justifyContent="center">
+      <Grid container alignItems="center" justifyContent="center">
         <Card
           variant="outlined"
-          style={{ display: "inline-block", bgcolor: "#F6F7EB" }}
+          style={{ display: "inline-block", bgcolor: "#F6F7EB", marginBottom: 10}}
           width="50%"
         >
           <Typography
