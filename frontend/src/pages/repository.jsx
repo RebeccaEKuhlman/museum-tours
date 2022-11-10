@@ -37,10 +37,8 @@ export class Repository {
         return new Promise((resolve, reject) => {
             console.log("Post Registration");
             axios.post( `http://${ this.url }:8000/users/registration`, {
-                data: {
                     email: email,
                     password: password
-                }
             })
                 .then(x => {
                     console.log("x.data", x.data);
