@@ -1,6 +1,6 @@
 /**const { nextTick } = require('process');
 
-const accessTokenSecret  = 'mysupercoolsecret' ;
+
 const jwt = require('jsonwebtoken' );
 class User {
     constructor(_DBQuery, _disconnect) {
@@ -10,6 +10,7 @@ class User {
     close () {
         this.disconnect();
     }**/// GIVES USER BASED OFF OF TOKEN
+    const accessTokenSecret  = 'accessToken' ;
     const jwt = require('jsonwebtoken' );
     const knex = require('../database/knex');
     const fetchAllUsers = async () => {
@@ -22,8 +23,8 @@ class User {
         const results = await query;
         return results;
     }
-    const fetchUsersByEmail = async (email) =>{
-        const query = knex('users').select().where({email});
+    const fetchUsersByEmail = async (givenEmail) => {
+        const query = knex.select().where({email: givenEmail}).from('users');
         const results = await query;
         return results;
     }

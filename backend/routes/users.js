@@ -27,7 +27,7 @@ module.exports = function users(app, logger) {
             const salt = await bcrypt.genSalt(10);
             const username = payload.username;
             const email = payload.email;
-            const hashed = await bcrypt.hash(password, salt);;
+            const hashed = await bcrypt.hash(rawPass, salt);;
             const joinDate = new Date();
             const query = knex('users').insert({ username, password: hashed, email, joinDate, photoId: 1})
             const results = await query;
@@ -52,7 +52,7 @@ module.exports = function users(app, logger) {
                 return null;
             }
             const user = users[0];
-            const auth = await authenticateUser(user, user.password); 
+            const auth = await authenticateUser(user, password); 
          //   const validPassword = await bcrypt.compare(password, user.password);
             if (auth != null) {
                 // if user exists
