@@ -12,8 +12,8 @@
        */
 const knex = require('../database/knex.js');
 const bcrypt = require('bcrypt');
-const {fetchUsersByEmail} = require('../models/users');
-const {authenticateUser} = require('../models/users');
+const fetchUsersByEmail = require('../models/users');
+const authenticateUser = require('../models/users');
 const { query } = require('express');
 
 module.exports = function users(app, logger) {
@@ -33,7 +33,6 @@ module.exports = function users(app, logger) {
             const results = await query;
             console.log('Results of my POST statement:', results);
             response.status(201).json(results);
-            return {authenticateUser}(username, hashed);
         } catch (err) {
             console.error('There was an error in POST /users', err);
             response.status(500).json({ message: err.message });
@@ -45,20 +44,18 @@ module.exports = function users(app, logger) {
             console.log('Request has a body / payload containing:', request.body);
             console.log('Request has params containing:', request.query);
             const email = request.body.email;
-            const password = request.body.password;
             const users = await fetchUsersByEmail(email);
             if (users.length === 0) {
                 console.error(`No users matched the email: ${email}`);
                 return null;
             }
             const user = users[0];
-            const auth = await authenticateUser(user, user.password); 
-         //   const validPassword = await bcrypt.compare(password, user.password);
-            if (auth != null) {
+            const validPassword = await bcrypt.compare(password, user.password);
+            if (validPassword) {
                 // if user exists
                 delete user.password;
                 response.status(200).json(results);
-                return auth
+                return await authenticateUser(users[0], user.password);
             } else {
                 response.status(200).json({
                     "error": "Invalid Credentials"
