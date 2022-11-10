@@ -22,16 +22,28 @@ module.exports = function users(app, logger) {
             console.log('Initiating POST /registration request');
             console.log('Request has a body / payload containing:', request.body);
             console.log('Request has params containing:', request.query);
+    
             const payload = request.body; // This payload should be an object containing user data
-            const rawPass = request.body.password;
-            const salt = await bcrypt.genSalt(10);
+            const rawPass = request.query.password;
+        // table.string('password_hash');
+            const { createHash } = require('crypto');
+            function hash(string) {
+                return createHash('sha256').update(string).digest('hex');
+            }
             const username = payload.username;
             const email = payload.email;
-            const hashed = await bcrypt.hash(password, salt);;
+            //salt: aB6nkeF0He3imq4AOhbO5kEljbveRpLn
+            const hashed = hash(rawPass + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
+            // const { DBQuery, disconnect } = await connectToDatabase();
             const joinDate = new Date();
+            // const results = await DBQuery('INSERT INTO users(name) VALUES(username, hashed, email, date)'
+            // , [payload.name]);
             const query = knex('users').insert({ username, password: hashed, email, joinDate, photoId: 1})
             const results = await query;
             console.log('Results of my POST statement:', results);
+            // Since we already know the id we're looking for, let's load the most up to date data
+            // const newlyCreatedRecord = await DBQuery('SELECT * FROM student WHERE id = ?', [id]);
+            // disconnect();
             response.status(201).json(results);
         } catch (err) {
             console.error('There was an error in POST /users', err);
