@@ -12,10 +12,6 @@
        */
 const knex = require('../database/knex.js');
 const bcrypt = require('bcrypt');
-const fetchUsersByEmail = require('../models/users');
-const authenticateUser = require('../models/users');
-const { query } = require('express');
-
 module.exports = function users(app, logger) {
     app.post('/users/registration', async (request, response) => {
         try {
@@ -55,19 +51,22 @@ module.exports = function users(app, logger) {
             console.log('Initiating POST /login request');
             console.log('Request has a body / payload containing:', request.body);
             console.log('Request has params containing:', request.query);
-            const email = request.body.email;
-            const users = await fetchUsersByEmail(email);
-            if (users.length === 0) {
-                console.error(`No users matched the email: ${email}`);
-                return null;
+    
+            const payload = request.body; // This payload should be an object containing user data
+            const rawPass = request.body.password;
+
+            const { createHash } = require('crypto');
+            function hash(string) {
+                return createHash('sha256').update(string).digest('hex');
             }
-            const user = users[0];
-            const validPassword = await bcrypt.compare(password, user.password);
-            if (validPassword) {
+            const email = request.body.email;
+            //salt: aB6nkeF0He3imq4AOhbO5kEljbveRpLn
+            const hashed = hash(rawPass + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
+            const results = await knex('users').where({email: email}).where({password: hashed});
+
+            if (typeof results[0] != "undefined") {
                 // if user exists
-                delete user.password;
                 response.status(200).json(results);
-                return await authenticateUser(users[0], user.password);
             } else {
                 response.status(200).json({
                     "error": "Invalid Credentials"
