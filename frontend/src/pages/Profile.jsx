@@ -3,14 +3,14 @@ import { Typography } from "@material-ui/core";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControl from '@mui/material/FormControl';
+import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
+import Select from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
 import Checkbox from "@material-ui/core/Checkbox";
 import Card from "@mui/material/Card";
-import Input from '@mui/material/Input';
+import Input from "@mui/material/Input";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -20,7 +20,7 @@ import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import Modal from '@mui/material/Modal';
+import Modal from "@mui/material/Modal";
 import { Repository } from "./repository";
 
 function generate(element) {
@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
   select: {
     alignItems: "left",
     textAlign: "left",
-  }
+  },
 }));
 
 export function Profile() {
@@ -79,21 +79,21 @@ export function Profile() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [ newpass, setNewPass ] = useState('');
-  const [ oldpass, setOldPass ] = useState('');
-  const [ newPhotoId, setNewPhotoId ] = useState('');
-  const [ photos, setPhotos ] = useState('');
-  const [ university, setUniversity ] = useState('');
-  const [ bio, setBio ] = useState('');
-  const [ showForm, setShowForm ] = useState(false);
-  const [ userForm, setuserForm ] = useState({
+  const [newpass, setNewPass] = useState("");
+  const [oldpass, setOldPass] = useState("");
+  const [newPhotoId, setNewPhotoId] = useState("");
+  const [photos, setPhotos] = useState("");
+  const [university, setUniversity] = useState("");
+  const [bio, setBio] = useState("");
+  const [showForm, setShowForm] = useState(false);
+  const [userForm, setuserForm] = useState({
     userName: "",
     password: "",
   });
 
   useEffect(() => {
     var repository = new Repository();
-    repository.getPhoto().then(x => setPhotos(x));
+    repository.getPhoto().then((x) => setPhotos(x));
   }, []);
 
   if (!photos) {
@@ -105,15 +105,14 @@ export function Profile() {
     e.preventDefault();
     console.log("HERE");
     var repository = new Repository();
-    repository.postUser(photos, university, bio).then(x => 
-      {
-        // if (typeof x.error != "undefined") {
-        //   alert("Invalid Credentials")
-        // } else {
-        //   window.location.href = "/profile";
-        // }
-        alert("Updated");
-      });
+    repository.postUser(photos, university, bio).then((x) => {
+      // if (typeof x.error != "undefined") {
+      //   alert("Invalid Credentials")
+      // } else {
+      //   window.location.href = "/profile";
+      // }
+      alert("Updated");
+    });
   };
 
   return (
@@ -125,7 +124,15 @@ export function Profile() {
         aria-describedby="modal-modal-description"
       >
         <Card className={classes.form}>
-          <h2 style={{ fontFamily: "Baskerville", margin: 10, textAlign: "center" }}>Update Password</h2>
+          <h2
+            style={{
+              fontFamily: "Baskerville",
+              margin: 10,
+              textAlign: "center",
+            }}
+          >
+            Update Password
+          </h2>
           <TextField
             variant="outlined"
             margin="normal"
@@ -149,20 +156,12 @@ export function Profile() {
             onInput={(e) => setNewPass(e.target.value)}
           />
           <div style={{ margin: 12, textAlign: "center" }}>
-            <Button
-              onClick={handleClose}
-              type="submit"
-              variant="contained"
-            >
+            <Button onClick={handleClose} type="submit" variant="contained">
               Confirm
             </Button>
           </div>
-          <div style={{ marginTop: 16, textAlign: "center"}}>
-            <Button
-              onClick={handleClose}
-            >
-              Cancel
-            </Button>
+          <div style={{ marginTop: 16, textAlign: "center" }}>
+            <Button onClick={handleClose}>Cancel</Button>
           </div>
         </Card>
       </Modal>
@@ -196,17 +195,13 @@ export function Profile() {
               >
                 <b className={classes.typography}>{photos[2].caption}</b>
               </Typography>
-              <Typography
-                className={classes.typography}
-                variant="body1"
-              >
-                <b className={classes.typography}>University:</b> Southern Methodist University
+              <Typography className={classes.typography} variant="body1">
+                <b className={classes.typography}>University:</b> Southern
+                Methodist University
               </Typography>
-              <Typography
-                className={classes.typography}
-                variant="body1"
-              >
-                <b className={classes.typography}>Bio:</b> This is a sentence about the person.
+              <Typography className={classes.typography} variant="body1">
+                <b className={classes.typography}>Bio:</b> This is a sentence
+                about the person.
               </Typography>
             </div>
           </Card>
@@ -237,16 +232,18 @@ export function Profile() {
                     id="photo"
                     label="photo"
                     value={newPhotoId}
-                    onChange={event => setNewPhotoId(event.target.value)}
+                    onChange={(event) => setNewPhotoId(event.target.value)}
                   >
-                    {
-                      photos.map((photo, index) => {
-                        if (photo.is_profile) {
-                          return <MenuItem key={index} value={photo.photoId}>{photo.caption}</MenuItem>
-                        } 
-                        return undefined
-                      })
-                    }
+                    {photos.map((photo, index) => {
+                      if (photo.is_profile) {
+                        return (
+                          <MenuItem key={index} value={photo.photoId}>
+                            {photo.caption}
+                          </MenuItem>
+                        );
+                      }
+                      return undefined;
+                    })}
                   </Select>
                   <TextField
                     variant="outlined"
@@ -260,7 +257,7 @@ export function Profile() {
                     onInput={(e) => setUniversity(e.target.value)}
                   />
                   <TextField
-                    sx={{mb: 3, mt: 1 }}
+                    sx={{ mb: 3, mt: 1 }}
                     variant="outlined"
                     margin="normal"
                     fullWidth
@@ -274,6 +271,11 @@ export function Profile() {
                   <Button
                     type="submit"
                     fullWidth
+                    style={{
+                      color: "#F6F7EB",
+                      backgroundColor: "cornflowerblue",
+                      fontFamily: "Baskerville",
+                    }}
                     variant="contained"
                     className={classes.submit}
                   >
@@ -282,6 +284,10 @@ export function Profile() {
                 </form>
                 <Button
                   sx={{ color: "cornflowerblue", mt: 1 }}
+                  style={{
+                    color: "cornflowerblue",
+                    fontFamily: "Baskerville",
+                  }}
                   onClick={handleOpen}
                 >
                   Change Password
@@ -292,15 +298,14 @@ export function Profile() {
         </Grid>
         <Grid item xs={9}>
           <Card>
-            <CardContent
-              sx={{ maxWidth: 400, backgroundcolor: "#FFFFFF" }}
-            >
-              <h2 style={{ fontSize: 50, fontFamily: "Baskerville", margin: 10 }}>My Tours</h2>
-              <hr/>
-              <Typography
-                className={classes.typography}
-                variant="body2"
+            <CardContent sx={{ maxWidth: 400, backgroundcolor: "#FFFFFF" }}>
+              <h2
+                style={{ fontSize: 50, fontFamily: "Baskerville", margin: 10 }}
               >
+                My Tours
+              </h2>
+              <hr />
+              <Typography className={classes.typography} variant="body2">
                 {/* <List dense={false}>
                   {generate(
                     <ListItem>
