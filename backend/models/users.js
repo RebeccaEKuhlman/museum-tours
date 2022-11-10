@@ -1,7 +1,7 @@
 /**const { nextTick } = require('process');
-const jwt = require('jsonwebtoken' );
-const accessTokenSecret  = 'mysupercoolsecret' ;
 
+const accessTokenSecret  = 'mysupercoolsecret' ;
+const jwt = require('jsonwebtoken' );
 class User {
     constructor(_DBQuery, _disconnect) {
         this.DBQuery = _DBQuery;
@@ -10,16 +10,21 @@ class User {
     close () {
         this.disconnect();
     }**/// GIVES USER BASED OFF OF TOKEN
+    const jwt = require('jsonwebtoken' );
+    const knex = require('../database/knex');
     const fetchAllUsers = async () => {
-        const results = await this.DBQuery('SELECT * FROM users');
+        const query = knex('users');
+        const results = await query;
         return results;
     }
     const fetchUsersByName = async (username) => {
-        const results = await this.DBQuery('SELECT * FROM users WHERE name = ?', [username]);
+        const query = knex('users').select().where({username});
+        const results = await query;
         return results;
     }
     const fetchUsersByEmail = async (email) =>{
-        const results = await this.DBQuery('SELECT * FROM users WHERE email = ?', [email]);
+        const query = knex('users').select().where({email});
+        const results = await query;
         return results;
     }
     const authenticateUser = async  (username, password) =>{
@@ -30,12 +35,7 @@ class User {
             return null;
         }
         const user = users[0];
-        const { createHash } = require('crypto');
-        function hash(string) {
-            return createHash('sha256').update(string).digest('hex');
-        }
-        const hashed = hash(password + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
-        const validPassword = await bcrypt.compare(hashed, user.password);
+        const validPassword = await bcrypt.compare(password, user.password);
         if (validPassword) {
             const accessToken = jwt.sign({ ...users[0], claims: ['user'] }, accessTokenSecret );
             return accessToken;
