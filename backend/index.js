@@ -38,9 +38,7 @@ app.get('/health', (request, response, next) => {
 });
 
 users(app, logger);
-museums(app, logger);
-tours(app, logger);
-ratings(app, logger);
+
 comments(app, logger);
 app.use('/photos', photos)
 app.use('/bookings', bookings);
