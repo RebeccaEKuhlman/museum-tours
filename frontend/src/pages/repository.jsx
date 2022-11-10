@@ -37,10 +37,8 @@ export class Repository {
         return new Promise((resolve, reject) => {
             console.log("Post Registration");
             axios.post( `http://${ this.url }:8000/users/registration`, {
-                data: {
                     email: email,
                     password: password
-                }
             })
                 .then(x => {
                     console.log("x.data", x.data);
@@ -78,7 +76,21 @@ export class Repository {
     getMuseums() {
         return new Promise((resolve, reject) => {
             console.log("Get Museums");
-            axios.get( `http://${ this.url }:8000/museums`)
+            axios.get( `http://${ this.url }:8000/museums/`)
+                .then(x => {
+                    resolve(x.data);
+                })
+                .catch(err => {
+                    alert(err);
+                    reject(err);
+                })
+        });
+    }
+
+    getPhotos() {
+        return new Promise((resolve, reject) => {
+            console.log("Get Photos");
+            axios.get( `http://${ this.url }:8000/photos`)
                 .then(x => {
                     resolve(x.data);
                 })
@@ -93,6 +105,20 @@ export class Repository {
         return new Promise((resolve, reject) => {
             console.log("Get Tours");
             axios.get( `http://${ this.url }:8000/tours`)
+                .then(x => {
+                    resolve(x.data);
+                })
+                .catch(err => {
+                    alert(err);
+                    reject(err);
+                })
+        });
+    }
+
+    getPhoto() {
+        return new Promise((resolve, reject) => {
+            console.log("Get Photo");
+            axios.get( `http://${ this.url }:8000/photos/`)
                 .then(x => {
                     resolve(x.data);
                 })

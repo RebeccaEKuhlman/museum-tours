@@ -1,14 +1,30 @@
-import * as React from 'react';
-import { Grid, Card, CardContent, CardMedia, CardActions, Typography, Paper } from "@material-ui/core";
-import Button from '@mui/material/Button';
+import * as React from "react";
+import {
+  Grid,
+  Card,
+  CardContent,
+  CardMedia,
+  CardActions,
+  CardHeader,
+  Typography,
+  Paper,
+} from "@material-ui/core";
+import Button from "@mui/material/Button";
 
-export const Tours = ({ museums }) => {
+export const Tours = ({ museums, photos }) => {
+  // const [museum, setMuseum] = useState({});
+  // const [photo, setPhoto] = useState([])
+
+  // useEffect(() => {
+  //   getMuseum(1).then(setMuseum);
+  //   getPhoto(1).then(setPhoto);
+  // }, []);
 
   function GridItem(props) {
     let items = [
       <Paper
         className="Project"
-        style={{ backgroundColor: "ivory", alignItems: "center" }}
+        style={{ backgroundColor: "ivory", alignItems: "center", marginBottom: 10 }}
         elevation={10}
         key={props.item.museum_name}
       >
@@ -16,8 +32,8 @@ export const Tours = ({ museums }) => {
           <img
             className="Image"
             alt="museumlogo"
-            src={props.item.Image}
-            style={{ alignItems: "center", height: 100, width: "auto" }}
+            src="https://via.placeholder.com/300x150"
+            style={{ alignItems: "center", height: "auto", width: "auto" }}
           ></img>
           <Typography
             className="Title"
@@ -39,6 +55,24 @@ export const Tours = ({ museums }) => {
           >
             {props.item.Caption}
           </Typography>
+          <Typography
+            className="Caption"
+            style={{
+              color: "#696963",
+              fontFamily: "Baskerville",
+            }}
+          >
+            Current Director: {props.item.director}
+          </Typography>
+          <Typography
+            className="Caption"
+            style={{
+              color: "#696963",
+              fontFamily: "Baskerville",
+            }}
+          >
+            Exhibits on Display: {props.item.num_exhibits}
+          </Typography>
         </CardContent>
         <CardActions>
           <Button
@@ -53,7 +87,59 @@ export const Tours = ({ museums }) => {
             View Now
           </Button>
         </CardActions>
-      </Paper>
+          
+        <Card sx={{ maxWidth: 345 }}>
+          <CardHeader
+            className="Caption"
+            style={{
+              color: "#696963",
+              fontFamily: "Baskerville",
+            }}
+            title={props.item.museum_name}
+          />
+          <CardMedia
+            component="img"
+            height="150"
+            width="300"
+            image="https://via.placeholder.com/300x150"
+          />
+          <CardContent>
+            <Typography
+              className="Caption"
+              style={{
+                color: "#696963",
+                fontFamily: "Baskerville",
+              }}
+              variant="body2"
+            >
+              Address?
+            </Typography>
+          </CardContent>
+          
+            <CardContent>
+              <Typography
+                paragraph
+                className="Caption"
+                style={{
+                  color: "#696963",
+                  fontFamily: "Baskerville",
+                }}
+              >
+                Current Director: {props.item.director}
+              </Typography>
+              <Typography
+                paragraph
+                className="Caption"
+                style={{
+                  color: "#696963",
+                  fontFamily: "Baskerville",
+                }}
+              >
+                Exhibits on Display: {props.item.num_exhibits}
+              </Typography>
+            </CardContent>
+        </Card>
+      </Paper>,
     ];
     return (
       <Grid item xs={11}>
@@ -119,17 +205,33 @@ export const Tours = ({ museums }) => {
   // }
 
   return (
-    <div style={{ marginTop: 10, maxWidth: '100%' }}>
-      <Grid
-      container
-      spacing={1}
-      alignItems="center"
-      justifyContent="center"
-    >
+    <div style={{ marginTop: 10, maxWidth: "100%" }}>
+      <Grid container alignItems="center" justifyContent="center">
+        <Card
+          variant="outlined"
+          style={{ display: "inline-block", bgcolor: "#F6F7EB", marginBottom: 10}}
+          width="50%"
+        >
+          <Typography
+            className="h3"
+            variant="h3"
+            style={{
+              color: "#F6F7EB",
+              fontFamily: "Baskerville",
+              textDecoration: "underline",
+              backgroundColor: "#323031",
+            }}
+            sx={{ border: 0 }}
+          >
+            Museums Near You
+          </Typography>
+        </Card>
         {museums.map((item, index) => {
           return <GridItem item={item} key={index} />;
         })}
       </Grid>
     </div>
   );
-}
+};
+
+//apisdjhfladk

@@ -1,7 +1,8 @@
 const User = require('../models/users');
 const Tour = require('../models/tours');
 const Photo = require('../models/photos');
-const Booking = require('../models/bookings');
+const Booking = require('../models/bookings')
+const Museum = require('../models/museums');
 const Rating = require('../models/ratings');
 const Comment = require('../models/comments');
 
@@ -10,9 +11,7 @@ const createModelsMiddleware = async (req, res, next) => {
     user: User,
     tour: Tour,
     photo: Photo,
-    booking: Booking,
-    rating: Rating,
-    comment: Comment
+    booking: Booking
   }
   next();
 }
