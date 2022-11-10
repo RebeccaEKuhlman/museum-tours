@@ -3,8 +3,14 @@ import { Typography } from "@material-ui/core";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Select from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Checkbox from "@material-ui/core/Checkbox";
 import Card from "@mui/material/Card";
-import Input from '@mui/material/Input';
+import Input from "@mui/material/Input";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -14,6 +20,7 @@ import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
+import Modal from "@mui/material/Modal";
 import { Repository } from "./repository";
 
 function generate(element) {
@@ -44,60 +51,120 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   root: {
-    height: "100vh",
+    height: "calc(100vh - 64px)",
   },
   card: {
     fontFamily: "Baskerville",
     backgroundColor: "#F6F7EB",
   },
-  form : {
+  form: {
     position: "absolute",
-    display: "inline-block",
-    // width: "100%",
-    // height: "100%",
     zIndex: 10,
-  }
+    padding: 20,
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    fontFamily: "Baskerville",
+  },
+  select: {
+    alignItems: "left",
+    textAlign: "left",
+  },
 }));
 
 export function Profile() {
   const classes = useStyles();
 
-  const [ showForm, setShowForm ] = useState(false);
-  const [ userForm, setuserForm ] = useState({
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const [newpass, setNewPass] = useState("");
+  const [oldpass, setOldPass] = useState("");
+  const [newPhotoId, setNewPhotoId] = useState("");
+  const [photos, setPhotos] = useState("");
+  const [university, setUniversity] = useState("");
+  const [bio, setBio] = useState("");
+  const [showForm, setShowForm] = useState(false);
+  const [userForm, setuserForm] = useState({
     userName: "",
     password: "",
   });
 
-  const toggleForm = () => { 
-    console.log("Toggle");
-    setShowForm(!showForm); 
+  useEffect(() => {
+    var repository = new Repository();
+    repository.getPhoto().then((x) => setPhotos(x));
+  }, []);
+
+  if (!photos) {
+    return <></>;
   }
+
+  // handle input form submission to backend via POST request
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("HERE");
+    var repository = new Repository();
+    repository.postUser(photos, university, bio).then((x) => {
+      // if (typeof x.error != "undefined") {
+      //   alert("Invalid Credentials")
+      // } else {
+      //   window.location.href = "/profile";
+      // }
+      alert("Updated");
+    });
+  };
 
   return (
     <div className="profile" style={{ textAlign: "center" }}>
-      {showForm && (
-        <form className={classes.form}>
-          <h2 style={{ color: "darkred" }}>Login</h2>
-          <Input
-            type="email"
-            value={userForm.userName}
-            placeholder={"User Name"}
-            onChange={(e) => {
-              setuserForm({ ...userForm, userName: e.target.value });
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Card className={classes.form}>
+          <h2
+            style={{
+              fontFamily: "Baskerville",
+              margin: 10,
+              textAlign: "center",
             }}
+          >
+            Update Password
+          </h2>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            name="oldpass"
+            label="Old Password"
+            type="oldpass"
+            id="oldpass"
+            value={oldpass}
+            onInput={(e) => setOldPass(e.target.value)}
           />
-          <Input
-            type="password"
-            value={userForm.password}
-            placeholder={"Password"}
-            onChange={(e) => {
-              setuserForm({ ...userForm, password: e.target.value });
-            }}
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            name="newpass"
+            label="New Password"
+            type="newpass"
+            id="newpass"
+            value={newpass}
+            onInput={(e) => setNewPass(e.target.value)}
           />
-          <Button type="submit" text="Submit" />
-          {/* onClick={onValidation}  */}
-        </form>
-      )}
+          <div style={{ margin: 12, textAlign: "center" }}>
+            <Button onClick={handleClose} type="submit" variant="contained">
+              Confirm
+            </Button>
+          </div>
+          <div style={{ marginTop: 16, textAlign: "center" }}>
+            <Button onClick={handleClose}>Cancel</Button>
+          </div>
+        </Card>
+      </Modal>
       <Grid
         container
         className={classes.root}
@@ -105,21 +172,45 @@ export function Profile() {
         direction="column"
         alignItems="center"
         justifyContent="center"
-        style={{ minHeight: "100vh", padding: "0" }}
-        
+        style={{ padding: "0" }}
       >
-        <Grid item xs="auto" sm={6}>
+        <Grid item xs={false}>
           <Card
             className={classes.card}
-            sx={{ maxWidth: 345, backgroundcolor: "#FFFFFF" }}
+            sx={{ maxWidth: 400, backgroundcolor: "#FFFFFF" }}
           >
             <CardMedia
               component="img"
               height="500vh"
               width="auto"
-              image="https://upload.wikimedia.org/wikipedia/commons/9/95/Josh_Allen_SEPT2021_%28cropped2%29.jpg"
+              image={photos[13].photo_data}
               alt="profile"
             />
+            <div style={{ marginTop: 10, marginBottom: 20 }}>
+              <Typography
+                className={classes.typography}
+                gutterBottom
+                variant="h4"
+                component="div"
+              >
+                <b className={classes.typography}>{photos[2].caption}</b>
+              </Typography>
+              <Typography className={classes.typography} variant="body1">
+                <b className={classes.typography}>University:</b> Southern
+                Methodist University
+              </Typography>
+              <Typography className={classes.typography} variant="body1">
+                <b className={classes.typography}>Bio:</b> This is a sentence
+                about the person.
+              </Typography>
+            </div>
+          </Card>
+        </Grid>
+        <Grid item xs={false}>
+          <Card
+            className={classes.card}
+            sx={{ maxWidth: 400, backgroundcolor: "#FFFFFF" }}
+          >
             <CardContent
               className={classes.card}
               sx={{ backgroundColor: "#FFFFFF" }}
@@ -127,39 +218,94 @@ export function Profile() {
               <Typography
                 className={classes.typography}
                 gutterBottom
-                variant="h5"
+                variant="h4"
                 component="div"
               >
-                Josh Allen
+                <b className={classes.typography}>Change Fields</b>
               </Typography>
-              <Typography
-                className={classes.typography}
-                variant="body2"
-              >
-                This is a sentence about the person.
-              </Typography>
+              <FormControl sx={{ mt: 1 }} size="large">
+                <form noValidate onSubmit={handleSubmit}>
+                  <InputLabel id="photo">Photo</InputLabel>
+                  <Select
+                    sx={{ display: "flex" }}
+                    name="photo"
+                    id="photo"
+                    label="photo"
+                    value={newPhotoId}
+                    onChange={(event) => setNewPhotoId(event.target.value)}
+                  >
+                    {photos.map((photo, index) => {
+                      if (photo.is_profile) {
+                        return (
+                          <MenuItem key={index} value={photo.photoId}>
+                            {photo.caption}
+                          </MenuItem>
+                        );
+                      }
+                      return undefined;
+                    })}
+                  </Select>
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    name="university"
+                    label="University"
+                    type="university"
+                    id="university"
+                    value={university}
+                    onInput={(e) => setUniversity(e.target.value)}
+                  />
+                  <TextField
+                    sx={{ mb: 3, mt: 1 }}
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    name="bio"
+                    label="Bio"
+                    type="bio"
+                    id="bio"
+                    value={bio}
+                    onInput={(e) => setBio(e.target.value)}
+                  />
+                  <Button
+                    type="submit"
+                    fullWidth
+                    style={{
+                      color: "#F6F7EB",
+                      backgroundColor: "cornflowerblue",
+                      fontFamily: "Baskerville",
+                    }}
+                    variant="contained"
+                    className={classes.submit}
+                  >
+                    Confirm Changes
+                  </Button>
+                </form>
+                <Button
+                  sx={{ color: "cornflowerblue", mt: 1 }}
+                  style={{
+                    color: "cornflowerblue",
+                    fontFamily: "Baskerville",
+                  }}
+                  onClick={handleOpen}
+                >
+                  Change Password
+                </Button>
+              </FormControl>
             </CardContent>
           </Card>
         </Grid>
-
         <Grid item xs={9}>
-          <Card className={classes.card} sx={{ width: 1000}}>
-            <CardContent
-              className={classes.card}
-              sx={{ backgroundColor: "#FFFFFF" }}
-            >
-              <Typography
-                className={classes.typography}
-                gutterBottom
-                variant="h5"
-                component="div"
+          <Card>
+            <CardContent sx={{ maxWidth: 400, backgroundcolor: "#FFFFFF" }}>
+              <h2
+                style={{ fontSize: 50, fontFamily: "Baskerville", margin: 10 }}
               >
                 My Tours
-              </Typography>
-              <Typography
-                className={classes.typography}
-                variant="body2"
-              >
+              </h2>
+              <hr />
+              <Typography className={classes.typography} variant="body2">
                 {/* <List dense={false}>
                   {generate(
                     <ListItem>
@@ -172,24 +318,55 @@ export function Profile() {
                   )}
                 </List> */}
               </Typography>
-              <Button
-                sx={{ color: "cornflowerblue" }}
-                onClick={toggleForm}
-              >
-                Change Password
-              </Button>
-              <Button
-                sx={{ color: "cornflowerblue" }}
-                onClick={() => {
-                  alert("Change Bio");
-                }}
-              >
-                Change Bio
-              </Button>
             </CardContent>
           </Card>
         </Grid>
       </Grid>
+    </div>
+  );
+}
+
+// import * as React from 'react';
+// import Box from '@mui/material/Box';
+// import Button from '@mui/material/Button';
+// import Typography from '@mui/material/Typography';
+// import Modal from '@mui/material/Modal';
+
+// const style = {
+//   position: 'absolute',
+//   top: '50%',
+//   left: '50%',
+//   transform: 'translate(-50%, -50%)',
+//   width: 400,
+//   bgcolor: 'background.paper',
+//   border: '2px solid #000',
+//   boxShadow: 24,
+//   p: 4,
+// };
+
+export default function BasicModal() {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  return (
+    <div>
+      <Button onClick={handleOpen}>Open modal</Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Text in a modal
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+          </Typography>
+        </Box>
+      </Modal>
     </div>
   );
 }

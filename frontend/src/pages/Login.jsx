@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -11,7 +11,7 @@ import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { Repository } from './repository';
+import { Repository } from "./repository";
 
 function Copyright() {
   return (
@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Baskerville",
   },
   palette: {
+    primary: {
+      main: "#7F96FF",
+    },
     background: {
       paper: "#F6F7EB",
     },
@@ -40,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
     },
     success: {
       dark: "#7F96FF",
+    },
+    button: {
+      primary: "#7F96FF",
     },
   },
   root: {
@@ -72,6 +78,8 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    color: "error",
+    bgcolor: "error",
   },
 }));
 
@@ -82,8 +90,8 @@ export function Login() {
   // state for storage of the information on the webpage of forms and list, uses hooks
   // const [number, setNumber] = useState("");
   // const [values, setValues] = useState([]);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   // ENTER YOUR EC2 PUBLIC IP/URL HERE
   const ec2_url = "";
@@ -121,33 +129,31 @@ export function Login() {
   // handle input form submission to backend via POST request
   const handleSubmit = (e) => {
     e.preventDefault();
-    repository.postLogin(email, password).then(x => 
-      {
-        if (typeof x.error != "undefined") {
-          alert("Invalid Credentials")
-
-        } else {
-          window.location.href = "/profile";
-        }
-      });
-      // axios
-      // .get(`http://${url}:8000/login`, {
-      //   data: {
-      //     username: username, 
-      //     password: password
-      //   }
-      // })
-      // .then((res) => {
-      //   console.log("res");
-      //   console.log(res);
-      // })
-      // .catch((err) => {
-      //   console.log("logging error");
-      //   console.log(err);
-      // });
+    repository.postLogin(email, password).then((x) => {
+      if (typeof x.error != "undefined") {
+        alert("Invalid Credentials");
+      } else {
+        window.location.href = "/profile";
+      }
+    });
+    // axios
+    // .get(`http://${url}:8000/login`, {
+    //   data: {
+    //     username: username,
+    //     password: password
+    //   }
+    // })
+    // .then((res) => {
+    //   console.log("res");
+    //   console.log(res);
+    // })
+    // .catch((err) => {
+    //   console.log("logging error");
+    //   console.log(err);
+    // });
     // Do Something With Result (Route to New Location)
   };
-  
+
   return (
     <Grid
       container
@@ -162,8 +168,8 @@ export function Login() {
           <Avatar className={classes.avatar}></Avatar>
           <Typography
             component="h1"
-            className = "title"
-            sx={{
+            className="title"
+            style={{
               fontFamily: "Baskerville",
             }}
           >
@@ -182,6 +188,7 @@ export function Login() {
               value={email}
               onInput={(e) => setEmail(e.target.value)}
               autoFocus
+              style = {{fontFamily: "Baskerville"}}
             />
             <TextField
               variant="outlined"
@@ -195,28 +202,48 @@ export function Login() {
               value={password}
               onInput={(e) => setPassword(e.target.value)}
               autoComplete="current-password"
+              style = {{fontFamily: "Baskerville"}}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={<Checkbox value="remember" color="cornflowerblue" fontFamily="Baskerville" />}
               label="Remember me"
+              
             />
             <Button
+              style={{
+                color: "#FFFFFF",
+                backgroundColor: "#7F96FF",
+                fontFamily: "Baskerville"
+              }}
               type="submit"
               fullWidth
               variant="contained"
-              className={classes.submit}
             >
               Sign In
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link
+                  href="#"
+                  variant="body2"
+                  style={{
+                    color: "#7F96FF",
+                    fontFamily: "Baskerville"
+                  }}
+                >
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link
+                  href="#"
+                  variant="body2"
+                  style={{
+                    color: "#7F96FF",
+                    fontFamily: "Baskerville"
+                  }}
+                >
+                  Don't have an account? Sign Up
                 </Link>
               </Grid>
             </Grid>
