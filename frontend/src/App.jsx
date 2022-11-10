@@ -13,6 +13,9 @@ import { Tours } from './pages/Tours';
 import { Registration } from './pages/Registration';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    height: "calc(100vh - 64px)",
+  },
   toolbar: {
     minHeight: '64px',
     justifyContent: 'space-between'
@@ -59,9 +62,13 @@ export const App = () => {
   const classes = useStyles();
 
   const [ museums, setMuseums ] = useState(undefined);
+  const [ photos, setPhotos ] = useState(undefined);
+
   useEffect(() => {
     var repository = new Repository();
     repository.getMuseums().then(x => setMuseums(x));
+    repository.getPhotos().then(x => setPhotos(x));
+    //
   }, []);
 
   if (!museums) {
@@ -155,7 +162,7 @@ export const App = () => {
       </AppBar>
       <Routes>
         <Route path="*" element={< NoPage />} />
-        <Route exact path='/' element={< Home museums={museums} />}></Route>
+        <Route exact path='/' element={< Home museums={museums} photos={photos} />}></Route>
         <Route exact path='/login' element={< Login />}></Route>
         <Route exact path='/profile' element={< Profile />} onEnter={requireAuth}></Route>
         <Route exact path='/tours' element={< Tours museums={museums} />}></Route>
