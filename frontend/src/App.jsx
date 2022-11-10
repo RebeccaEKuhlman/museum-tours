@@ -12,6 +12,9 @@ import { Profile } from './pages/Profile';
 import { Tours } from './pages/Tours';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    height: "calc(100vh - 64px)",
+  },
   toolbar: {
     minHeight: '64px',
     justifyContent: 'space-between'

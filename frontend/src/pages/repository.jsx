@@ -117,4 +117,18 @@ export class Repository {
         });
     }
 
+    getPhoto() {
+        return new Promise((resolve, reject) => {
+            console.log("Get Photo");
+            axios.get( `http://${ this.url }:8000/photos/`)
+                .then(x => {
+                    resolve(x.data);
+                })
+                .catch(err => {
+                    alert(err);
+                    reject(err);
+                })
+        });
+    }
+
 }
