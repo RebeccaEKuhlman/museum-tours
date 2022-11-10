@@ -76,7 +76,7 @@ export class Repository {
     getMuseums() {
         return new Promise((resolve, reject) => {
             console.log("Get Museums");
-            axios.get( `http://${ this.url }:8000/museums`)
+            axios.get( `http://${ this.url }:8000/museums/`)
                 .then(x => {
                     resolve(x.data);
                 })
