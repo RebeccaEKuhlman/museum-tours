@@ -1,28 +1,24 @@
 /**const { nextTick } = require('process');
 const jwt = require('jsonwebtoken' );
-const accessTokenSecret  = 'mysupercoolsecret' ;
+const accessTokenSecret  = 'mysupercoolsecret' ;**/
 
 class User {
     constructor(_DBQuery, _disconnect) {
         this.DBQuery = _DBQuery;
         this.disconnect = _disconnect;
-    }const getAllPhotos = async () => 
+    }
     close () {
         this.disconnect();
-    }**/// GIVES USER BASED OFF OF TOKEN
-    const fetchAllUsers = async () => {
+    }
+    async fetchAllUsers () {
         const results = await this.DBQuery('SELECT * FROM users');
         return results;
     }
-    const fetchUsersByName = async (username) => {
+    async fetchUsersByName (username) {
         const results = await this.DBQuery('SELECT * FROM users WHERE name = ?', [username]);
         return results;
     }
-    const fetchUsersByEmail = async (email) =>{
-        const results = await this.DBQuery('SELECT * FROM users WHERE email = ?', [email]);
-        return results;
-    }
-    const authenticateUser = async  (username, password) =>{
+    async authenticateUser  (username, password) {
         const users = await fetchUsersByName(username);
         console.log('Results of users query', users);
         if (users.length === 0) {
@@ -43,6 +39,6 @@ class User {
         return null;
         
      }
-     
- module.exports = {fetchAllUsers, authenticateUser, fetchUsersByEmail, fetchUsersByName};
+ }
+ module.exports = User;
  
