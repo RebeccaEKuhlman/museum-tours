@@ -42,12 +42,11 @@ museums(app, logger);
 tours(app, logger);
 ratings(app, logger);
 comments(app, logger);
-
 app.use('/photos', photos)
-// bookings(app, logger);
 app.use('/bookings', bookings);
 // app.use('/users', UserRoutes);
-// app.use('/tours', TourRoutes);
+app.use('/museums', museums);
+app.use('/tours', tours);
 
 app.listen(port, () => {
    console.log(`This app is listening on port  ${port}`);
