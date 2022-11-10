@@ -3,13 +3,14 @@ const express = require('express');
 const router = express.Router();
 
 const bodyParser = require('body-parser');
+const { query } = require('express');
 router.use(bodyParser.json());
 
 
 router.post('/', async (req, res, next) => {
     try {
-        const museum = await req.models.museum.postMuseum(req.body.museum_name, req.body.photo_id, req.body.director, req.body.num_exhibits);
-        res.status(200).json(museum);
+        const museum = await req.models.museum.postMuseum(req.body.museum_name, req.body.photoId, req.body.director, req.body.num_exhibits);
+        res.status(201).json(museum);
         next();
     } catch (err) {
         console.error('There was an error in POST /museums', err);
@@ -19,7 +20,12 @@ router.post('/', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
     try {
-        if (req.query.museum_name) {
+        if (req.query.getPhoto) {
+            // pass in a "getPhoto" that is true in the body
+            const photolink = await req.models.museum.getMuseumPhoto(req.query.museum_name);
+            res.status(200).json(photolink);
+            next();
+        } else if (req.query.museum_name) {
             const museum = await req.models.museum.getByMuseumName(req.query.museum_name);
             res.status(200).json(museum);
             next();
@@ -34,6 +40,34 @@ router.get('/', async (req, res, next) => {
         console.error('There was an error in GET /museums', err);
         res.status(500).json({ message: err.message });
     }
-})
+});
+
+router.put('/', async (req, res, next) => {
+    try {
+        if (req.body.photoId) {
+            const museum = await req.models.museum.updateMuseumPhotoId(req.body.museum_name, req.body.photoId);
+            res.status(200).json(museum);
+            next();
+        } else if (req.body.num_exhibits) {
+            const museum = await req.models.museum.updateMuseumNum_exhibits(req.body.museum_name, req.body.newName);
+            res.status(200).json(museum);
+            next();
+        }
+    } catch(err) {
+        console.error('There was an error in PUT /museums', err);
+        res.status(500).json({ message: err.message });
+    }
+});
+
+router.delete('/', async (req, res, next) => {
+    try {
+        const museum = await req.models.museum.deleteMuseum(req.query.museum_name);
+        res.status(200).json(museum);
+        next();
+    } catch(err) {
+        console.error('There was an error in DELETE /museums', err);
+        res.status(500).json({ message: err.message });
+    }
+});
 
 module.exports = router;
