@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   },
   image: {
     backgroundImage:
-      "url(https://texashighways.com/wp-content/uploads/2021/11/drive-ticket-alamosaurus.jpg)",
+      "url(https://glasstire.com/wp-content/uploads/2018/09/Texas-Artist-Ludwig-Schwarz-Dallas-Museum-of-Art-paintings-from-Conduit-Gallery-3-1170x742.jpg)",
     backgroundRepeat: "no-repeat",
     backgroundColor:
       theme.palette.type === "light"
@@ -83,6 +83,7 @@ export function Registration() {
   // const [number, setNumber] = useState("");
   // const [values, setValues] = useState([]);
   const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmpassword, setConfirmPassword] = useState('');
 
@@ -122,38 +123,37 @@ export function Registration() {
   // handle input form submission to backend via POST request
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(password !== confirmpassword){
+    if (password !== confirmpassword) {
       alert("passwords must match")
     }
-    else{
-      repository.postRegristration(email, password).then(x => 
-        {
-          if (typeof x.error != "undefined") {
-            alert("error: unable to sign up")
+    else {
+      repository.postRegristration(email, username, password).then(x => {
+        if (typeof x.error != "undefined") {
+          alert("error: unable to sign up")
 
-          } else {
-            window.location.href = "/login";
-          }
-        });
+        } else {
+          window.location.href = "/login";
+        }
+      });
     }
-      // axios
-      // .get(`http://${url}:8000/login`, {
-      //   data: {
-      //     username: username, 
-      //     password: password
-      //   }
-      // })
-      // .then((res) => {
-      //   console.log("res");
-      //   console.log(res);
-      // })
-      // .catch((err) => {
-      //   console.log("logging error");
-      //   console.log(err);
-      // });
+    // axios
+    // .get(`http://${url}:8000/login`, {
+    //   data: {
+    //     username: username, 
+    //     password: password
+    //   }
+    // })
+    // .then((res) => {
+    //   console.log("res");
+    //   console.log(res);
+    // })
+    // .catch((err) => {
+    //   console.log("logging error");
+    //   console.log(err);
+    // });
     // Do Something With Result (Route to New Location)
   };
-  
+
   return (
     <Grid
       container
@@ -168,7 +168,7 @@ export function Registration() {
           <Avatar className={classes.avatar}></Avatar>
           <Typography
             component="h1"
-            className = "title"
+            className="title"
             sx={{
               fontFamily: "Baskerville",
             }}
@@ -194,6 +194,19 @@ export function Registration() {
               margin="normal"
               required
               fullWidth
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
+              value={username}
+              onInput={(e) => setUsername(e.target.value)}
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
               name="password"
               label="Password"
               type="password"
@@ -208,13 +221,14 @@ export function Registration() {
               required
               fullWidth
               name="confirm-password"
-              label="confirm-Password"
+              label="Confirm Password"
               type="password"
               id="confirm-password"
               value={confirmpassword}
               onInput={(e) => setConfirmPassword(e.target.value)}
             />
             <Button
+              style={{ color: "#FFFFFF", backgroundColor: "#7F96FF" }}
               type="submit"
               fullWidth
               variant="contained"
