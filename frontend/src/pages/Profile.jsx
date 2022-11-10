@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
 export function Profile() {
   const classes = useStyles();
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -178,7 +178,7 @@ export function Profile() {
         <Grid item xs={false}>
           <Card
             className={classes.card}
-            sx={{ maxWidth: 345, backgroundcolor: "#FFFFFF" }}
+            sx={{ maxWidth: 400, backgroundcolor: "#FFFFFF" }}
           >
             <CardMedia
               component="img"
@@ -214,7 +214,7 @@ export function Profile() {
         <Grid item xs={false}>
           <Card
             className={classes.card}
-            sx={{ maxWidth: 345, backgroundcolor: "#FFFFFF" }}
+            sx={{ maxWidth: 400, backgroundcolor: "#FFFFFF" }}
           >
             <CardContent
               className={classes.card}
@@ -242,7 +242,7 @@ export function Profile() {
                     {
                       photos.map((photo, index) => {
                         if (photo.is_profile) {
-                          return <MenuItem key={index} value={photo.photoId}>{photo.photoId}</MenuItem>
+                          return <MenuItem key={index} value={photo.photoId}>{photo.caption}</MenuItem>
                         } 
                         return undefined
                       })
@@ -293,7 +293,7 @@ export function Profile() {
         <Grid item xs={9}>
           <Card>
             <CardContent
-              sx={{ backgroundColor: "#FFFFFF", width: "40rem" }}
+              sx={{ maxWidth: 400, backgroundcolor: "#FFFFFF" }}
             >
               <h2 style={{ fontSize: 50, fontFamily: "Baskerville", margin: 10 }}>My Tours</h2>
               <hr/>
