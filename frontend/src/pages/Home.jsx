@@ -120,8 +120,8 @@ export const Home = ({ museums, photos }) => {
           indicators={state.indicators}
           duration={state.duration}
           cycleNavigation={state.cycleNavigation}
-          navButtonsAlwaysVisible={state.navButtonsAlwaysVisible}
-          navButtonsAlwaysInvisible={state.navButtonsAlwaysInvisible}
+          navButtonsAlwaysVisible={true}
+          navButtonsAlwaysInvisible={false}
           fullHeightHover={false}
           navButtonsProps={{ style: { backgroundColor: "#7F96FF", borderRadius: 100 }}}
           navButtonsWrapperProps={{ style: { bottom: "0", marginRight: 10, marginLeft: 10 } }}
