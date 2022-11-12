@@ -169,7 +169,7 @@ export function Login() {
           <Typography
             component="h1"
             className="title"
-            sx={{
+            style={{
               fontFamily: "Baskerville",
             }}
           >
@@ -188,6 +188,7 @@ export function Login() {
               value={email}
               onInput={(e) => setEmail(e.target.value)}
               autoFocus
+              style = {{fontFamily: "Baskerville"}}
             />
             <TextField
               variant="outlined"
@@ -201,15 +202,19 @@ export function Login() {
               value={password}
               onInput={(e) => setPassword(e.target.value)}
               autoComplete="current-password"
+              style = {{fontFamily: "Baskerville"}}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={<Checkbox value="remember" fontFamily="Baskerville" />}
+              style={{color: "#323031"}}
               label="Remember me"
+              
             />
             <Button
               style={{
                 color: "#FFFFFF",
                 backgroundColor: "#7F96FF",
+                fontFamily: "Baskerville"
               }}
               type="submit"
               fullWidth
@@ -224,6 +229,7 @@ export function Login() {
                   variant="body2"
                   style={{
                     color: "#7F96FF",
+                    fontFamily: "Baskerville"
                   }}
                 >
                   Forgot password?
