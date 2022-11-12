@@ -12,6 +12,7 @@ class User {
     }**/// GIVES USER BASED OFF OF TOKEN
     const accessTokenSecret  = 'accessToken' ;
     const jwt = require('jsonwebtoken' );
+    const bcrypt = require('bcrypt');
     const knex = require('../database/knex');
     const fetchAllUsers = async () => {
         const query = knex('users');
@@ -19,12 +20,14 @@ class User {
         return results;
     }
     const fetchUsersByName = async (username) => {
-        const query = knex('users').select().where({username});
+        const query = knex.from('users').select().where(username);
+       // const query = knex.select().where({username: username}).from('users');
         const results = await query;
         return results;
     }
     const fetchUsersByEmail = async (givenEmail) => {
-        const query = knex.select().where({email: givenEmail}).from('users');
+       // const query = knex('users').select().where({email: givenEmail});
+        const query = knex.from('users').select().where(givenEmail);
         const results = await query;
         return results;
     }
