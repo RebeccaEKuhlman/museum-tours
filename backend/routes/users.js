@@ -61,7 +61,7 @@ module.exports = function users(app, logger) {
                 // if user exists
                 console.log("checking if auth is null");
                 delete user.password;
-                response.status(200).json(results);
+                response.status(200).json("Good creditials, logging user in");
                 return auth
             } else {
                 response.status(200).json({
