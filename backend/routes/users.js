@@ -47,15 +47,19 @@ module.exports = function users(app, logger) {
             const email = request.body.email;
             const password = request.body.password;
             const users = await fetchUsersByEmail(email);
+            console.log("passed");
             if (users.length === 0) {
-                //console.error(`No users matched the email: ${email}`);
+                console.error(`No users matched the email: ${email}`);
                 throw new Error(`No users matched the email: ${email}`);
             }
             const user = users[0];
+            console.log("user", user);
             const auth = await authenticateUser(user, password); 
+            console.log("auth", auth);
          //   const validPassword = await bcrypt.compare(password, user.password);
             if (auth !== null) {
                 // if user exists
+                console.log("checking if auth is null");
                 delete user.password;
                 response.status(200).json(results);
                 return auth
