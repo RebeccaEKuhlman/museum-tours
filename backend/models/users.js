@@ -27,7 +27,9 @@ class User {
     }
     const fetchUsersByEmail = async (givenEmail) => {
        // const query = knex('users').select().where({email: givenEmail});
-        const query = knex.from('users').select().where(givenEmail);
+       console.log("inside fetch by email");
+       console.log(givenEmail);
+        const query = knex('users').where({ email: givenEmail }).select();
         const results = await query;
         return results;
     }
