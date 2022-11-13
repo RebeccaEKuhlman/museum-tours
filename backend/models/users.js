@@ -35,8 +35,7 @@ class User {
         const users = await fetchUsersByName(username);
         console.log('Results of users query', users);
         if (users.length === 0) {
-            console.error(`No users matched the username: ${username}`);
-            return null;
+            throw new Error(`No users matched the email: ${email}`);
         }
         const user = users[0];
         const validPassword = await bcrypt.compare(password, user.password);
@@ -44,8 +43,7 @@ class User {
             const accessToken = jwt.sign({ ...users[0], claims: ['user'] }, accessTokenSecret );
             return accessToken;
         }
-        return null;
-        
+        throw new Error(`Incorrect creditials`);
      }
      
  module.exports = {fetchAllUsers, authenticateUser, fetchUsersByEmail, fetchUsersByName};
