@@ -46,6 +46,16 @@ module.exports = function users(app, logger) {
             console.log('Request has params containing:', request.query);
             const email = request.body.email;
             const password = request.body.password;
+            /**const urlParams = new URLSearchParams(request.url);
+            console.log('Request has params containing:', urlParams.keys());
+            const email = urlParams.keys().value;
+            const password = urlParams.get(email);
+            console.log('Request has params containing:', email);
+            console.log('Request has params containing:', password);
+            
+             * const email = request.body.email;
+                const password = request.body.password;
+             */
             const users = await fetchUsersByEmail(email);
             console.log("passed");
             if (users.length === 0) {
@@ -59,7 +69,6 @@ module.exports = function users(app, logger) {
          //   const validPassword = await bcrypt.compare(password, user.password);
             if (auth !== null) {
                 // if user exists
-                console.log("checking if auth is null");
                 delete user.password;
                 response.status(200).json("Good creditials, logging user in");
                 return auth
