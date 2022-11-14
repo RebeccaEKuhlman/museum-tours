@@ -8,6 +8,8 @@ import {
   CardHeader,
   Typography,
   Paper,
+  Dialog,
+  Box,
 } from "@material-ui/core";
 import Button from "@mui/material/Button";
 
@@ -19,6 +21,9 @@ export const Tours = ({ museums, photos }) => {
   //   getMuseum(1).then(setMuseum);
   //   getPhoto(1).then(setPhoto);
   // }, []);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   function GridItem(props) {
     let items = [
@@ -83,9 +88,34 @@ export const Tours = ({ museums, photos }) => {
               backgroundColor: "cornflowerblue",
               fontFamily: "Baskerville",
             }}
+            onClick={handleOpen}
           >
             View Now
           </Button>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Card
+              style={{
+                width: 1000,
+                height: 500,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "#F6F7EB",
+              }}
+            >
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                {props.item.museum_name}
+              </Typography>
+              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                {props.item.museum_name}
+              </Typography>
+            </Card>
+          </Dialog>
         </CardActions>
           
         <Card sx={{ maxWidth: 345 }}>
@@ -147,69 +177,17 @@ export const Tours = ({ museums, photos }) => {
       </Grid>
     );
   }
-  // function Project(props) {
-  //   let items = [
-  //     <Paper
-  //       className="Project"
-  //       style={{ backgroundColor: "ivory", alignItems: "center" }}
-  //       elevation={10}
-  //       key={props.item.Name}
-  //     >
-  //       <CardContent className="Content">
-  //         <img
-  //           className="Image"
-  //           alt="museumlogo"
-  //           src={props.item.Image}
-  //           style={{ alignItems: "center", height: 100, width: "auto" }}
-  //         ></img>
-  //         <Typography
-  //           className="Title"
-  //           style={{
-  //             color: "#696963",
-  //             fontFamily: "Baskerville",
-  //             fontWeight: "bold",
-  //             fontSize: 25,
-  //           }}
-  //         >
-  //           {props.item.Name}
-  //         </Typography>
-  //         <br />
-  //         <Typography
-  //           className="Caption"
-  //           style={{
-  //             color: "#696963",
-  //             fontFamily: "Baskerville",
-  //           }}
-  //         >
-  //           {props.item.Caption}
-  //         </Typography>
-  //         <Button
-  //           variant="outlined"
-  //           className="ViewButton"
-  //           style={{
-  //             color: "#F6F7EB",
-  //             backgroundColor: "cornflowerblue",
-  //             fontFamily: "Baskerville",
-  //           }}
-  //         >
-  //           View Now
-  //         </Button>
-  //       </CardContent>
-  //     </Paper>,
-  //   ];
-  //   return (
-  //     <Grid item xs={11}>
-  //       {items}
-  //     </Grid>
-  //   );
-  // }
 
   return (
     <div style={{ marginTop: 10, maxWidth: "100%" }}>
       <Grid container alignItems="center" justifyContent="center">
         <Card
           variant="outlined"
-          style={{ display: "inline-block", bgcolor: "#F6F7EB", marginBottom: 10}}
+          style={{
+            display: "inline-block",
+            backgroundcolor: "#F6F7EB",
+            border: "none",
+          }}
           width="50%"
         >
           <Typography
@@ -220,8 +198,9 @@ export const Tours = ({ museums, photos }) => {
               fontFamily: "Baskerville",
               textDecoration: "underline",
               backgroundColor: "#323031",
+              
             }}
-            sx={{ border: 0 }}
+            
           >
             Museums Near You
           </Typography>
