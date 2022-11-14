@@ -45,4 +45,26 @@ router.get('/', async(request, response, next) => {
 
 });
 
+router.post('/', async(request, response, next) => {
+    try{
+        console.log('Initiating POST /comments request');
+        console.log('Request has a body / payload containing:', request.body);
+
+        const content = request.body.content;
+        const username = request.body.username;
+        const tour_Name = request.body.tour_Name;
+        const review_id = request.body.review_id;
+        const like_sum = request.body.like_sum;
+        const overComment = request.body.overComment;
+
+        const results = await request.models.comment.insertComment(content, username, tour_Name, review_id,
+                                                                                      like_sum, overComment);
+        response.status(201).json(results);
+        next();
+    } catch(err){
+        console.error('There was an error in POST /comments', err);
+        response.status(500).json({ message: err.message });
+    }
+});
+
 module.exports = router;

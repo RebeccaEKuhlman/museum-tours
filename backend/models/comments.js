@@ -16,8 +16,15 @@ const fetchCommentsByTourName = async (tour_Name) => {
     return results;
 }
 
+const insertComment = async (content, username, tour_Name, review_id, like_sum, overComment) => {
+    const query = knex(COMMENT_TABLE).insert({content, username, tour_Name, review_id, like_sum, overComment});
+    const results = await query;
+    return results;
+}
+
 module.exports = {
     fetchAllComments,
     fetchCommentsByTourName,
-    fetchCommentsByOverComment
+    fetchCommentsByOverComment,
+    insertComment
 }
