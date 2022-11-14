@@ -38,15 +38,12 @@ app.get('/health', (request, response, next) => {
 });
 
 users(app, logger);
-museums(app, logger);
-tours(app, logger);
-ratings(app, logger);
-comments(app, logger);
 app.use('/photos', photos)
 app.use('/bookings', bookings);
 // app.use('/users', UserRoutes);
 app.use('/museums', museums);
 app.use('/tours', tours);
+app.use('/comments', comments);
 
 app.listen(port, () => {
    console.log(`This app is listening on port  ${port}`);
