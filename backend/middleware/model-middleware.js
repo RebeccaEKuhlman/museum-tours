@@ -12,7 +12,7 @@ const createModelsMiddleware = async (req, res, next) => {
     tour: Tour,
     photo: Photo,
     booking: Booking,
-    Museum: Museum,
+    museum: Museum,
     Rating: Rating,
     Comment: Comment
   }
