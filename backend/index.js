@@ -36,11 +36,10 @@ app.get('/health', (request, response, next) => {
 });
 
 users(app, logger);
-museums(app, logger);
 app.use('/photos', photos)
-// bookings(app, logger);
 app.use('/bookings', bookings);
 // app.use('/users', UserRoutes);
+app.use('/museums', museums);
 app.use('/tours', tours);
 
 app.listen(port, () => {
