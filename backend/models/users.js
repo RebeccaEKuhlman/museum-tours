@@ -43,6 +43,7 @@ class User {
         const validPassword = await bcrypt.compare(password, user.password);
         if (validPassword) {
             const accessToken = jwt.sign({ ...users[0], claims: ['user'] }, accessTokenSecret );
+            console.log('Access granted');
             return accessToken;
         }
         throw new Error(`Incorrect creditials`);

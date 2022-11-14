@@ -33,7 +33,8 @@ module.exports = function users(app, logger) {
             const results = await query;
             console.log('Results of my POST statement:', results);
             response.status(201).json(results);
-            return {authenticateUser}(username, hashed);
+            const auth = await authenticateUser({username}, rawPass); 
+            return auth; 
         } catch (err) {
             console.error('There was an error in POST /users', err);
             response.status(500).json({ message: err.message });
@@ -57,7 +58,6 @@ module.exports = function users(app, logger) {
                 const password = request.body.password;
              */
             const users = await fetchUsersByEmail(email);
-            console.log("passed");
             if (users.length === 0) {
                 console.error(`No users matched the email: ${email}`);
                 throw new Error(`No users matched the email: ${email}`);
@@ -65,7 +65,6 @@ module.exports = function users(app, logger) {
             const user = users[0];
             console.log("user", user);
             const auth = await authenticateUser(user, password); 
-            console.log("auth", auth);
          //   const validPassword = await bcrypt.compare(password, user.password);
             if (auth !== null) {
                 // if user exists
