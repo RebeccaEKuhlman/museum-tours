@@ -2,7 +2,7 @@ const knex = require('../database/knex');
 const COMMENT_TABLE = 'comments';
 
 const fetchAllComments = async () => {
-    const results = await knex(TOUR_TABLE).select();
+    const results = await knex(COMMENT_TABLE).select();
     return results;
 }
 
