@@ -62,7 +62,9 @@ router.get('/', async (req, res, next) => {
 
 router.get('/museums', async (req, res, next) => {
     try {
-        const photosByMuseum = await req.models.photo.getPhotosByMuseum(req.query.museum);
+        //alert(req.query.museum_name);
+        const photosByMuseum = await req.models.photo.getPhotosByMuseum(req.query.museum_name);
+        console.log(photosByMuseum);
         res.status(200).json(photosByMuseum);
         next();
     } catch (err) {

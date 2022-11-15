@@ -12,18 +12,17 @@ import {
   Box,
 } from "@material-ui/core";
 import Button from "@mui/material/Button";
+import { Repository } from './repository';
 
 export const Tours = ({ museums, photos }) => {
   // const [museum, setMuseum] = useState({});
   // const [photo, setPhoto] = useState([])
 
-  // useEffect(() => {
-  //   getMuseum(1).then(setMuseum);
-  //   getPhoto(1).then(setPhoto);
-  // }, []);
+  
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  var repository = new Repository();
 
   function GridItem(props) {
     let items = [
@@ -37,7 +36,7 @@ export const Tours = ({ museums, photos }) => {
           <img
             className="Image"
             alt="museumlogo"
-            src="https://via.placeholder.com/300x150"
+            src={repository.getPhotoByMuseum(props.item.museum_name)}
             style={{ alignItems: "center", height: "auto", width: "auto" }}
           ></img>
           <Typography
@@ -118,7 +117,7 @@ export const Tours = ({ museums, photos }) => {
           </Dialog>
         </CardActions>
           
-        <Card sx={{ maxWidth: 345 }}>
+        {/* <Card sx={{ maxWidth: 345 }}>
           <CardHeader
             className="Caption"
             style={{
@@ -131,7 +130,7 @@ export const Tours = ({ museums, photos }) => {
             component="img"
             height="150"
             width="300"
-            image="https://via.placeholder.com/300x150"
+            
           />
           <CardContent>
             <Typography
@@ -168,7 +167,7 @@ export const Tours = ({ museums, photos }) => {
                 Exhibits on Display: {props.item.num_exhibits}
               </Typography>
             </CardContent>
-        </Card>
+        </Card> */}
       </Paper>,
     ];
     return (
