@@ -34,7 +34,7 @@ export const Tours = ({ museums, photos }) => {
             className="Image"
             alt="museumlogo"
             src={photos.filter(x => x.photoId === props.item.photoId)[0].photo_data}
-            style={{ alignItems: "center", height: "auto", width: "auto" }}
+            style={{ alignItems: "center", height: 100, width: "auto" }}
           ></img>
           <Typography
             className="Title"
