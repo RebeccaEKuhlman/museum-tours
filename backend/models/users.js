@@ -1,44 +1,53 @@
 /**const { nextTick } = require('process');
-const jwt = require('jsonwebtoken' );
-const accessTokenSecret  = 'mysupercoolsecret' ;**/
 
+
+const jwt = require('jsonwebtoken' );
 class User {
     constructor(_DBQuery, _disconnect) {
         this.DBQuery = _DBQuery;
         this.disconnect = _disconnect;
-    }
+    }const getAllPhotos = async () => 
     close () {
         this.disconnect();
-    }
-    async fetchAllUsers () {
-        const results = await this.DBQuery('SELECT * FROM users');
+    }**/// GIVES USER BASED OFF OF TOKEN
+    const accessTokenSecret  = 'accessToken' ;
+    const jwt = require('jsonwebtoken' );
+    const bcrypt = require('bcrypt');
+    const knex = require('../database/knex');
+    const fetchAllUsers = async () => {
+        const query = knex('users');
+        const results = await query;
         return results;
     }
-    async fetchUsersByName (username) {
-        const results = await this.DBQuery('SELECT * FROM users WHERE name = ?', [username]);
+    const fetchUsersByName = async (username) => {
+        const query = knex.from('users').select().where(username);
+       // const query = knex.select().where({username: username}).from('users');
+        const results = await query;
         return results;
     }
-    async authenticateUser  (username, password) {
+    const fetchUsersByEmail = async (givenEmail) => {
+       // const query = knex('users').select().where({email: givenEmail});
+       console.log("inside fetch by email");
+       console.log(givenEmail);
+        const query = knex('users').where({ email: givenEmail }).select();
+        const results = await query;
+        return results;
+    }
+    const authenticateUser = async  (username, password) =>{
         const users = await fetchUsersByName(username);
         console.log('Results of users query', users);
         if (users.length === 0) {
-            console.error(`No users matched the username: ${username}`);
-            return null;
+            throw new Error(`No users matched the email: ${email}`);
         }
         const user = users[0];
-        const { createHash } = require('crypto');
-        function hash(string) {
-            return createHash('sha256').update(string).digest('hex');
-        }
-        const hashed = hash(password + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
-        const validPassword = await bcrypt.compare(hashed, user.password);
+        const validPassword = await bcrypt.compare(password, user.password);
         if (validPassword) {
-      //      const accessToken = jwt.sign({ ...users[0], claims: ['user'] }, accessTokenSecret );
-       //     return accessToken;
+            const accessToken = jwt.sign({ ...users[0], claims: ['user'] }, accessTokenSecret );
+            console.log('Access granted');
+            return accessToken;
         }
-        return null;
-        
+        throw new Error(`Incorrect creditials`);
      }
- }
- module.exports = User;
+     
+ module.exports = {fetchAllUsers, authenticateUser, fetchUsersByEmail, fetchUsersByName};
  

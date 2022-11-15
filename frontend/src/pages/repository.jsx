@@ -3,24 +3,25 @@ import axios from "axios";
 export class Repository {
   url = "localhost";
 
-  postLogin(email, password) {
-    return new Promise((resolve, reject) => {
-      console.log("Post Login");
-      axios
-        .post(`http://${this.url}:8000/users/login`, {
-          email: email,
-          password: password,
-        })
-        .then((x) => {
-          console.log("x", x.data);
-          resolve(x.data);
-        })
-        .catch((err) => {
-          console.log("catch");
-          alert(err);
-          reject(err);
+    postLogin(email, password) {
+        return new Promise((resolve, reject) => {
+            console.log("Post Login");
+            axios.post( `http://${ this.url }:8000/users/login`, {
+                    email: email,
+                    password: password
+                
+            })
+                .then(x => {
+                    console.log("x", x.data);
+                    resolve(x.data);
+                })
+                .catch(err => {
+                    console.log("catch");
+                    alert(err);
+                    reject(err);
+                })
         });
-    });
+   
     //         // Save JWT in localStorage form the memory
     //         localStorage.setItem("token", token);
     //         // Send the request with JWT
@@ -34,24 +35,24 @@ export class Repository {
     // });
   }
 
-  postRegristration(email, password) {
-    return new Promise((resolve, reject) => {
-      console.log("Post Registration");
-      axios
-        .post(`http://${this.url}:8000/users/registration`, {
-          email: email,
-          password: password,
-        })
-        .then((x) => {
-          console.log("x.data", x.data);
-          resolve(x.data);
-        })
-        .catch((err) => {
-          console.log("catch");
-          alert(err);
-          reject(err);
+    postRegristration(email, username, password) {
+        return new Promise((resolve, reject) => {
+            console.log("Post Registration");
+            axios.post( `http://${ this.url }:8000/users/registration`, {
+                email: email,
+                username: username,
+                password: password
+            })
+                .then(x => {
+                    console.log("x.data", x.data);
+                    resolve(x.data);
+                })
+                .catch(err => {
+                    console.log("catch");
+                    reject(err);
+                })
         });
-    });
+  
   }
 
   putPassword(email, newPass) {
