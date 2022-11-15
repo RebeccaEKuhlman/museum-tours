@@ -140,14 +140,14 @@ export class Repository {
   getPhotoByMuseum(museum_name) {
     return new Promise((resolve, reject) => {
       console.log("Get Photo by Museum");
-      axios.get(`http://${this.url}:8000/photos`, {
-          data: {
-            museum: museum_name,
+      axios.get(`http://${this.url}:8000/photos/museums`, {
+          params: {
+            museum_name: museum_name,
           },
         })
         .then((x) => {
           resolve(x.data);
-          console.log(x.data);
+          console.log("x.data", x.data);
         })
         .catch((err) => {
           alert(err);

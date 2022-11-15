@@ -20,7 +20,7 @@ export const Home = ({ museums, photos }) => {
           <img
             className="Image"
             alt="museumlogo"
-            src={props.item.photo_data}
+            src={photos.filter(x => x.photoId === props.item.photoId)[0].photo_data}
             style={{ alignItems: "center", height: 100, width: "auto" }}
           ></img>
           <Typography
