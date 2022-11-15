@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Grid,
   Card,
@@ -16,7 +16,7 @@ import { Repository } from './repository';
 
 export const Tours = ({ museums, photos }) => {
   // const [museum, setMuseum] = useState({});
-  // const [photo, setPhoto] = useState([])
+  const [photo, setPhoto] = useState([])
 
   
   const [open, setOpen] = React.useState(false);
