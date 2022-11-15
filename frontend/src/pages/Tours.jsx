@@ -54,15 +54,6 @@ export const Tours = ({ museums, photos }) => {
               fontFamily: "Baskerville",
             }}
           >
-            {props.item.Caption}
-          </Typography>
-          <Typography
-            className="Caption"
-            style={{
-              color: "#696963",
-              fontFamily: "Baskerville",
-            }}
-          >
             Current Director: {props.item.director}
           </Typography>
           <Typography
@@ -88,6 +79,7 @@ export const Tours = ({ museums, photos }) => {
           >
             View Now
           </Button>
+          {/* Need a use state to handle what goes in the Dialog, rip from Lawrimore*/}
           <Dialog
             open={open}
             onClose={handleClose}
