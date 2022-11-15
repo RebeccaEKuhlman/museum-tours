@@ -16,13 +16,10 @@ import { Repository } from './repository';
 
 export const Tours = ({ museums, photos }) => {
   // const [museum, setMuseum] = useState({});
-  const [photo, setPhoto] = useState([])
 
-  
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  var repository = new Repository();
 
   function GridItem(props) {
     let items = [
@@ -36,7 +33,7 @@ export const Tours = ({ museums, photos }) => {
           <img
             className="Image"
             alt="museumlogo"
-            src={repository.getPhotoByMuseum(props.item.museum_name)}
+            src={photos.filter(x => x.photoId === props.item.photoId)[0].photo_data}
             style={{ alignItems: "center", height: "auto", width: "auto" }}
           ></img>
           <Typography

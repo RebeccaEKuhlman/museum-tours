@@ -67,10 +67,9 @@ export const App = () => {
     var repository = new Repository();
     repository.getMuseums().then(x => setMuseums(x));
     repository.getPhotos().then(x => setPhotos(x));
-    //
   }, []);
 
-  if (!museums) {
+  if (!museums || !photos) {
     return <></>;
   }
 
@@ -115,7 +114,7 @@ export const App = () => {
         <Route exact path='/' element={< Home museums={museums} photos={photos} />}></Route>
         <Route exact path='/login' element={< Login />}></Route>
         <Route exact path='/profile' element={< Profile />} onEnter={requireAuth}></Route>
-        <Route exact path='/tours' element={< Tours museums={museums} />}></Route>
+        <Route exact path='/tours' element={< Tours museums={museums} photos={photos} />}></Route>
         <Route exact path='/Registration' element={< Registration />}></Route>
       </Routes>
     </Router>
