@@ -52,7 +52,7 @@ CREATE TABLE ratings(
 	FOREIGN KEY (username) REFERENCES users(username),
   	FOREIGN KEY (tour_Name) REFERENCES tours(tour_Name),
 	FOREIGN KEY (museum_name) REFERENCES museums(museum_name),
-	ratingID int NOT NULL,
+	ratingID int NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY (ratingID)
 );
 

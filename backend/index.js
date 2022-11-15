@@ -12,6 +12,8 @@ const museums = require('./routes/museums');
 const tours = require('./routes/tours');
 const bookings = require('./routes/bookings');
 const photos = require('./routes/photos');
+const comments = require('./routes/comments');
+const ratings = require('./routes/ratings');
 
 // set up some configs for express.
 const config = {
@@ -36,6 +38,8 @@ app.get('/health', (request, response, next) => {
 });
 
 users(app, logger);
+
+comments(app, logger);
 app.use('/photos', photos)
 app.use('/bookings', bookings);
 // app.use('/users', UserRoutes);
