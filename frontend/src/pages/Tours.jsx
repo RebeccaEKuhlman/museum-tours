@@ -36,7 +36,7 @@ export const Tours = ({ museums, photos }) => {
           <img
             className="Image"
             alt="museumlogo"
-            src={repository.getPhotoByMuseum(props.item.museum_name)}
+            src={repository.getPhotoByMuseum(props.item.museum_name).photo_data}
             style={{ alignItems: "center", height: "auto", width: "auto" }}
           ></img>
           <Typography
