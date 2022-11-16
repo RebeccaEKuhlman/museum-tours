@@ -40,5 +40,14 @@ router.get('/', async (req, res, next) => {
         response.status(500).json({ message: err.message });
     }
 });
-
+router.delete('/', async (req, res, next) => {
+    try {
+        const rating = await req.models.rating.deleteRating(req.query.ratingId);
+        res.status(200).json(rating);
+        next();
+    } catch(err) {
+        console.error('There was an error in DELETE /ratings', err);
+        res.status(500).json({ message: err.message });
+    }
+});
 module.exports = router;
