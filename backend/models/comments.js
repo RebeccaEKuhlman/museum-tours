@@ -22,9 +22,15 @@ const insertComment = async (content, username, tour_Name, review_id, like_sum, 
     return results;
 }
 
+const deleteComment = async (commNum) => {
+    const results = await knex(COMMENT_TABLE).delete().where({'commNum':commNum});
+    return results;
+}
+
 module.exports = {
     fetchAllComments,
     fetchCommentsByTourName,
     fetchCommentsByOverComment,
-    insertComment
+    insertComment,
+    deleteComment
 }

@@ -67,4 +67,19 @@ router.post('/', async(request, response, next) => {
     }
 });
 
+router.delete('/', async (request, response, next) => {
+    try {
+       console.log('Initiating DELETE /comments request');
+       console.log('Request has params containing:', request.query);
+
+       const results = await request.models.comment.deleteComment(request.query.commNum);
+       console.log('Results of my DELETE statement:', results);
+       response.status(200).json(results);
+       next();
+    } catch (err) {
+        console.error('There was an error in DELETE /comments', err);
+        response.status(500).json({ message: err.message });
+    }
+});
+
 module.exports = router;
