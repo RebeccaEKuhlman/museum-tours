@@ -39,7 +39,6 @@ app.get('/health', (request, response, next) => {
 
 users(app, logger);
 
-comments(app, logger);
 app.use('/photos', photos)
 app.use('/bookings', bookings);
 // app.use('/users', UserRoutes);
