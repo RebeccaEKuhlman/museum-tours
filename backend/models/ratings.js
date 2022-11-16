@@ -1,22 +1,25 @@
-class Rating {
-    constructor(_DBQuery, _disconnect) {
-        this.DBQuery = _DBQuery;
-        this.disconnect = _disconnect;
-    }
-    close () {
-        this.disconnect();
-    }
-    async fetchAllRatings () {
-        const results = await this.DBQuery('SELECT * FROM ratings');
-        return results;
-    }
-    async fetchRatingsByUsername (username) {
-        const results = await this.DBQuery('SELECT * FROM ratings WHERE username = ?', [username]);
-        return results;
-    }
-    async fetchRatingsByTourname (tour_Name) {
-        const results = await this.DBQuery('SELECT * FROM ratings WHERE tour_Name = ?', [tour_Name]);
-        return results;
-    }
- }
- module.exports = Rating;
+const knex = require('../database/knex');
+const RATINGS_TABLE = 'ratings';
+
+
+const postRating = async (rating, username, tour_Name, museum_name) => {
+    const query = knex(RATINGS_TABLE).insert({
+        rating: rating, 
+        username: username,
+        tour_Name: tour_Name,
+        museum_name: museum_name
+    });
+    const results = await query;
+    return results;
+}
+
+const getAllRatings = async() => {
+    const query = knex(RATINGS_TABLE).select();
+    const results = await query;
+    return results;
+}
+
+module.exports = {
+    postRating,
+    getAllRatings
+}

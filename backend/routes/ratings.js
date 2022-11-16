@@ -10,39 +10,35 @@
 	PRIMARY KEY (ratingID)
  */
 
-const knex = require('../database/knex.js');
+const express = require('express');
+const router = express.Router();
+const bodyParser = require('body-parser');
+router.use(bodyParser.json());
 
-module.exports = function ratings(app, logger) {
-    
-    app.get('/ratings', async (request, response) => {
-        try {
-            const results = await knex("ratings").select();
-            response.status(201).json(results);
-        } catch (err) {
-            console.error('There was an error in GET /ratings', err);
-            response.status(500).json({ message: err.message });
-        }
-    });
+router.post('/', async (req, res, next) => {
+    try {
+        console.log('Initiating POST /ratings request');
+        console.log('Request has a body / payload containing:', req.body);
+        const rating = await req.models.rating.postRating(
+            req.body.rating,
+            req.body.username,
+            req.body.tour_Name,
+            req.body.museum_name
+        );
+        res.status(201).json(rating);
+    } catch(err) {
+        console.error('There was an error in POST /ratings', err);
+        res.status(500).json({ message: err.message });
+    }
+});
+router.get('/', async (req, res, next) => {
+    try {
+        const ratings = await req.models.rating.getAllRatings();
+        res.status(200).json(ratings);
+    } catch(err) {
+        console.error('There was an error in GET /ratings', err);
+        response.status(500).json({ message: err.message });
+    }
+});
 
-    app.post('/ratings/newRating', async (request, response) => {
-        try {
-            console.log('Initiating POST /ratings/newRating request');
-            console.log('Request has a body / payload containing:', request.body);
-            console.log('Request has params containing:', request.query);
-            const payload = request.body; // This payload should be an object containing user data
-            const query = knex('ratings').insert({ 
-                rating: request.body.rating,
-                username: request.body.username,
-                tour_name: request.body.tour_name,
-                museum_name: request.body.museum_name,
-                ratingID: request.body.ratingID,
-            })
-            const results = await query;
-            console.log('Results of my POST statement:', results);
-            response.status(201).json(results);
-        } catch (err) {
-            console.error('There was an error in POST /ratings', err);
-            response.status(500).json({ message: err.message });
-        }
-    });
-}
+module.exports = router;
