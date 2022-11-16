@@ -4,12 +4,12 @@ import { render } from 'react-dom';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { AppBar, Toolbar, Typography, makeStyles, Box, Avatar } from "@material-ui/core";
 import { Repository } from './pages/repository';
-
 import { NoPage } from './pages/NoPage';
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 import { Profile } from './pages/Profile';
 import { Tours } from './pages/Tours';
+import { Registration } from './pages/Registration';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -84,66 +84,18 @@ export const App = () => {
     // next();
   };
 
-  // console.log(museums);
-
-  // let museumsEX = [ // Get From Backend
-  //   {
-  //     Name: "Dallas Museum of Art",
-  //     Image: "https://www.dma.org/sites/default/files/dma-logo.png",
-  //     Caption: "Art museum with more than 24,000 works of art from around the world ranging from ancient to modern times. Located in downtown Dallas.",
-  //     Color: "#282c34",
-  //     // Items: [
-  //     //   {
-  //     //     Name: "Dallas Museum of Art",
-  //     //     Image: "https://via.placeholder.com/100"
-  //     //   }
-  //     // ]
-  //   },
-  //   {
-  //     Name: "Perot Museum of Natural History",
-  //     Image: "http://photos.prnewswire.com/prnfull/20120531/DC16400LOGO",
-  //     Caption: "Dallas's natural history museum. Focuses on innovation, archaeology, and curiosity. Located in downtown Dallas.",
-  //     Color: "#282c34",
-  //   },
-  //   {
-  //     Name: "Bush Presidential Center",
-  //     Image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Official_logo_of_the_George_W._Bush_Presidential_Library.svg/1200px-Official_logo_of_the_George_W._Bush_Presidential_Library.svg.png",
-  //     Caption: "Presidential Library and think tank of George W. Bush. Located on the campus of SMU.",
-  //     Color: "#282c34",
-  //   },
-  //   {
-  //     Name: "Meadows Museum",
-  //     Image: "https://meadowsmuseumdallas.org/wp-content/uploads/2017/02/MUSE_retina.png",
-  //     Caption: "The largest collection of Spanish art outside of Spain. Located on the campus of SMU.",
-  //     Color: "#282c34",
-  //   },
-  // ];
-
-  // console.log(museumsEX)
-
-  // useEffect(() => {
-  //   const onPageLoad = () => {
-      
-  //   };
-  //   if (document.readyState === 'complete') {
-  //     document.onload
-  //     onPageLoad();
-  //   } else {
-  //     window.addEventListener('load');
-  //     return () => window.removeEventListener('load', onPageLoad);
-  //   }
-  // }, []);
   return (
     <Router>
-      <AppBar position="static" style={{ backgroundColor: "#7F96FF" }}>
+      <AppBar position="static" style={{ backgroundColor: "#323031" }}>
         <Toolbar disableGutters className={classes.toolbar}>
           <Typography 
             className={classes.headlink}
             component="a"
             href="/"
             noWrap
+            src="../Artt.png"
           > 
-            Artt. Museum Tours
+            <img style = {{height: "45px", marginTop: "15px"}} src={require("./Artt.png")}/>
           </Typography>
           <Typography className={classes.link}>
             {/* <Link to="/tours" className={classes.link}>
@@ -164,6 +116,7 @@ export const App = () => {
         <Route exact path='/login' element={< Login />}></Route>
         <Route exact path='/profile' element={< Profile />} onEnter={requireAuth}></Route>
         <Route exact path='/tours' element={< Tours museums={museums} />}></Route>
+        <Route exact path='/Registration' element={< Registration />}></Route>
       </Routes>
     </Router>
   );

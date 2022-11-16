@@ -9,6 +9,7 @@ export class Repository {
             axios.post( `http://${ this.url }:8000/users/login`, {
                     email: email,
                     password: password
+                
             })
                 .then(x => {
                     console.log("x", x.data);
@@ -33,12 +34,13 @@ export class Repository {
         // });
     }
 
-    postRegristration(email, password) {
+    postRegristration(email, username, password) {
         return new Promise((resolve, reject) => {
             console.log("Post Registration");
             axios.post( `http://${ this.url }:8000/users/registration`, {
-                    email: email,
-                    password: password
+                email: email,
+                username: username,
+                password: password
             })
                 .then(x => {
                     console.log("x.data", x.data);
@@ -46,7 +48,6 @@ export class Repository {
                 })
                 .catch(err => {
                     console.log("catch");
-                    alert(err);
                     reject(err);
                 })
         });
@@ -76,7 +77,7 @@ export class Repository {
     getMuseums() {
         return new Promise((resolve, reject) => {
             console.log("Get Museums");
-            axios.get( `http://${ this.url }:8000/museums`)
+            axios.get( `http://${ this.url }:8000/museums/`)
                 .then(x => {
                     resolve(x.data);
                 })

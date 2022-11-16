@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -11,7 +11,7 @@ import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { Repository } from "./repository";
+import { Repository } from './repository';
 
 function Copyright() {
   return (
@@ -28,9 +28,6 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Baskerville",
   },
   palette: {
-    primary: {
-      main: "#7F96FF",
-    },
     background: {
       paper: "#F6F7EB",
     },
@@ -44,16 +41,13 @@ const useStyles = makeStyles((theme) => ({
     success: {
       dark: "#7F96FF",
     },
-    button: {
-      primary: "#7F96FF",
-    },
   },
   root: {
     height: "calc(100vh - 64px)",
   },
   image: {
     backgroundImage:
-      "url(https://texashighways.com/wp-content/uploads/2021/11/drive-ticket-alamosaurus.jpg)",
+      "url(https://glasstire.com/wp-content/uploads/2018/09/Texas-Artist-Ludwig-Schwarz-Dallas-Museum-of-Art-paintings-from-Conduit-Gallery-3-1170x742.jpg)",
     backgroundRepeat: "no-repeat",
     backgroundColor:
       theme.palette.type === "light"
@@ -78,20 +72,20 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
-    color: "error",
-    bgcolor: "error",
   },
 }));
 
 // React functional component
-export function Login() {
+export function Registration() {
   const classes = useStyles();
 
   // state for storage of the information on the webpage of forms and list, uses hooks
   // const [number, setNumber] = useState("");
   // const [values, setValues] = useState([]);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmpassword, setConfirmPassword] = useState('');
 
   // ENTER YOUR EC2 PUBLIC IP/URL HERE
   const ec2_url = "";
@@ -129,17 +123,23 @@ export function Login() {
   // handle input form submission to backend via POST request
   const handleSubmit = (e) => {
     e.preventDefault();
-    repository.postLogin(email, password).then((x) => {
-      if (typeof x.error != "undefined") {
-        alert("Invalid Credentials");
-      } else {
-        window.location.href = "/profile";
-      }
-    });
+    if (password !== confirmpassword) {
+      alert("passwords must match")
+    }
+    else {
+      repository.postRegristration(email, username, password).then(x => {
+        if (typeof x.error != "undefined") {
+          alert("error: unable to sign up")
+
+        } else {
+          window.location.href = "/login";
+        }
+      });
+    }
     // axios
     // .get(`http://${url}:8000/login`, {
     //   data: {
-    //     username: username,
+    //     username: username, 
     //     password: password
     //   }
     // })
@@ -169,11 +169,11 @@ export function Login() {
           <Typography
             component="h1"
             className="title"
-            style={{
+            sx={{
               fontFamily: "Baskerville",
             }}
           >
-            LOGIN
+            REGISTER
           </Typography>
           <form className={classes.form} noValidate onSubmit={handleSubmit}>
             <TextField
@@ -188,7 +188,19 @@ export function Login() {
               value={email}
               onInput={(e) => setEmail(e.target.value)}
               autoFocus
-              style = {{fontFamily: "Baskerville"}}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
+              value={username}
+              onInput={(e) => setUsername(e.target.value)}
+              autoFocus
             />
             <TextField
               variant="outlined"
@@ -202,45 +214,28 @@ export function Login() {
               value={password}
               onInput={(e) => setPassword(e.target.value)}
               autoComplete="current-password"
-              style = {{fontFamily: "Baskerville"}}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" fontFamily="Baskerville" />}
-              style={{color: "#323031"}}
-              label="Remember me"
-              
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="confirm-password"
+              label="Confirm Password"
+              type="password"
+              id="confirm-password"
+              value={confirmpassword}
+              onInput={(e) => setConfirmPassword(e.target.value)}
             />
             <Button
-              style={{
-                color: "#FFFFFF",
-                backgroundColor: "#7F96FF",
-                fontFamily: "Baskerville"
-              }}
+              style={{ color: "#FFFFFF", backgroundColor: "#7F96FF" }}
               type="submit"
               fullWidth
               variant="contained"
+              className={classes.submit}
             >
-              Sign In
+              Sign Up
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link
-                  href="#"
-                  variant="body2"
-                  style={{
-                    color: "#7F96FF",
-                    fontFamily: "Baskerville"
-                  }}
-                >
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="/Registration" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
             <Box mt={5}>
               <Copyright />
             </Box>
