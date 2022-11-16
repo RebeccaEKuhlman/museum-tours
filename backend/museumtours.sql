@@ -9,7 +9,6 @@ CREATE TABLE photos(
 	is_profile BOOL DEFAULT False
 );
 
-
 CREATE TABLE users(
 	username VARCHAR(30) NOT NULL PRIMARY KEY,
 	password VARCHAR(100) NOT NULL,

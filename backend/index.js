@@ -45,6 +45,8 @@ app.use('/bookings', bookings);
 // app.use('/users', UserRoutes);
 app.use('/museums', museums);
 app.use('/tours', tours);
+app.use('/comments', comments);
+app.use('/ratings', ratings);
 
 app.listen(port, () => {
    console.log(`This app is listening on port  ${port}`);
