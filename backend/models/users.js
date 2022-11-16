@@ -12,7 +12,7 @@ class User {
     }**/// GIVES USER BASED OFF OF TOKEN
     const accessTokenSecret  = 'accessToken' ;
     const jwt = require('jsonwebtoken' );
-    const bcrypt = require('bcrypt');
+    const bcrypt = require('bcryptjs');
     const knex = require('../database/knex');
     const fetchAllUsers = async () => {
         const query = knex('users');

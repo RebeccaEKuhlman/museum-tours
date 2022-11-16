@@ -11,7 +11,7 @@
        * 
        */
 const knex = require('../database/knex.js');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const {fetchUsersByEmail} = require('../models/users');
 const {authenticateUser} = require('../models/users');
 const { query } = require('express');
