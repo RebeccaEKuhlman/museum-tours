@@ -21,7 +21,7 @@ export const Home = ({ museums, photos }) => {
             className="Image"
             alt="museumlogo"
             src={photos.filter(x => x.photoId === props.item.photoId)[0].photo_data}
-            style={{ alignItems: "center", height: 100, width: "auto" }}
+            style={{ alignItems: "center", height: 250, width: "auto" }}
           ></img>
           <Typography
             className="Title"

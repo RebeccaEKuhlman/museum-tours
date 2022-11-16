@@ -10,6 +10,7 @@ import { Login } from './pages/Login';
 import { Profile } from './pages/Profile';
 import { Tours } from './pages/Tours';
 import { Registration } from './pages/Registration';
+import { Bookings } from './pages/Bookings';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -116,6 +117,7 @@ export const App = () => {
         <Route exact path='/profile' element={< Profile />} onEnter={requireAuth}></Route>
         <Route exact path='/tours' element={< Tours museums={museums} photos={photos} />}></Route>
         <Route exact path='/Registration' element={< Registration />}></Route>
+        <Route exact path='/bookings' element = {<Bookings />}></Route>
       </Routes>
     </Router>
   );

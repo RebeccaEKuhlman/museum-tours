@@ -12,7 +12,7 @@ import {
   Box,
 } from "@material-ui/core";
 import Button from "@mui/material/Button";
-import { Repository } from './repository';
+
 
 export const Tours = ({ museums, photos }) => {
   // const [museum, setMuseum] = useState({});
