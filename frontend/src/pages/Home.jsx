@@ -80,7 +80,6 @@ export const Home = ({ museums, photos }) => {
 
   const StyledButton = {
     textAlign: 'center',
-    fontFamily: [ "Baskerville" ],
     fontWeight: 'bold',
     backgroundColor: "#7F96FF",
     color: "#F6F7EB",

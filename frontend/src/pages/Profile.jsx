@@ -169,7 +169,6 @@ export function Profile() {
         container
         className={classes.root}
         spacing={0}
-        direction="column"
         alignItems="center"
         justifyContent="center"
         style={{ padding: "0" }}
@@ -177,7 +176,7 @@ export function Profile() {
         <Grid item xs={false}>
           <Card
             className={classes.card}
-            sx={{ maxWidth: 400, backgroundcolor: "#FFFFFF" }}
+            sx={{ maxWidth: 600, backgroundcolor: "#FFFFFF" }}
           >
             <CardMedia
               component="img"
@@ -209,7 +208,7 @@ export function Profile() {
         <Grid item xs={false}>
           <Card
             className={classes.card}
-            sx={{ maxWidth: 400, backgroundcolor: "#FFFFFF" }}
+            sx={{ maxWidth: 1000, backgroundcolor: "#FFFFFF", marginLeft: "10px", marginRight: "10px" }}
           >
             <CardContent
               className={classes.card}
@@ -221,7 +220,7 @@ export function Profile() {
                 variant="h4"
                 component="div"
               >
-                <b className={classes.typography}>Change Fields</b>
+                <b className={classes.typography}>Manage Account</b>
               </Typography>
               <FormControl sx={{ mt: 1 }} size="large">
                 <form noValidate onSubmit={handleSubmit}>
@@ -292,13 +291,26 @@ export function Profile() {
                 >
                   Change Password
                 </Button>
+                <Button
+                    type="submit"
+                    fullWidth
+                    style={{
+                      color: "#F6F7EB",
+                      backgroundColor: "#EC0B43",
+                      fontFamily: "Baskerville",
+                    }}
+                    variant="contained"
+                    className={classes.submit}
+                  >
+                    Delete Account
+                  </Button>
               </FormControl>
             </CardContent>
           </Card>
         </Grid>
         <Grid item xs={9}>
           <Card>
-            <CardContent sx={{ maxWidth: 400, backgroundcolor: "#FFFFFF" }}>
+            <CardContent sx={{ maxWidth: 400, backgroundcolor: "#FFFFFF", alignItems: "center" }}>
               <h2
                 style={{ fontSize: 50, fontFamily: "Baskerville", margin: 10 }}
               >
