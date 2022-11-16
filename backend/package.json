@@ -20,6 +20,6 @@
   },
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "npm rebuild bcrypt --build-from-source && nodemon index.js"
   }
 }
