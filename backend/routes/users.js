@@ -66,7 +66,9 @@ module.exports = function users(app, logger) {
 
             if (typeof results[0] != "undefined") {
                 // if user exists
-                response.status(200).json(results);
+                delete user.password;
+                response.status(200).json("Good creditials, logging user in");
+                return auth
             } else {
                 response.status(200).json({
                     "error": "Invalid Credentials"
