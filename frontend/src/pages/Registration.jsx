@@ -169,7 +169,7 @@ export function Registration() {
           <Typography
             component="h1"
             className="title"
-            sx={{
+            style={{
               fontFamily: "Baskerville",
             }}
           >
@@ -236,6 +236,18 @@ export function Registration() {
             >
               Sign Up
             </Button>
+            <Grid item>
+                <Link
+                  href="/Login"
+                  variant="body2"
+                  style={{
+                    color: "#7F96FF",
+                    fontFamily: "Baskerville",
+                  }}
+                >
+                  {"Have an account? Log in"}
+                </Link>
+              </Grid>
             <Box mt={5}>
               <Copyright />
             </Box>

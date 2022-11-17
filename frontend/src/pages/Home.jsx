@@ -1,10 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { Card, CardContent, CardActions, Typography, Paper } from "@material-ui/core";
-import Carousel from 'react-material-ui-carousel'
+import React, { useEffect, useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardActions,
+  Typography,
+  Paper,
+} from "@material-ui/core";
+import Carousel from "react-material-ui-carousel";
 import Button from "@mui/material/Button";
-import autoBind from 'auto-bind';
-import axios from 'axios';
-import './Home.css';
+import autoBind from "auto-bind";
+import axios from "axios";
+import "./Home.css";
 
 // React Functional Component
 export const Home = ({ museums, photos }) => {
@@ -12,21 +18,33 @@ export const Home = ({ museums, photos }) => {
     let items = [
       <Paper
         className="Project"
-        style={{ backgroundColor: "#696963", alignItems: "center", display: 'flex', justifyContent: 'center' }}
+        style={{
+          backgroundColor: "#696963",
+          alignItems: "center",
+          display: "flex",
+          justifyContent: "center",
+          mt: 10
+        }}
         elevation={10}
         key={props.item.museum_name}
       >
-        <CardContent className="Content">
+        <CardContent
+          className="Content"
+          style={{ backgroundColor: "#F6F7EB", height: 400, width: 750, mt: 100 }}
+        >
           <img
             className="Image"
             alt="museumlogo"
-            src={props.item.photo_data}
-            style={{ alignItems: "center", height: 100, width: "auto" }}
+            src={
+              photos.filter((x) => x.photoId === props.item.photoId)[0]
+                .photo_data
+            }
+            style={{ alignItems: "auto", height: 250, width: "auto" }}
           ></img>
           <Typography
             className="Title"
             style={{
-              color: "#F6F7EB",
+              color: "#696963",
               fontFamily: "Baskerville",
               fontWeight: "bold",
               fontSize: 25,
@@ -79,18 +97,18 @@ export const Home = ({ museums, photos }) => {
   };
 
   const StyledButton = {
-    textAlign: 'center',
-    fontFamily: [ "Baskerville" ],
-    fontWeight: 'bold',
+    textAlign: "center",
+    fontFamily: ["Baskerville"],
+    fontWeight: "bold",
     backgroundColor: "#7F96FF",
     color: "#F6F7EB",
     padding: "20px 80px",
     fontSize: "32px",
     "&:hover": {
-      backgroundColor: "#EC0B43"
+      backgroundColor: "#EC0B43",
     },
   };
-  
+
   return (
     <div className="Home-body">
       {/* <BrowserRouter>
@@ -103,9 +121,9 @@ export const Home = ({ museums, photos }) => {
         </Routes>
       </BrowserRouter> */}
       <header className="Home-header">
-        <Button 
+        <Button
           variant="contained"
-          sx={StyledButton} 
+          sx={StyledButton}
           component="a"
           href="/tours"
         >
@@ -123,9 +141,15 @@ export const Home = ({ museums, photos }) => {
           navButtonsAlwaysVisible={state.navButtonsAlwaysVisible}
           navButtonsAlwaysInvisible={state.navButtonsAlwaysInvisible}
           fullHeightHover={false}
-          navButtonsProps={{ style: { backgroundColor: "#7F96FF", borderRadius: 100 }}}
-          navButtonsWrapperProps={{ style: { bottom: "0", marginRight: 10, marginLeft: 10 } }}
-          indicatorContainerProps={{ style: { marginTop: 20, marginBottom: 20 } }}
+          navButtonsProps={{
+            style: { backgroundColor: "#7F96FF", borderRadius: 100 },
+          }}
+          navButtonsWrapperProps={{
+            style: { bottom: "0", marginRight: 10, marginLeft: 10 },
+          }}
+          indicatorContainerProps={{
+            style: { marginTop: 20, marginBottom: 20 },
+          }}
         >
           {museums.map((item, index) => {
             return <Project item={item} key={index} />;
@@ -134,4 +158,4 @@ export const Home = ({ museums, photos }) => {
       </main>
     </div>
   );
-}
+};
