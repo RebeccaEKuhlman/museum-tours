@@ -12,7 +12,7 @@ export class Repository {
                 
             })
                 .then(x => {
-                    console.log("x", x.data);
+                    console.log("xxxxxx", x);
                     resolve(x.data);
                 })
                 .catch(err => {

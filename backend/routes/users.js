@@ -69,7 +69,7 @@ module.exports = function users(app, logger) {
             if (auth !== null) {
                 // if user exists
                 delete user.password;
-                response.status(200).json({"is_director" : user.is_director});
+                response.status(200).json({"jwt": auth, "is_director" : user.is_director});
                 return auth;
             } else {
                 response.status(200).json({
