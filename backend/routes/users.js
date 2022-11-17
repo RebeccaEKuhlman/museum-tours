@@ -32,7 +32,7 @@ module.exports = function users(app, logger) {
             const query = knex('users').insert({ username, password: hashed, email, joinDate, photoId: 1})
             const results = await query;
             console.log('Results of my POST statement:', results);
-            response.status(201).json(results);
+            response.status(201).json({"is_director" : user.is_director});
             const auth = await authenticateUser({username}, rawPass); 
             return auth; 
         } catch (err) {
@@ -69,8 +69,8 @@ module.exports = function users(app, logger) {
             if (auth !== null) {
                 // if user exists
                 delete user.password;
-                response.status(200).json("Good creditials, logging user in");
-                return auth
+                response.status(200).json({"is_director" : user.is_director});
+                return auth;
             } else {
                 response.status(200).json({
                     "error": "Invalid Credentials"

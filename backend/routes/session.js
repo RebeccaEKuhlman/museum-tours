@@ -4,7 +4,6 @@ const router = express.Router();
 router.post('/', async (req, res, next) => {
    try {
        const body = req.body;
-      
        const result = await User.authenticateUser(body.username, body.password);
        res.status(201).json(result);
    } catch (err) {
