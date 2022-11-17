@@ -15,6 +15,8 @@ const bcrypt = require('bcryptjs');
 const {fetchUsersByEmail} = require('../models/users');
 const {authenticateUser} = require('../models/users');
 const { query } = require('express');
+const accessTokenSecret  = 'accessToken' ;
+const jwt = require('jsonwebtoken' );
 
 module.exports = function users(app, logger) {
     app.post('/users/registration', async (request, response) => {
@@ -32,12 +34,27 @@ module.exports = function users(app, logger) {
             const query = knex('users').insert({ username, password: hashed, email, joinDate, photoId: 1})
             const results = await query;
             console.log('Results of my POST statement:', results);
-            response.status(201).json({"is_director" : user.is_director});
+            response.status(201).json({"user" : user});
             const auth = await authenticateUser({username}, rawPass); 
             return auth; 
         } catch (err) {
             console.error('There was an error in POST /users', err);
             response.status(500).json({ message: err.message });
+        }
+    });
+    app.post('/jwt', async (request, response) => {
+        try {
+            console.log('Initiating POST /jwt request');
+            console.log('Request has a body / payload containing:', request.body);
+            console.log('Request has params containing:', request.query);
+            // invalid token - synchronous
+            const token = request.jwt; 
+            const decoded = jwt.verify(token, accessTokenSecret);
+            return true;
+        } catch (err) {
+            console.error('Token Invalid', err);
+            response.status(500).json({ message: err.message });
+            return false;
         }
     });
     app.post('/users/login', async (request, response) => {
@@ -69,7 +86,7 @@ module.exports = function users(app, logger) {
             if (auth !== null) {
                 // if user exists
                 delete user.password;
-                response.status(200).json({"is_director" : user.is_director});
+                response.status(200).json({"user" : user.is_director});
                 return auth;
             } else {
                 response.status(200).json({
