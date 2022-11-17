@@ -100,6 +100,7 @@ export const App = () => {
           <Avatar 
             className={classes.profile}
             onClick={requireAuth}
+            style={{ cursor: "pointer" }}
             src="/broken-image.jpg"
           />
         </Toolbar>
