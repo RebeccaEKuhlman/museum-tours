@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Grid,
   Card,
@@ -13,15 +13,11 @@ import {
 } from "@material-ui/core";
 import Button from "@mui/material/Button";
 
+
 export const Tours = ({ museums, photos }) => {
   // const [museum, setMuseum] = useState({});
-  // const [photo, setPhoto] = useState([])
 
-  // useEffect(() => {
-  //   getMuseum(1).then(setMuseum);
-  //   getPhoto(1).then(setPhoto);
-  // }, []);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -37,8 +33,8 @@ export const Tours = ({ museums, photos }) => {
           <img
             className="Image"
             alt="museumlogo"
-            src="https://via.placeholder.com/300x150"
-            style={{ alignItems: "center", height: "auto", width: "auto" }}
+            src={photos.filter(x => x.photoId === props.item.photoId)[0].photo_data}
+            style={{ alignItems: "center", height: 100, width: "auto" }}
           ></img>
           <Typography
             className="Title"
@@ -50,15 +46,6 @@ export const Tours = ({ museums, photos }) => {
             }}
           >
             {props.item.museum_name}
-          </Typography>
-          <Typography
-            className="Caption"
-            style={{
-              color: "#696963",
-              fontFamily: "Baskerville",
-            }}
-          >
-            {props.item.Caption}
           </Typography>
           <Typography
             className="Caption"
@@ -92,6 +79,7 @@ export const Tours = ({ museums, photos }) => {
           >
             View Now
           </Button>
+          {/* Need a use state to handle what goes in the Dialog, rip from Lawrimore*/}
           <Dialog
             open={open}
             onClose={handleClose}
@@ -118,7 +106,7 @@ export const Tours = ({ museums, photos }) => {
           </Dialog>
         </CardActions>
           
-        <Card sx={{ maxWidth: 345 }}>
+        {/* <Card sx={{ maxWidth: 345 }}>
           <CardHeader
             className="Caption"
             style={{
@@ -131,7 +119,7 @@ export const Tours = ({ museums, photos }) => {
             component="img"
             height="150"
             width="300"
-            image="https://via.placeholder.com/300x150"
+            
           />
           <CardContent>
             <Typography
@@ -168,7 +156,7 @@ export const Tours = ({ museums, photos }) => {
                 Exhibits on Display: {props.item.num_exhibits}
               </Typography>
             </CardContent>
-        </Card>
+        </Card> */}
       </Paper>,
     ];
     return (
