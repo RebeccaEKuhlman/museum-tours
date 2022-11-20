@@ -9,8 +9,16 @@ router.use(bodyParser.json());
 
 router.post('/', async (req, res, next) => {
     try {
-        const museum = await req.models.museum.postMuseum(req.body.museum_name, req.body.photoId, req.body.director, req.body.num_exhibits);
-        res.status(201).json(museum);
+        const museum = await req.models.museum.postMuseum(req.body.museum_name, req.body.photoId, req.body.director,
+                                                                                                req.body.num_exhibits);
+        if(museum){
+            const check = await req.models.museum.getByMuseumName(req.body.museum_name);
+            res.status(201).json(check);
+        }
+        else{
+            console.error('There was an error in POST /museums');
+            res.status(500).json();
+        }
         next();
     } catch (err) {
         console.error('There was an error in POST /museums', err);
