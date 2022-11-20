@@ -42,7 +42,6 @@ router.post('/', async (req, res, next) => {
             else{
                 console.error('There was an error in POST /bookings');
                 res.status(500).json();
-
             }
             next();
         } else {

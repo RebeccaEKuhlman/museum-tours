@@ -52,15 +52,24 @@ router.get('/', async (req, res, next) => {
 
 router.put('/', async (req, res, next) => {
     try {
-        if (req.body.photoId) {
+        if (req.body.photoId){
             const museum = await req.models.museum.updateMuseumPhotoId(req.body.museum_name, req.body.photoId);
-            res.status(200).json(museum);
-            next();
-        } else if (req.body.num_exhibits) {
-            const museum = await req.models.museum.updateMuseumNum_exhibits(req.body.museum_name, req.body.newName);
-            res.status(200).json(museum);
-            next();
         }
+        else if (req.body.num_exhibits){
+            const museum = await req.models.museum.updateMuseumNum_exhibits(req.body.museum_name, req.body.num_exhibits);
+        }
+        else {
+            throw new Error('Make sure all needed data is encluded\n');
+        }
+
+        const check = await req.models.museum.getByMuseumName(req.body.museum_name);
+        if(check)
+            res.status(200).json(check);
+        else{
+            console.error('There was an error in PUT /museums');
+            res.status(500).json();
+        }
+        next();
     } catch(err) {
         console.error('There was an error in PUT /museums', err);
         res.status(500).json({ message: err.message });
