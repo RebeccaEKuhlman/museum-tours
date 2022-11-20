@@ -32,6 +32,11 @@ router.get('/', async(request, response, next) => {
             const results = await request.models.comment.fetchCommentsByTourName(request.query.tour_Name);
             response.status(200).json(results);
         }
+        else if(request.query.username && request.query.tour_Name && request.content){
+            const results = await request.models.comment.fetchCommentsByTourName(request.query.username,
+                                                                        request.query.tour_Name, request.query.content);
+            response.status(200).json(results);
+        }
         else{
             const results = await request.models.comment.fetchAllComments();
             response.status(200).json(results);
