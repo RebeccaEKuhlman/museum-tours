@@ -50,11 +50,11 @@ module.exports = function users(app, logger) {
             // invalid token - synchronous
             const token = request.jwt; 
             const decoded = jwt.verify(token, accessTokenSecret);
-            return true;
+            return decoded;
         } catch (err) {
             console.error('Token Invalid', err);
             response.status(500).json({ message: err.message });
-            return false;
+            return null;
         }
     });
     app.post('/users/login', async (request, response) => {
