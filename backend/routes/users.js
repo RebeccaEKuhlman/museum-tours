@@ -10,13 +10,64 @@
         FOREIGN KEY (photoId) REFERENCES photos(photoId)
        * 
        */
-const knex = require('../database/knex.js');
+// const knex = require('../database/knex.js');
 const bcrypt = require('bcryptjs');
-const {fetchUsersByEmail} = require('../models/users');
-const {authenticateUser} = require('../models/users');
-const { query } = require('express');
+// const {fetchUsersByEmail} = require('../models/users');
+// const {authenticateUser} = require('../models/users');
+// const { query } = require('express');
 
-module.exports = function users(app, logger) {
+const express = require('express');
+const router = express.Router();
+
+const bodyParser = require('body-parser');
+router.use(bodyParser.json());
+
+router.post('/registration', async(request, response, next) => {
+    try{
+        console.log('Initiating POST /registration request');
+        console.log('Request has a body / payload containing:', request.body);
+        console.log('Request has params containing:', request.query);
+
+        const payload = request.body; // This payload should be an object containing user data
+        const rawPass = request.body.password;
+        const salt = await bcrypt.genSalt(10);
+        const username = payload.username;
+        const email = payload.email;
+        const hashed = await bcrypt.hash(rawPass, salt);
+        const joinDate = new Date();
+
+        const query = request.models.user.({ username, password: hashed, email, joinDate, photoId: 1});
+        const results = await query;
+
+        console.log('Results of my POST statement:', results);
+        response.status(201).json({"is_director" : user.is_director});
+        const auth = await authenticateUser({username}, rawPass);
+        return auth;
+
+    } catch (err) {
+        console.error('There was an error in POST /users', err);
+        response.status(500).json({ message: err.message });
+    }
+});
+
+// router.post('/', async(request, response, next) => {
+// });
+//
+// router.put('/', async(request, response, next) => {
+// });
+//
+// router.put('/', async(request, response, next) => {
+// });
+//
+// router.delete('/', async(request, response, next) => {
+// });
+//
+// router.get('/', async(request, response, next) => {
+// });
+
+module.exports = router;
+
+/*module.exports = function users(app, logger) {
     app.post('/users/registration', async (request, response) => {
         try {
             console.log('Initiating POST /registration request');
@@ -155,4 +206,4 @@ module.exports = function users(app, logger) {
             response.status(500).json({ message: err.message });
         }
     });
-}
+}*/
