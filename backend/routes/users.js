@@ -48,7 +48,7 @@ module.exports = function users(app, logger) {
             console.log('Request has a body / payload containing:', request.body);
             console.log('Request has params containing:', request.query);
             // invalid token - synchronous
-            const token = request.jwt; 
+            const token = request.body.jwt; 
             const decoded = jwt.verify(token, accessTokenSecret);
             return decoded;
         } catch (err) {
