@@ -113,7 +113,7 @@ router.post('/', async(request, response, next) => {
         }
         else{
             console.error('There was an error in POST /tours');
-            res.status(500).json();
+            response.status(500).json();
         }
         next();
     } catch (err) {
@@ -132,7 +132,14 @@ router.put('/updateTourName', async(request, response, next) => {
         const newName = request.body.new_name;
 
         const results = await request.models.tour.updateTourName(tour, newName);
-        response.status(200).json(results);
+        if(results){
+            const check = await request.models.tour.getToursbyName(newName);
+            response.status(200).json(check);
+        }
+        else{
+            console.error('There was an error in PUT /tours/updateTourName');
+            response.status(500).json();
+        }
         next();
     } catch (err) {
             console.error('There was an error in PUT /tours/updateTourName', err);
@@ -149,7 +156,14 @@ router.put('/updateTourSlots', async(request, response, next) => {
         const newSlots = request.body.num_spaces_available;
 
         const results = await request.models.tour.updateTourSlots(tour, newSlots);
-        response.status(200).json(results);
+        if(results){
+            const check = await request.models.tour.getToursbyName(tour);
+            response.status(200).json(check);
+        }
+        else{
+            console.error('There was an error in PUT /tours/updateTourSlots');
+            response.status(500).json();
+        }
         next();
     } catch (err) {
             console.error('There was an error in PUT /tours/updateTourSlots', err);
@@ -168,20 +182,42 @@ router.put('/updateTourDateTime', async (request, response, next) => {
 
         if(newDate && newTime){
             const results = await request.models.tour.updateTourDateTime(tour, newDate, newTime);
-            response.status(200).json(results);
+            if(results){
+                const check = await request.models.tour.getToursbyName(tour);
+                response.status(200).json(check);
+            }
+            else{
+                console.error('There was an error in PUT /tours/updateTourDateTime');
+                response.status(500).json();
+            }
         }
         else if(newDate){
             const results = await request.models.tour.updateTourDate(tour, newDate);
-            response.status(200).json(results);
+            if(results){
+                const check = await request.models.tour.getToursbyName(tour);
+                response.status(200).json(check);
+            }
+            else{
+                console.error('There was an error in PUT /tours/updateTourDateTime');
+                response.status(500).json();
+            }
         }
         else if(newTime){
             const results = await request.models.tour.updateTourTime(tour, newTime);
-            response.status(200).json(results);
+            if(results){
+                const check = await request.models.tour.getToursbyName(tour);
+                response.status(200).json(check);
+            }
+            else{
+                console.error('There was an error in PUT /tours/updateTourDateTime');
+                response.status(500).json();
+            }
         }
         else{
             response.status(400).json(); //if there's nothing in the body
-            console.log('There was an error in PUT /tours/updateTourDateTime', request.body);
+            console.error('There was an error in PUT /tours/updateTourDateTime:', request.body);
         }
+
         next();
     } catch (err) {
         console.error('There was an error in PUT /tours/updateTourDateTime', err);
@@ -198,7 +234,14 @@ router.put('/updateTourDescription', async(request, response, next) => {
         const newSummary = request.body.tour_description;
 
         const results = await request.models.tour.updateTourDescription(tour, newSummary);
-        response.status(200).json(results);
+        if(results){
+            const check = await request.models.tour.getToursbyName(tour);
+            response.status(200).json(check);
+        }
+        else{
+            console.error('There was an error in PUT /tours/updateTourDescription');
+            response.status(500).json();
+        }
         next();
     } catch (err) {
             console.error('There was an error in PUT /tours/updateTourDescription', err);
@@ -215,7 +258,14 @@ router.put('/updateTourPrice', async(request, response, next) => {
         const newPrice = request.body.price;
 
         const results = await request.models.tour.updateTourPrice(tour, newPrice);
-        response.status(200).json(results);
+        if(results){
+            const check = await request.models.tour.getToursbyName(tour);
+            response.status(200).json(check);
+        }
+        else{
+            console.error('There was an error in PUT /tours/updateTourPrice');
+            response.status(500).json();
+        }
         next();
     } catch (err) {
             console.error('There was an error in PUT /tours/updateTourPrice', err);
@@ -232,7 +282,14 @@ router.put('/updateTourTheme', async(request, response, next) => {
         const newTheme = request.body.theme;
 
         const results = await request.models.tour.updateTourTheme(tour, newTheme);
-        response.status(200).json(results);
+        if(results){
+            const check = await request.models.tour.getToursbyName(tour);
+            response.status(200).json(check);
+        }
+        else{
+            console.error('There was an error in PUT /tours/updateTourTheme');
+            response.status(500).json();
+        }
         next();
     } catch (err) {
             console.error('There was an error in PUT /tours/updateTourTheme', err);
