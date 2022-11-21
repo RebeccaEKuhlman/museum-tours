@@ -8,7 +8,7 @@ router.use(bodyParser.json());
 router.post('/', async (req, res, next) => {
     try {
         const photoId = await req.models.photo.postPhoto(req.body.photo_data, req.body.caption, req.body.is_profile);
-        res.status(200).json(photoId);
+        res.status(201).json(photoId);
         next();
     } catch (err) {
         console.error('There was an error in POST /photos', err);
@@ -62,8 +62,9 @@ router.get('/', async (req, res, next) => {
 
 router.get('/museums', async (req, res, next) => {
     try {
-        const photosByMuseum = await req.models.photo.getPhotosByMuseum(req.query.museum);
-        res.status(200).json(photosByMuseum);
+        const photosByMuseum = await req.models.photo.getPhotosByMuseum(req.query.museum_name);
+        console.log("output: ", photosByMuseum[0].photo_data);
+        res.status(200).json(photosByMuseum[0].photo_data);
         next();
     } catch (err) {
         console.error('There was an error in GET /photos/museums', err);

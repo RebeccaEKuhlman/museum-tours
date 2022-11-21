@@ -11,36 +11,30 @@
        * 
        */
 const knex = require('../database/knex.js');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
+const {fetchUsersByEmail} = require('../models/users');
+const {authenticateUser} = require('../models/users');
+const { query } = require('express');
+
 module.exports = function users(app, logger) {
     app.post('/users/registration', async (request, response) => {
         try {
             console.log('Initiating POST /registration request');
             console.log('Request has a body / payload containing:', request.body);
             console.log('Request has params containing:', request.query);
-    
             const payload = request.body; // This payload should be an object containing user data
             const rawPass = request.body.password;
-        // table.string('password_hash');
-            const { createHash } = require('crypto');
-            function hash(string) {
-                return createHash('sha256').update(string).digest('hex');
-            }
+            const salt = await bcrypt.genSalt(10);
             const username = payload.username;
             const email = payload.email;
-            //salt: aB6nkeF0He3imq4AOhbO5kEljbveRpLn
-            const hashed = hash(rawPass + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
-            // const { DBQuery, disconnect } = await connectToDatabase();
+            const hashed = await bcrypt.hash(rawPass, salt);;
             const joinDate = new Date();
-            // const results = await DBQuery('INSERT INTO users(name) VALUES(username, hashed, email, date)'
-            // , [payload.name]);
             const query = knex('users').insert({ username, password: hashed, email, joinDate, photoId: 1})
             const results = await query;
             console.log('Results of my POST statement:', results);
-            // Since we already know the id we're looking for, let's load the most up to date data
-            // const newlyCreatedRecord = await DBQuery('SELECT * FROM student WHERE id = ?', [id]);
-            // disconnect();
-            response.status(201).json(results);
+            response.status(201).json({"is_director" : user.is_director});
+            const auth = await authenticateUser({username}, rawPass); 
+            return auth; 
         } catch (err) {
             console.error('There was an error in POST /users', err);
             response.status(500).json({ message: err.message });
@@ -51,22 +45,32 @@ module.exports = function users(app, logger) {
             console.log('Initiating POST /login request');
             console.log('Request has a body / payload containing:', request.body);
             console.log('Request has params containing:', request.query);
-    
-            const payload = request.body; // This payload should be an object containing user data
-            const rawPass = request.body.password;
-
-            const { createHash } = require('crypto');
-            function hash(string) {
-                return createHash('sha256').update(string).digest('hex');
-            }
             const email = request.body.email;
-            //salt: aB6nkeF0He3imq4AOhbO5kEljbveRpLn
-            const hashed = hash(rawPass + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
-            const results = await knex('users').where({email: email}).where({password: hashed});
-
-            if (typeof results[0] != "undefined") {
+            const password = request.body.password;
+            /**const urlParams = new URLSearchParams(request.url);
+            console.log('Request has params containing:', urlParams.keys());
+            const email = urlParams.keys().value;
+            const password = urlParams.get(email);
+            console.log('Request has params containing:', email);
+            console.log('Request has params containing:', password);
+            
+             * const email = request.body.email;
+                const password = request.body.password;
+             */
+            const users = await fetchUsersByEmail(email);
+            if (users.length === 0) {
+                console.error(`No users matched the email: ${email}`);
+                throw new Error(`No users matched the email: ${email}`);
+            }
+            const user = users[0];
+            console.log("user", user);
+            const auth = await authenticateUser(user, password); 
+         //   const validPassword = await bcrypt.compare(password, user.password);
+            if (auth !== null) {
                 // if user exists
-                response.status(200).json(results);
+                delete user.password;
+                response.status(200).json({"jwt": auth, "is_director" : user.is_director});
+                return auth;
             } else {
                 response.status(200).json({
                     "error": "Invalid Credentials"
@@ -81,18 +85,15 @@ module.exports = function users(app, logger) {
     app.put('/users/updatePassword', async (request, response) => {
         try {
             const username = request.body.username
-            const newPass = request.body.password
-            const { createHash } = require('crypto');
-        function hash(string) {
-            return createHash('sha256').update(string).digest('hex');
-        }
-        const hashed = hash(newPass + 'aB6nkeF0He3imq4AOhbO5kEljbveRpLn');
-        const query = knex('users')
-            .where({ username: username })
-            .update({ password: hashed })
-        const results = await query;
-        console.log('Results of my PUT statement: ', results);
-        response.status(200).json({ username: username});
+            const rawPass = request.body.password;
+            const salt = await bcrypt.genSalt(10);
+            const hashed = await bcrypt.hash(rawPass, salt);;
+            const query = knex('users')
+                .where({ username: username })
+                .update({ password: hashed })
+            const results = await query;
+            console.log('Results of my PUT statement: ', results);
+            response.status(200).json({ username: username});
         } catch (err) {
             console.error('There was an error in PUT /users/updatePassword', err);
             response.status(500).json({ message: err.message });

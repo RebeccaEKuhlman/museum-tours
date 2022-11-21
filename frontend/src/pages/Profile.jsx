@@ -132,6 +132,12 @@ export function Profile() {
     e.preventDefault();
     alert("account deleted (doesnt do anything yet)")
   }
+  
+  const Logout = (e) => {
+    sessionStorage.jwt = "";
+    sessionStorage.director = "";
+    window.location.href = "/"
+  };
 
   return (
     <div className="profile" style={{ textAlign: "center" }}>
@@ -209,6 +215,20 @@ export function Profile() {
                 <b className={classes.typography}>Bio:</b> This is a sentence
                 about the person.
               </Typography>
+              <Button
+                type="submit"
+                style={{
+                  marginTop: 12,
+                  color: "#F6F7EB",
+                  backgroundColor: "cornflowerblue",
+                  fontFamily: "Baskerville",
+                }}
+                variant="contained"
+                className={classes.submit}
+                onClick={Logout}
+              >
+                Log Out
+              </Button>
             </div>
           </Card>
         </Grid>
