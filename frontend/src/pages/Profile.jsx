@@ -100,11 +100,12 @@ export function Profile() {
     return <></>;
   }
 
+  var repository = new Repository();
+
   // handle input form submission to backend via POST request
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("HERE");
-    var repository = new Repository();
     repository.postUser(photos, university, bio).then((x) => {
       // if (typeof x.error != "undefined") {
       //   alert("Invalid Credentials")
@@ -114,6 +115,23 @@ export function Profile() {
       alert("Updated");
     });
   };
+
+  const handleConfirm = (e) => {
+    e.preventDefault();
+    if (password !== oldpass) {
+      alert("old passwords must match")
+    }
+    else {
+      repository.postPassoword(email, newpass).then(x => {
+        if (typeof x.error != "undefined") {
+          alert("error: unable to sign up")
+
+        } else {
+          setOpen(false)
+        }
+      });
+    }
+  }
 
   return (
     <div className="profile" style={{ textAlign: "center" }}>
@@ -156,7 +174,7 @@ export function Profile() {
             onInput={(e) => setNewPass(e.target.value)}
           />
           <div style={{ margin: 12, textAlign: "center" }}>
-            <Button onClick={handleClose} type="submit" variant="contained">
+            <Button onClick={handleConfirm} type="submit" variant="contained">
               Confirm
             </Button>
           </div>
@@ -176,7 +194,7 @@ export function Profile() {
         <Grid item xs={false}>
           <Card
             className={classes.card}
-            sx={{ maxWidth: 600, backgroundcolor: "#FFFFFF" }}
+            sx={{ maxWidth: 600, backgroundcolor: "#FFFFFF", margin: "10px" }}
           >
             <CardMedia
               component="img"
@@ -208,7 +226,7 @@ export function Profile() {
         <Grid item xs={false}>
           <Card
             className={classes.card}
-            sx={{ maxWidth: 1000, backgroundcolor: "#FFFFFF", marginLeft: "10px", marginRight: "10px" }}
+            sx={{ maxWidth: 1000, backgroundcolor: "#FFFFFF", margin: "10px" }}
           >
             <CardContent
               className={classes.card}
