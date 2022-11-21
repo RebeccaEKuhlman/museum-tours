@@ -14,7 +14,7 @@ router.post('/', async (req, res, next) => {
             res.status(201).json(check);
         }
         else {
-            throw new Error('Make sure all needed data is encluded\n');
+            throw new Error('Make sure all needed data is included\n');
         }
         next();
     } catch (err) {
@@ -28,21 +28,28 @@ router.put('/', async (req, res, next) => {
     try {
         if (req.body.photo_data) {
             const photoId = await req.models.photo.updatePhotoData(req.body.photoId, req.body.photo_data);
-            res.status(200).json(photoId);
-            next();
-        } else if (req.body.caption) {
+            const check = await req.models.photo.getPhoto(req.body.photoId);
+            res.status(200).json(check);
+        }
+        else if (req.body.caption) {
             const photoId = await req.models.photo.updatePhotoCaption(req.body.photoId, req.body.caption);
-            res.status(200).json(photoId);
-            next();
-        } else if (req.body.is_profile) {
+            const check = await req.models.photo.getPhoto(req.body.photoId);
+            res.status(200).json(check);
+        }
+        else if (req.body.is_profile) {
+
             if (req.body.is_profile != "1" && req.body.is_profile != "0") {
                 res.status(400).json({ message: "Invalid Input" });
             } else {
                 const photoId = await req.models.photo.updatePhotois_profile(req.body.photoId, req.body.is_profile);
-                res.status(200).json(photoId);
+                const check = await req.models.photo.getPhoto(req.body.photoId);
+                res.status(200).json(check);
             }
-            next();
+        } else {
+            throw new Error('Make sure all needed data is correct and included\n');
         }
+
+        next();
     } catch(err) {
         console.error('There was an error in PUT /photos', err);
         res.status(500).json({ message: err.message });

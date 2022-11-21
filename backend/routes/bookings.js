@@ -45,7 +45,7 @@ router.post('/', async (req, res, next) => {
             }
             next();
         } else {
-            throw new Error('Make sure all needed data is encluded\n');
+            throw new Error('Make sure all needed data is included\n');
         }
     } catch (err) {
         console.error('There was an error in POST /bookings', err);

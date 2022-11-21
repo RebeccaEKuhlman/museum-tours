@@ -59,7 +59,7 @@ router.put('/', async (req, res, next) => {
             const museum = await req.models.museum.updateMuseumNum_exhibits(req.body.museum_name, req.body.num_exhibits);
         }
         else {
-            throw new Error('Make sure all needed data is encluded\n');
+            throw new Error('Make sure all needed data is included\n');
         }
 
         const check = await req.models.museum.getByMuseumName(req.body.museum_name);
