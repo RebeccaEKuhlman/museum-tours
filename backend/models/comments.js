@@ -17,7 +17,7 @@ const fetchCommentsByTourName = async (tour_Name) => {
 }
 
 const fetchSpecificComment = async (username, tour_Name, content) => {
-    const results = await knex(COMMENT_TABLE).select().where({ content, username, username });
+    const results = await knex(COMMENT_TABLE).select().where({ content, username, tour_Name });
     return results;
 }
 
