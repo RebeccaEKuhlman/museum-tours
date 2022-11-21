@@ -107,7 +107,14 @@ router.post('/', async(request, response, next) => {
 
         const results = await request.models.tour.insertTour(tour_Name, tourDate, tourTime, num_spaces_available,
                                                              total_space, tour_description, price, museum_name, theme);
-        response.status(201).json(results);
+        if(results){
+            const check = await request.models.tour.getToursbyName(tour_Name);
+            response.status(201).json(check);
+        }
+        else{
+            console.error('There was an error in POST /tours');
+            res.status(500).json();
+        }
         next();
     } catch (err) {
         console.error('There was an error in POST /tours', err);
