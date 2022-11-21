@@ -1,3 +1,4 @@
+const knex = require('../database/knex');
 const express = require('express');
 const router = express.Router();
 
@@ -8,7 +9,13 @@ router.use(bodyParser.json());
 router.post('/', async (req, res, next) => {
     try {
         const photoId = await req.models.photo.postPhoto(req.body.photo_data, req.body.caption, req.body.is_profile);
-        res.status(201).json(photoId);
+        if(photoId){
+            const check = await req.models.photo.getPhoto(photoId);
+            res.status(201).json(check);
+        }
+        else {
+            throw new Error('Make sure all needed data is encluded\n');
+        }
         next();
     } catch (err) {
         console.error('There was an error in POST /photos', err);
