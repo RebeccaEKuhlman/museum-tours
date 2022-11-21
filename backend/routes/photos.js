@@ -1,4 +1,3 @@
-const knex = require('../database/knex');
 const express = require('express');
 const router = express.Router();
 
