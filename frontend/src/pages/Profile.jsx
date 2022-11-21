@@ -118,19 +118,19 @@ export function Profile() {
 
   const handleConfirm = (e) => {
     e.preventDefault();
-    if (password !== oldpass) {
-      alert("old passwords must match")
-    }
-    else {
-      repository.postPassoword(email, newpass).then(x => {
-        if (typeof x.error != "undefined") {
-          alert("error: unable to sign up")
+    repository.postPassoword(sessionStorage.jwt, newpass).then(x => {
+      if (typeof x.error != "undefined") {
+        alert("error: unable to sign up")
+      } else {
+        setOpen(false)
+        alert("password has been changed.")
+      }
+    });
+  }
 
-        } else {
-          setOpen(false)
-        }
-      });
-    }
+  const handleAcctDel = (e) => {
+    e.preventDefault();
+    alert("account deleted (doesnt do anything yet)")
   }
 
   return (
@@ -151,17 +151,6 @@ export function Profile() {
           >
             Update Password
           </h2>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            fullWidth
-            name="oldpass"
-            label="Old Password"
-            type="oldpass"
-            id="oldpass"
-            value={oldpass}
-            onInput={(e) => setOldPass(e.target.value)}
-          />
           <TextField
             variant="outlined"
             margin="normal"
@@ -317,6 +306,7 @@ export function Profile() {
                       backgroundColor: "#EC0B43",
                       fontFamily: "Baskerville",
                     }}
+                    onClick={handleAcctDel}
                     variant="contained"
                     className={classes.submit}
                   >
