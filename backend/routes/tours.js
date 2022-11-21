@@ -113,7 +113,7 @@ router.post('/', async(request, response, next) => {
         }
         else{
             console.error('There was an error in POST /tours');
-            response.status(500).json();
+            response.status(400).json('There was an error in POST /tours');
         }
         next();
     } catch (err) {
@@ -138,7 +138,7 @@ router.put('/updateTourName', async(request, response, next) => {
         }
         else{
             console.error('There was an error in PUT /tours/updateTourName');
-            response.status(500).json();
+            response.status(400).json('There was an error in PUT /tours/updateTourName');
         }
         next();
     } catch (err) {
@@ -162,7 +162,7 @@ router.put('/updateTourSlots', async(request, response, next) => {
         }
         else{
             console.error('There was an error in PUT /tours/updateTourSlots');
-            response.status(500).json();
+            response.status(400).json('There was an error in PUT /tours/updateTourSlots');
         }
         next();
     } catch (err) {
@@ -188,7 +188,7 @@ router.put('/updateTourDateTime', async (request, response, next) => {
             }
             else{
                 console.error('There was an error in PUT /tours/updateTourDateTime');
-                response.status(500).json();
+                response.status(400).json('There was an error in PUT /tours/updateTourDateTime');
             }
         }
         else if(newDate){
@@ -199,7 +199,7 @@ router.put('/updateTourDateTime', async (request, response, next) => {
             }
             else{
                 console.error('There was an error in PUT /tours/updateTourDateTime');
-                response.status(500).json();
+                response.status(400).json('There was an error in PUT /tours/updateTourDateTime');
             }
         }
         else if(newTime){
@@ -210,12 +210,12 @@ router.put('/updateTourDateTime', async (request, response, next) => {
             }
             else{
                 console.error('There was an error in PUT /tours/updateTourDateTime');
-                response.status(500).json();
+                response.status(400).json('There was an error in PUT /tours/updateTourDateTime');
             }
         }
-        else{
-            response.status(400).json(); //if there's nothing in the body
-            console.error('There was an error in PUT /tours/updateTourDateTime:', request.body);
+        else{   //if there's nothing in the body
+            response.status(400).json('There was an error in PUT /tours/updateTourDateTime:');
+            console.error('There was an error in PUT /tours/updateTourDateTime:');
         }
 
         next();
@@ -240,12 +240,12 @@ router.put('/updateTourDescription', async(request, response, next) => {
         }
         else{
             console.error('There was an error in PUT /tours/updateTourDescription');
-            response.status(500).json();
+            response.status(400).json('There was an error in PUT /tours/updateTourDescription');
         }
         next();
     } catch (err) {
             console.error('There was an error in PUT /tours/updateTourDescription', err);
-            response.status(500).json({ message: err.message });
+            response.status(400).json({ message: err.message });
     }
 });
 
@@ -264,7 +264,7 @@ router.put('/updateTourPrice', async(request, response, next) => {
         }
         else{
             console.error('There was an error in PUT /tours/updateTourPrice');
-            response.status(500).json();
+            response.status(400).json('There was an error in PUT /tours/updateTourPrice');
         }
         next();
     } catch (err) {
@@ -288,7 +288,7 @@ router.put('/updateTourTheme', async(request, response, next) => {
         }
         else{
             console.error('There was an error in PUT /tours/updateTourTheme');
-            response.status(500).json();
+            response.status(400).json('There was an error in PUT /tours/updateTourTheme');
         }
         next();
     } catch (err) {

@@ -12,8 +12,9 @@ router.post('/', async (req, res, next) => {
             const check = await req.models.photo.getPhoto(photoId);
             res.status(201).json(check);
         }
-        else {
-            throw new Error('Make sure all needed data is included\n');
+        else{
+            console.error('There was an error in POST /photos');
+            res.status(400).json('There was an error in POST /photos.');
         }
         next();
     } catch (err) {
@@ -44,8 +45,9 @@ router.put('/', async (req, res, next) => {
                 const check = await req.models.photo.getPhoto(req.body.photoId);
                 res.status(200).json(check);
             }
-        } else {
-            throw new Error('Make sure all needed data is correct and included\n');
+        } else{ //if there's nothing in the body
+            console.error('There was an error in PUT /photos.');
+            res.status(400).json('There was an error in PUT /photos.');
         }
 
         next();

@@ -31,8 +31,8 @@ router.post('/', async (req, res, next) => {
             res.status(201).json(check);
         }
         else{
-            console.error('There was an error in POST /ratings');
-            res.status(500).json();
+            console.error('There was an error in POST /ratings.');
+            res.status(400).json('There was an error in POST /ratings.');
         }
         next();
     } catch(err) {
@@ -40,6 +40,7 @@ router.post('/', async (req, res, next) => {
         res.status(500).json({ message: err.message });
     }
 });
+
 router.get('/', async (req, res, next) => {
     try {
         const ratings = await req.models.rating.getAllRatings();
@@ -49,6 +50,7 @@ router.get('/', async (req, res, next) => {
         response.status(500).json({ message: err.message });
     }
 });
+
 router.delete('/', async (req, res, next) => {
     try {
         const rating = await req.models.rating.deleteRating(req.query.ratingId);

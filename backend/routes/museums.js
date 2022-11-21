@@ -17,7 +17,7 @@ router.post('/', async (req, res, next) => {
         }
         else{
             console.error('There was an error in POST /museums');
-            res.status(500).json();
+            res.status(400).json('There was an error in POST /museums');
         }
         next();
     } catch (err) {
@@ -58,8 +58,9 @@ router.put('/', async (req, res, next) => {
         else if (req.body.num_exhibits){
             const museum = await req.models.museum.updateMuseumNum_exhibits(req.body.museum_name, req.body.num_exhibits);
         }
-        else {
-            throw new Error('Make sure all needed data is included\n');
+        else{
+            console.error('There was an error in PUT /museums');
+            res.status(400).json('There was an error in POST /museums');
         }
 
         const check = await req.models.museum.getByMuseumName(req.body.museum_name);
@@ -67,7 +68,7 @@ router.put('/', async (req, res, next) => {
             res.status(200).json(check);
         else{
             console.error('There was an error in PUT /museums');
-            res.status(500).json();
+            res.status(400).json('There was an error in PUT /museums');
         }
         next();
     } catch(err) {
