@@ -304,7 +304,7 @@ router.delete('/', async (request, response, next) => {
 
        const results = await request.models.tour.deleteTour(request.query.tour_Name);
        console.log('Results of my DELETE statement:', results);
-       response.status(200).json(results);
+       response.status(200).json(results); //deletes don't return anything
        next();
     } catch (err) {
         console.error('There was an error in DELETE /tours', err);

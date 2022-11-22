@@ -36,174 +36,275 @@ router.post('/registration', async(request, response, next) => {
         const hashed = await bcrypt.hash(rawPass, salt);
         const joinDate = new Date();
 
-        const query = request.models.user.({ username, password: hashed, email, joinDate, photoId: 1});
+        const query = request.models.user.addUser(username, hashed, email, joinDate, 1);
         const results = await query;
 
         console.log('Results of my POST statement:', results);
-        response.status(201).json({"is_director" : user.is_director});
-        const auth = await authenticateUser({username}, rawPass);
-        return auth;
 
+        if(results){
+            const check = await request.models.user.fetchUsersByName(username);
+            response.status(201).json(check);
+        }
+        else{
+            console.error('There was an error in POST /users');
+            response.status(400).json('There was an error in POST /users');
+        }
+
+        next();
+        const auth = await request.models.user.authenticateUser({username}, rawPass);
+        return auth;
     } catch (err) {
         console.error('There was an error in POST /users', err);
         response.status(500).json({ message: err.message });
     }
 });
 
-// router.post('/', async(request, response, next) => {
-// });
-//
-// router.put('/', async(request, response, next) => {
-// });
-//
-// router.put('/', async(request, response, next) => {
-// });
-//
-// router.delete('/', async(request, response, next) => {
-// });
-//
+router.post('/login', async(request, response, next) => {
+    try {
+        console.log('Initiating POST /login request');
+        console.log('Request has a body / payload containing:', request.body);
+
+        const email = request.body.email;
+        const password = request.body.password;
+        /**const urlParams = new URLSearchParams(request.url);
+           console.log('Request has params containing:', urlParams.keys());
+           const email = urlParams.keys().value;
+           const password = urlParams.get(email);
+           console.log('Request has params containing:', email);
+           console.log('Request has params containing:', password);
+
+         * const email = request.body.email;
+          const password = request.body.password;
+        */
+
+        const users = await request.models.user.fetchUsersByEmail(email);
+        if (users.length === 0) {
+            console.error(`No users matched the email: ${email}`);
+            throw new Error(`No users matched the email: ${email}`);
+        }
+        const user = users[0];
+        console.log("user", user);
+        const auth = await request.models.user.authenticateUser(user.username, password);
+//         const validPassword = await bcrypt.compare(password, user.password);
+        if (auth !== null) {
+            // if user exists
+            delete user.password;
+            response.status(200).json({"jwt": auth, user});
+            return auth;
+        } else
+            response.status(400).json({ "error": "Invalid Credentials" });
+
+        next();
+    } catch (err) {
+        console.error('There was an error in POST /users/login', err);
+        response.status(500).json({ message: err.message });
+    }
+});
+
+router.put('/updatePassword', async(request, response, next) => {
+    try {
+        const username = request.body.username;
+        const rawPass = request.body.password;
+        const salt = await bcrypt.genSalt(10);
+        const hashed = await bcrypt.hash(rawPass, salt);
+
+        const results = await request.models.user.updateUserPassword(username, hashed);
+        if(results){
+            console.log('Results of my PUT statement: ', results);
+            const check = await request.models.user.fetchUsersByName(username);
+            response.status(200).json(check);
+        }
+        else{
+            console.error('There was an error in PUT /users/updatePassword');
+            response.status(400).json('There was an error in PUT /users/updatePassword');
+        }
+    } catch (err) {
+        console.error('There was an error in PUT /users/updatePassword', err);
+        response.status(500).json({ message: err.message });
+    }
+});
+
+router.put('/updateBio', async(request, response, next) => {
+    try {
+        const username = request.body.username;
+        const newBio = request.body.bio
+
+        const results = await request.models.user.updateUserBio(username, newBio);
+        if(results){
+            console.log('Results of my PUT statement: ', results);
+            const check = await request.models.user.fetchUsersByName(username);
+            response.status(200).json(check);
+        }
+        else{
+            console.error('There was an error in PUT /users/updateBio');
+            response.status(400).json('There was an error in PUT /users/updateBio');
+        }
+    } catch (err) {
+        console.error('There was an error in PUT /users/updateBio', err);
+        response.status(500).json({ message: err.message });
+    }
+});
+
+router.delete('/', async(request, response, next) => {
+    try {
+        console.log('Initiating DELETE /users request');
+        console.log('Request has params containing:', request.query);
+
+        const username = request.query.username;
+        const query = request.models.user.deleteUser(username);
+        const results = await query;
+
+        console.log('Results of my DELETE statement:', results);
+        response.status(200).json();
+        next();
+    } catch (err) {
+        console.error('There was an error in DELETE /users', err);
+        response.status(500).json({ message: err.message });
+    }
+});
+
 // router.get('/', async(request, response, next) => {
 // });
 
 module.exports = router;
 
-/*module.exports = function users(app, logger) {
-    app.post('/users/registration', async (request, response) => {
-        try {
-            console.log('Initiating POST /registration request');
-            console.log('Request has a body / payload containing:', request.body);
-            console.log('Request has params containing:', request.query);
-            const payload = request.body; // This payload should be an object containing user data
-            const rawPass = request.body.password;
-            const salt = await bcrypt.genSalt(10);
-            const username = payload.username;
-            const email = payload.email;
-            const hashed = await bcrypt.hash(rawPass, salt);;
-            const joinDate = new Date();
-            const query = knex('users').insert({ username, password: hashed, email, joinDate, photoId: 1})
-            const results = await query;
-            console.log('Results of my POST statement:', results);
-            response.status(201).json({"is_director" : user.is_director});
-            const auth = await authenticateUser({username}, rawPass); 
-            return auth; 
-        } catch (err) {
-            console.error('There was an error in POST /users', err);
-            response.status(500).json({ message: err.message });
-        }
-    });
-    app.post('/users/login', async (request, response) => {
-        try {
-            console.log('Initiating POST /login request');
-            console.log('Request has a body / payload containing:', request.body);
-            console.log('Request has params containing:', request.query);
-            const email = request.body.email;
-            const password = request.body.password;
-            /**const urlParams = new URLSearchParams(request.url);
-            console.log('Request has params containing:', urlParams.keys());
-            const email = urlParams.keys().value;
-            const password = urlParams.get(email);
-            console.log('Request has params containing:', email);
-            console.log('Request has params containing:', password);
-            
-             * const email = request.body.email;
-                const password = request.body.password;
-             */
-            const users = await fetchUsersByEmail(email);
-            if (users.length === 0) {
-                console.error(`No users matched the email: ${email}`);
-                throw new Error(`No users matched the email: ${email}`);
-            }
-            const user = users[0];
-            console.log("user", user);
-            const auth = await authenticateUser(user, password); 
-         //   const validPassword = await bcrypt.compare(password, user.password);
-            if (auth !== null) {
-                // if user exists
-                delete user.password;
-                response.status(200).json({"jwt": auth, "is_director" : user.is_director});
-                return auth;
-            } else {
-                response.status(200).json({
-                    "error": "Invalid Credentials"
-                  });
-            }
-            response.status(200).json();
-        } catch (err) {
-            console.error('There was an error in POST /users/login', err);
-            response.status(500).json({ message: err.message });
-        }
-    });
-    app.put('/users/updatePassword', async (request, response) => {
-        try {
-            const username = request.body.username
-            const rawPass = request.body.password;
-            const salt = await bcrypt.genSalt(10);
-            const hashed = await bcrypt.hash(rawPass, salt);;
-            const query = knex('users')
-                .where({ username: username })
-                .update({ password: hashed })
-            const results = await query;
-            console.log('Results of my PUT statement: ', results);
-            response.status(200).json({ username: username});
-        } catch (err) {
-            console.error('There was an error in PUT /users/updatePassword', err);
-            response.status(500).json({ message: err.message });
-        }
-    })
-    app.put('/users/updateBio', async (request, response) => {
-        try {
-            const username = request.body.username
-            const newBio = request.body.bio
-            const query = knex('users')
-                .where({ username: username })
-                .update({ bio: newBio })
-        const results = await query;
-        console.log('Results of my PUT statement: ', results);
-        response.status(200).json({ username: username, bio: newBio});
-        } catch (err) {
-            console.error('There was an error in PUT /users/updateBio', err);
-            response.status(500).json({ message: err.message });
-        }
-    })
-    app.delete('/users', async (request, response) => {
-        try {
-            console.log('Initiating DELETE /users request');
-            console.log('Request has a body / payload containing:', request.body);
-            console.log('Request has params containing:', request.query);
-            const username = request.body.username
-            const query = knex('users').delete().where({username});
-            const results = await query;
-            console.log('Results of my DELETE statement:', results);
-            response.status(200).json(results);
-        } catch (err) {
-            console.error('There was an error in DELETE /users', err);
-            response.status(500).json({ message: err.message });
-        }
-    });
-    app.get('/users', async (request, response) => {
-        try {
-            const bodyParser = require('body-parser');
-            app.use(bodyParser.json());
-
-            if(request.body.username){
-                const results = await knex('users').select().where( {'username':request.body.username} );
-                response.status(200).json(results);
-            }
-            else if(request.body.uni_affilation){
-                const results = await knex('users').select().where( {'uni_affilation':request.body.uni_affilation} );
-                response.status(200).json(results);
-            }
-            else if(request.body.is_director){
-                const results = await knex('users').select().where( {'is_director':request.body.is_director} );
-                response.status(200).json(results);
-            }
-            else{
-                const results = await knex("users").select();
-                response.status(200).json(results);
-            }
-        } catch (err) {
-            console.error('There was an error in GET /users', err);
-            response.status(500).json({ message: err.message });
-        }
-    });
-}*/
+// module.exports = function users(app, logger) {
+//     app.post('/users/registration', async (request, response) => {
+//         try {
+//             console.log('Initiating POST /registration request');
+//             console.log('Request has a body / payload containing:', request.body);
+//             console.log('Request has params containing:', request.query);
+//             const payload = request.body; // This payload should be an object containing user data
+//             const rawPass = request.body.password;
+//             const salt = await bcrypt.genSalt(10);
+//             const username = payload.username;
+//             const email = payload.email;
+//             const hashed = await bcrypt.hash(rawPass, salt);;
+//             const joinDate = new Date();
+//             const query = knex('users').insert({ username, password: hashed, email, joinDate, photoId: 1})
+//             const results = await query;
+//             console.log('Results of my POST statement:', results);
+//             response.status(201).json({"is_director" : user.is_director});
+//             const auth = await authenticateUser({username}, rawPass);
+//             return auth;
+//         } catch (err) {
+//             console.error('There was an error in POST /users', err);
+//             response.status(500).json({ message: err.message });
+//         }
+//     });
+//     app.post('/users/login', async (request, response) => {
+//         try {
+//             console.log('Initiating POST /login request');
+//             console.log('Request has a body / payload containing:', request.body);
+//             console.log('Request has params containing:', request.query);
+//             const email = request.body.email;
+//             const password = request.body.password;
+//             /**const urlParams = new URLSearchParams(request.url);
+//             console.log('Request has params containing:', urlParams.keys());
+//             const email = urlParams.keys().value;
+//             const password = urlParams.get(email);
+//             console.log('Request has params containing:', email);
+//             console.log('Request has params containing:', password);
+//
+//              * const email = request.body.email;
+//                 const password = request.body.password;
+//              */
+//             const users = await fetchUsersByEmail(email);
+//             if (users.length === 0) {
+//                 console.error(`No users matched the email: ${email}`);
+//                 throw new Error(`No users matched the email: ${email}`);
+//             }
+//             const user = users[0];
+//             console.log("user", user);
+//             const auth = await authenticateUser(user, password);
+//          //   const validPassword = await bcrypt.compare(password, user.password);
+//             if (auth !== null) {
+//                 // if user exists
+//                 delete user.password;
+//                 response.status(200).json({"jwt": auth, "is_director" : user.is_director});
+//                 return auth;
+//             } else {
+//                 response.status(200).json({
+//                     "error": "Invalid Credentials"
+//                   });
+//             }
+//             response.status(200).json();
+//         } catch (err) {
+//             console.error('There was an error in POST /users/login', err);
+//             response.status(500).json({ message: err.message });
+//         }
+//     });
+//     app.put('/users/updatePassword', async (request, response) => {
+//         try {
+//             const username = request.body.username
+//             const rawPass = request.body.password;
+//             const salt = await bcrypt.genSalt(10);
+//             const hashed = await bcrypt.hash(rawPass, salt);;
+//             const query = knex('users')
+//                 .where({ username: username })
+//                 .update({ password: hashed })
+//             const results = await query;
+//             console.log('Results of my PUT statement: ', results);
+//             response.status(200).json({ username: username});
+//         } catch (err) {
+//             console.error('There was an error in PUT /users/updatePassword', err);
+//             response.status(500).json({ message: err.message });
+//         }
+//     })
+//     app.put('/users/updateBio', async (request, response) => {
+//         try {
+//             const username = request.body.username
+//             const newBio = request.body.bio
+//             const query = knex('users')
+//                 .where({ username: username })
+//                 .update({ bio: newBio })
+//         const results = await query;
+//         console.log('Results of my PUT statement: ', results);
+//         response.status(200).json({ username: username, bio: newBio});
+//         } catch (err) {
+//             console.error('There was an error in PUT /users/updateBio', err);
+//             response.status(500).json({ message: err.message });
+//         }
+//     })
+//     app.delete('/users', async (request, response) => {
+//         try {
+//             console.log('Initiating DELETE /users request');
+//             console.log('Request has a body / payload containing:', request.body);
+//             console.log('Request has params containing:', request.query);
+//             const username = request.body.username
+//             const query = knex('users').delete().where({username});
+//             const results = await query;
+//             console.log('Results of my DELETE statement:', results);
+//             response.status(200).json(results);
+//         } catch (err) {
+//             console.error('There was an error in DELETE /users', err);
+//             response.status(500).json({ message: err.message });
+//         }
+//     });
+//     app.get('/users', async (request, response) => {
+//         try {
+//             const bodyParser = require('body-parser');
+//             app.use(bodyParser.json());
+//
+//             if(request.body.username){
+//                 const results = await knex('users').select().where( {'username':request.body.username} );
+//                 response.status(200).json(results);
+//             }
+//             else if(request.body.uni_affilation){
+//                 const results = await knex('users').select().where( {'uni_affilation':request.body.uni_affilation} );
+//                 response.status(200).json(results);
+//             }
+//             else if(request.body.is_director){
+//                 const results = await knex('users').select().where( {'is_director':request.body.is_director} );
+//                 response.status(200).json(results);
+//             }
+//             else{
+//                 const results = await knex("users").select();
+//                 response.status(200).json(results);
+//             }
+//         } catch (err) {
+//             console.error('There was an error in GET /users', err);
+//             response.status(500).json({ message: err.message });
+//         }
+//     });
+// }
