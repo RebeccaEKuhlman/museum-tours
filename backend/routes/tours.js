@@ -113,7 +113,7 @@ router.post('/', async(request, response, next) => {
         }
         else{
             console.error('There was an error in POST /tours');
-            response.status(400).json('There was an error in POST /tours');
+            response.status(400).json('Make sure all needed data is included');
         }
         next();
     } catch (err) {
@@ -245,7 +245,7 @@ router.put('/updateTourDescription', async(request, response, next) => {
         next();
     } catch (err) {
             console.error('There was an error in PUT /tours/updateTourDescription', err);
-            response.status(400).json({ message: err.message });
+            response.status(500).json({ message: err.message });
     }
 });
 

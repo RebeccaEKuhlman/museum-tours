@@ -47,7 +47,7 @@ router.post('/registration', async(request, response, next) => {
         }
         else{
             console.error('There was an error in POST /users');
-            response.status(400).json('There was an error in POST /users');
+            response.status(400).json('Make sure all needed data is included');
         }
 
         next();

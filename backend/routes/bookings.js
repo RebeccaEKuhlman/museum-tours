@@ -46,7 +46,7 @@ router.post('/', async (req, res, next) => {
             next();
         } else{
             console.error('There was an error in POST /bookings');
-            res.status(400).json();
+            res.status(400).json('"Make sure all needed data is included');
         }
     } catch (err) {
         console.error('There was an error in POST /bookings', err);

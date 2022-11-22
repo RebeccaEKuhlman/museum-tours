@@ -71,7 +71,7 @@ router.post('/', async(request, response, next) => {
         }
         else{
             console.error('There was an error in POST /comments');
-            response.status(400).json('There was an error in POST /comments');
+            response.status(400).json('Make sure all needed data is included');
         }
         next();
     } catch(err){

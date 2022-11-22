@@ -17,7 +17,7 @@ router.post('/', async (req, res, next) => {
         }
         else{
             console.error('There was an error in POST /museums');
-            res.status(400).json('There was an error in POST /museums');
+            res.status(400).json('Make sure all needed data is included');
         }
         next();
     } catch (err) {
