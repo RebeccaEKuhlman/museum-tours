@@ -117,7 +117,7 @@ export const App = () => {
         <Route exact path='/profile' element={< Profile />} onEnter={requireAuth}></Route>
         <Route exact path='/tours' element={< Tours museums={museums} photos={photos} />}></Route>
         <Route exact path='/Registration' element={< Registration />}></Route>
-        <Route exact path='/bookings' element = {<Bookings />}></Route>
+        <Route exact path='/bookings:museum_name' element = {<Bookings museums={museums}/>}></Route>
       </Routes>
     </Router>
   );

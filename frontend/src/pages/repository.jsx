@@ -35,7 +35,7 @@ export class Repository {
     // });
   }
 
-    postRegristration(email, username, password) {
+    postRegistration(email, username, password) {
         return new Promise((resolve, reject) => {
             console.log("Post Registration");
             axios.post( `http://${ this.url }:8000/users/registration`, {
@@ -92,6 +92,26 @@ export class Repository {
     });
   }
 
+  getMuseumByName(museum_name) {
+    return new Promise((resolve, reject) => {
+      console.log("Get Museums");
+      axios
+        .get(`http://${this.url}:8000/museums/`, {
+          data: {
+            museum_name: museum_name
+          
+          }
+        })
+        .then((x) => {
+          resolve(x.data);
+        })
+        .catch((err) => {
+          alert(err);
+          reject(err);
+        });
+    });
+  }
+
   getPhotos() {
     return new Promise((resolve, reject) => {
       console.log("Get Photos");
@@ -137,7 +157,7 @@ export class Repository {
     });
   }
 
-  getPhotoByMuseum(museum_name) {
+  getMuseumPhoto(museum_name) {
     return new Promise((resolve, reject) => {
       console.log("Get Photo by Museum");
       axios.get(`http://${this.url}:8000/photos/museums`, {
