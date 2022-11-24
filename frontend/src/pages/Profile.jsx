@@ -113,10 +113,19 @@ export function Profile() {
       // } else {
       //   window.location.href = "/profile";
       // }
-      alert("Updated");
     });
   };
   
+  const handleDelete = () => {
+    var repository = new Repository();
+    repository.deleteUser(sessionStorage.jwt).then((x) => {
+      console.log("Deleted!");
+    });
+    sessionStorage.jwt = "";
+    sessionStorage.director = "";
+    window.location.href = "/"
+  };
+
   const Logout = (e) => {
     sessionStorage.jwt = "";
     sessionStorage.director = "";
@@ -213,36 +222,39 @@ export function Profile() {
               </Typography>
               { 
                 sessionStorage.director &&
-                (<Button
+                (<div>
+                  <Button
+                    type="submit"
+                    style={{
+                      marginTop: 12,
+                      color: "#F6F7EB",
+                      backgroundColor: "cornflowerblue",
+                      fontFamily: "Baskerville",
+                    }}
+                    variant="contained"
+                    className={classes.submit}
+                    onClick={() => { navigate('director'); }}
+                  >
+                    Your Museum
+                  </Button>
+                </div>)
+              }
+              <div>
+                <Button
                   type="submit"
                   style={{
                     marginTop: 12,
-                    marginRight: 30,
                     color: "#F6F7EB",
                     backgroundColor: "cornflowerblue",
                     fontFamily: "Baskerville",
                   }}
                   variant="contained"
                   className={classes.submit}
-                  onClick={() => { navigate('director'); }}
+                  onClick={Logout}
                 >
-                  Your Museum
-                </Button>)
-              }
-              <Button
-                type="submit"
-                style={{
-                  marginTop: 12,
-                  color: "#F6F7EB",
-                  backgroundColor: "cornflowerblue",
-                  fontFamily: "Baskerville",
-                }}
-                variant="contained"
-                className={classes.submit}
-                onClick={Logout}
-              >
-                Log Out
-              </Button>
+                  Log Out
+                </Button>
+              </div>
             </div>
           </Card>
         </Grid>
@@ -336,6 +348,35 @@ export function Profile() {
             </CardContent>
           </Card>
         </Grid>
+        <Card
+          sx={{ height: 200, width: 300, backgroundcolor: "#FFFFFF", marginTop: 12, }}
+        >
+          <Typography
+            className={classes.typography}
+            gutterBottom
+            variant="h4"
+            component="div"
+            style={{
+              marginTop: 50,
+            }}
+          >
+            <b className={classes.typography}>Delete Account</b>
+          </Typography>
+          <Button
+            type="submit"
+            style={{
+              marginTop: 5,
+              color: "#F6F7EB",
+              backgroundColor: "cornflowerblue",
+              fontFamily: "Baskerville",
+            }}
+            variant="contained"
+            className={classes.submit}
+            onClick={handleDelete}
+          >
+            Delete
+          </Button>
+        </Card>
         <Grid item xs={9}>
           <Card>
             <CardContent sx={{ maxWidth: 400, backgroundcolor: "#FFFFFF" }}>

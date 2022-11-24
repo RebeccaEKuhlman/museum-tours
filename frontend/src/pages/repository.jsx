@@ -78,6 +78,24 @@ export class Repository {
     });
   }
 
+  deleteUser(jwt) {
+    return new Promise((resolve, reject) => {
+      console.log("Put Password");
+      axios.delete(`http://${this.url}:8000/users`, { 
+        jwt: jwt
+        })
+        .then((x) => {
+          console.log("x.data", x.data);
+          resolve(x.data);
+        })
+        .catch((err) => {
+          console.log("catch");
+          alert(err);
+          reject(err);
+        });
+    });
+  }
+
   getMuseums() {
     return new Promise((resolve, reject) => {
       console.log("Get Museums");
@@ -142,9 +160,9 @@ export class Repository {
     return new Promise((resolve, reject) => {
       console.log("Get Photo by Museum");
       axios.get(`http://${this.url}:8000/photos/museums`, {
-          params: {
-            museum_name: museum_name,
-          },
+            params: {
+                museum_name: museum_name,
+            },
         })
         .then((x) => {
           resolve(x.data);
