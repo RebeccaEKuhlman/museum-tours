@@ -35,13 +35,14 @@ export class Repository {
     // });
   }
 
-    postRegristration(email, username, password) {
+    postRegristration(email, username, password, director) {
         return new Promise((resolve, reject) => {
             console.log("Post Registration");
             axios.post( `http://${ this.url }:8000/users/registration`, {
                 email: email,
                 username: username,
-                password: password
+                password: password,
+                director: director
             })
                 .then(x => {
                     console.log("x.data", x.data);

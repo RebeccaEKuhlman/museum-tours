@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
@@ -73,6 +74,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function Profile() {
+  const navigate = useNavigate();
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
@@ -114,7 +116,7 @@ export function Profile() {
       alert("Updated");
     });
   };
-
+  
   const Logout = (e) => {
     sessionStorage.jwt = "";
     sessionStorage.director = "";
@@ -209,6 +211,24 @@ export function Profile() {
                 <b className={classes.typography}>Bio:</b> This is a sentence
                 about the person.
               </Typography>
+              { 
+                sessionStorage.director &&
+                (<Button
+                  type="submit"
+                  style={{
+                    marginTop: 12,
+                    marginRight: 30,
+                    color: "#F6F7EB",
+                    backgroundColor: "cornflowerblue",
+                    fontFamily: "Baskerville",
+                  }}
+                  variant="contained"
+                  className={classes.submit}
+                  onClick={() => { navigate('director'); }}
+                >
+                  Your Museum
+                </Button>)
+              }
               <Button
                 type="submit"
                 style={{

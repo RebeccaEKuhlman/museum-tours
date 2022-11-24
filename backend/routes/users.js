@@ -22,18 +22,21 @@ module.exports = function users(app, logger) {
             console.log('Initiating POST /registration request');
             console.log('Request has a body / payload containing:', request.body);
             console.log('Request has params containing:', request.query);
+
             const payload = request.body; // This payload should be an object containing user data
-            const rawPass = request.body.password;
+            const rawPass = payload.password;
             const salt = await bcrypt.genSalt(10);
             const username = payload.username;
             const email = payload.email;
             const hashed = await bcrypt.hash(rawPass, salt);;
             const joinDate = new Date();
-            const query = knex('users').insert({ username, password: hashed, email, joinDate, photoId: 1})
+            const is_director = payload.director;
+
+            const query = knex('users').insert({ username, password: hashed, email, joinDate, photoId: 1, is_director})
             const results = await query;
             console.log('Results of my POST statement:', results);
-            response.status(201).json({"is_director" : user.is_director});
             const auth = await authenticateUser({username}, rawPass); 
+            response.status(200).json({"jwt": auth, "is_director": is_director});
             return auth; 
         } catch (err) {
             console.error('There was an error in POST /users', err);

@@ -86,6 +86,7 @@ export function Registration() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmpassword, setConfirmPassword] = useState('');
+  const [director, setDirector] = useState('');
 
   // ENTER YOUR EC2 PUBLIC IP/URL HERE
   const ec2_url = "";
@@ -124,15 +125,16 @@ export function Registration() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password !== confirmpassword) {
-      alert("passwords must match")
+      alert("Passwords Must Match!")
     }
     else {
-      repository.postRegristration(email, username, password).then(x => {
+      repository.postRegristration(email, username, password, director).then(x => {
         if (typeof x.error != "undefined") {
-          alert("error: unable to sign up")
-
+          alert("Error: Unable To Sign Up")
         } else {
-          window.location.href = "/login";
+          sessionStorage.jwt = x.jwt;
+          sessionStorage.director = x.is_director;
+          window.location.href = "/profile";
         }
       });
     }
@@ -169,9 +171,6 @@ export function Registration() {
           <Typography
             component="h1"
             className="title"
-            style={{
-              fontFamily: "Baskerville",
-            }}
           >
             REGISTER
           </Typography>
@@ -227,8 +226,13 @@ export function Registration() {
               value={confirmpassword}
               onInput={(e) => setConfirmPassword(e.target.value)}
             />
+            <FormControlLabel
+              control={<Checkbox value={director} fontFamily="Baskerville" onChange={() => setDirector(!director)} />}
+              style={{ color: "#323031" }}
+              label="Museum Director?"
+            />
             <Button
-              style={{ color: "#FFFFFF", backgroundColor: "#7F96FF" }}
+              style={{ color: "#FFFFFF", backgroundColor: "#7F96FF", marginTop: "6px", marginBottom: "4px" }}
               type="submit"
               fullWidth
               variant="contained"
@@ -236,7 +240,20 @@ export function Registration() {
             >
               Sign Up
             </Button>
-            <Grid item>
+            <Grid container>
+              <Grid item xs>
+                {/* <Link
+                  href="#"
+                  variant="body2"
+                  style={{
+                    color: "#7F96FF",
+                    fontFamily: "Baskerville",
+                  }}
+                >
+                  Forgot password?
+                </Link> */}
+              </Grid>
+              <Grid item>
                 <Link
                   href="/Login"
                   variant="body2"
@@ -248,6 +265,7 @@ export function Registration() {
                   {"Have an account? Log in"}
                 </Link>
               </Grid>
+            </Grid>
             <Box mt={5}>
               <Copyright />
             </Box>

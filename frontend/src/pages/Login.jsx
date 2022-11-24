@@ -171,9 +171,6 @@ export function Login() {
           <Typography
             component="h1"
             className="title"
-            style={{
-              fontFamily: "Baskerville",
-            }}
           >
             LOGIN
           </Typography>
@@ -206,16 +203,13 @@ export function Login() {
               autoComplete="current-password"
               style={{ fontFamily: "Baskerville" }}
             />
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" fontFamily="Baskerville" />}
-              style={{ color: "#323031" }}
-              label="Remember me"
-            /> */}
             <Button
               style={{
                 color: "#FFFFFF",
                 backgroundColor: "#7F96FF",
                 fontFamily: "Baskerville",
+                marginTop: "16px",
+                marginBottom: "4px"
               }}
               type="submit"
               fullWidth
@@ -225,7 +219,7 @@ export function Login() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link
+                {/* <Link
                   href="#"
                   variant="body2"
                   style={{
@@ -234,7 +228,7 @@ export function Login() {
                   }}
                 >
                   Forgot password?
-                </Link>
+                </Link> */}
               </Grid>
               <Grid item>
                 <Link
