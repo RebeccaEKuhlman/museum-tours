@@ -24,43 +24,41 @@ export const Tours = ({ museums, photos }) => {
     }
   }, [params.museum_name]);
 
-  //const mergeMuseum = (delta) => setMuseum({ ...museum, ...delta });
-
-  const handleBookClick = () => {
-    if (params.museum_name) {
-      Repository.getMuseumByName(params.museum_name).then((x) => navigate("/"));
-    } else {
-    }
-
-    function GridItem(props) {
-      let items = [
-        <Paper
-          className="Project"
-          style={{
-            backgroundColor: "ivory",
-            alignItems: "center",
-            marginBottom: 10,
-          }}
-          elevation={10}
-          key={props.item.museum_name}
-        >
-          <CardContent className="Content">
-            <img
-              className="Image"
-              alt="museumlogo"
-              src={
-                photos.filter((x) => x.photoId === props.item.photoId)[0]
-                  .photo_data
-              }
-              style={{ alignItems: "center", height: 100, width: "auto" }}
-            ></img>
+  function GridItem(props) {
+    let items = [
+      <Paper
+        className="Project"
+        style={{
+          backgroundColor: "ivory",
+          alignItems: "center",
+          marginBottom: 10,
+          display: "flex",
+        }}
+        elevation={10}
+        key={props.item.museum_name}
+      >
+        <CardContent className="Content" style={{ display: "flex" }}>
+          <img
+            className="Image"
+            alt="museumlogo"
+            src={
+              photos.filter((x) => x.photoId === props.item.photoId)[0]
+                .photo_data
+            }
+            style={{
+              height: 300,
+              width: 500,
+              borderRadius: "16px",
+            }}
+          ></img>
+          <div className="Info" style={{ marginLeft: 30 }}>
             <Typography
               className="Title"
               style={{
                 color: "#696963",
                 fontFamily: "Baskerville",
                 fontWeight: "bold",
-                fontSize: 25,
+                fontSize: 30,
               }}
             >
               {props.item.museum_name}
@@ -70,6 +68,7 @@ export const Tours = ({ museums, photos }) => {
               style={{
                 color: "#696963",
                 fontFamily: "Baskerville",
+                fontSize: 20,
               }}
             >
               Current Director: {props.item.director}
@@ -79,47 +78,43 @@ export const Tours = ({ museums, photos }) => {
               style={{
                 color: "#696963",
                 fontFamily: "Baskerville",
+                fontSize: 20,
               }}
             >
               Exhibits on Display: {props.item.num_exhibits}
             </Typography>
-          </CardContent>
-          <CardActions>
-            <Link to="/bookings">
-              <Button
-                variant="outlined"
-                className="ViewButton"
-                style={{
-                  color: "#F6F7EB",
-                  backgroundColor: "cornflowerblue",
-                  fontFamily: "Baskerville",
-                }}
-              >
-                View Now
-              </Button>
-            </Link>
-            {/* Need a use state to handle what goes in the Dialog, rip from Lawrimore*/}
-          </CardActions>
-        </Paper>,
-      ];
-      return (
-        <Grid item xs={11}>
-          {items}
-        </Grid>
-      );
-    }
+          </div>
 
+          <Button
+            variant="outlined"
+            className="ViewButton"
+            style={{
+              color: "#F6F7EB",
+              backgroundColor: "cornflowerblue",
+              fontFamily: "Baskerville",
+              height: 45,
+              width: 200,
+              marginLeft: 250,
+              marginTop: 250,
+            }}
+          >
+            View Now
+          </Button>
+        </CardContent>
+      </Paper>,
+    ];
+  }
     return (
       <div style={{ marginTop: 10, maxWidth: "100%" }}>
         <Grid container alignItems="center" justifyContent="center">
           <Card
             variant="outlined"
             style={{
-              display: "inline-block",
-              backgroundcolor: "#F6F7EB",
-              border: "none",
+              color: "#F6F7EB",
+              fontFamily: "Baskerville",
+              textDecoration: "underline",
+              backgroundColor: "#323031",
             }}
-            width="50%"
           >
             <Typography
               className="h3"
@@ -140,5 +135,4 @@ export const Tours = ({ museums, photos }) => {
         </Grid>
       </div>
     );
-  };
-};
+  }
