@@ -133,6 +133,7 @@ export function Login() {
       if (typeof x.error != "undefined") {
         alert("Invalid Credentials");
       } else {
+        sessionStorage.email = x.email;
         sessionStorage.jwt = x.jwt;
         sessionStorage.director = x.is_director;
         window.location.href = "/profile";

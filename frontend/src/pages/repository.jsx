@@ -78,11 +78,54 @@ export class Repository {
     });
   }
 
-  deleteUser(jwt) {
+  getUser(email) {
     return new Promise((resolve, reject) => {
-      console.log("Put Password");
-      axios.delete(`http://${this.url}:8000/users`, { 
-        jwt: jwt
+        console.log("Update User");
+        axios.get(`http://${this.url}:8000/users`, { 
+            params: {
+                email: email
+            },
+        })
+        .then((x) => {
+          console.log("x.data", x.data);
+          resolve(x.data);
+        })
+        .catch((err) => {
+          console.log("catch");
+          alert(err);
+          reject(err);
+        });
+    });
+  }
+
+  updateUser(email, photo, uni, bio) {
+    return new Promise((resolve, reject) => {
+        console.log("Update User");
+        axios.put(`http://${this.url}:8000/users/updateInfo`, { 
+            email: email,
+            photo: photo,
+            uni: uni,
+            bio: bio
+        })
+        .then((x) => {
+          console.log("x.data", x.data);
+          resolve(x.data);
+        })
+        .catch((err) => {
+          console.log("catch");
+          alert(err);
+          reject(err);
+        });
+    });
+  }
+
+  deleteUser(email) {
+    return new Promise((resolve, reject) => {
+        console.log("Delete User");
+        axios.delete(`http://${this.url}:8000/users`, { 
+            params: {
+                email: email
+            },
         })
         .then((x) => {
           console.log("x.data", x.data);

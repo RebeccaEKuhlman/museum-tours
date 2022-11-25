@@ -132,6 +132,7 @@ export function Registration() {
         if (typeof x.error != "undefined") {
           alert("Error: Unable To Sign Up")
         } else {
+          sessionStorage.email = x.email;
           sessionStorage.jwt = x.jwt;
           sessionStorage.director = x.is_director;
           window.location.href = "/profile";
