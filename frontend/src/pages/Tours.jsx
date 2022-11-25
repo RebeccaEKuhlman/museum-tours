@@ -12,7 +12,7 @@ import {
   Box,
 } from "@material-ui/core";
 import Button from "@mui/material/Button";
-
+import { maxHeight } from "@mui/system";
 
 export const Tours = ({ museums, photos }) => {
   // const [museum, setMuseum] = useState({});
@@ -25,48 +25,63 @@ export const Tours = ({ museums, photos }) => {
     let items = [
       <Paper
         className="Project"
-        style={{ backgroundColor: "ivory", alignItems: "center", marginBottom: 10 }}
+        style={{
+          backgroundColor: "ivory",
+          alignItems: "center",
+          marginBottom: 10,
+          display: "flex",
+        }}
         elevation={10}
         key={props.item.museum_name}
       >
-        <CardContent className="Content">
+        <CardContent className="Content" style={{ display: "flex" }}>
           <img
             className="Image"
             alt="museumlogo"
-            src={photos.filter(x => x.photoId === props.item.photoId)[0].photo_data}
-            style={{ alignItems: "center", height: 100, width: "auto" }}
+            src={
+              photos.filter((x) => x.photoId === props.item.photoId)[0]
+                .photo_data
+            }
+            style={{
+              height: 300,
+              width: 500,
+              borderRadius: "16px",
+            }}
           ></img>
-          <Typography
-            className="Title"
-            style={{
-              color: "#696963",
-              fontFamily: "Baskerville",
-              fontWeight: "bold",
-              fontSize: 25,
-            }}
-          >
-            {props.item.museum_name}
-          </Typography>
-          <Typography
-            className="Caption"
-            style={{
-              color: "#696963",
-              fontFamily: "Baskerville",
-            }}
-          >
-            Current Director: {props.item.director}
-          </Typography>
-          <Typography
-            className="Caption"
-            style={{
-              color: "#696963",
-              fontFamily: "Baskerville",
-            }}
-          >
-            Exhibits on Display: {props.item.num_exhibits}
-          </Typography>
-        </CardContent>
-        <CardActions>
+          <div className="Info" style={{ marginLeft: 30 }}>
+            <Typography
+              className="Title"
+              style={{
+                color: "#696963",
+                fontFamily: "Baskerville",
+                fontWeight: "bold",
+                fontSize: 30,
+              }}
+            >
+              {props.item.museum_name}
+            </Typography>
+            <Typography
+              className="Caption"
+              style={{
+                color: "#696963",
+                fontFamily: "Baskerville",
+                fontSize: 20,
+              }}
+            >
+              Current Director: {props.item.director}
+            </Typography>
+            <Typography
+              className="Caption"
+              style={{
+                color: "#696963",
+                fontFamily: "Baskerville",
+                fontSize: 20,
+              }}
+            >
+              Exhibits on Display: {props.item.num_exhibits}
+            </Typography>
+          </div>
+
           <Button
             variant="outlined"
             className="ViewButton"
@@ -74,6 +89,10 @@ export const Tours = ({ museums, photos }) => {
               color: "#F6F7EB",
               backgroundColor: "cornflowerblue",
               fontFamily: "Baskerville",
+              height: 45,
+              width: 200,
+              marginLeft: 250,
+              marginTop: 250
             }}
             onClick={handleOpen}
           >
@@ -104,59 +123,7 @@ export const Tours = ({ museums, photos }) => {
               </Typography>
             </Card>
           </Dialog>
-        </CardActions>
-          
-        {/* <Card sx={{ maxWidth: 345 }}>
-          <CardHeader
-            className="Caption"
-            style={{
-              color: "#696963",
-              fontFamily: "Baskerville",
-            }}
-            title={props.item.museum_name}
-          />
-          <CardMedia
-            component="img"
-            height="150"
-            width="300"
-            
-          />
-          <CardContent>
-            <Typography
-              className="Caption"
-              style={{
-                color: "#696963",
-                fontFamily: "Baskerville",
-              }}
-              variant="body2"
-            >
-              Address?
-            </Typography>
-          </CardContent>
-          
-            <CardContent>
-              <Typography
-                paragraph
-                className="Caption"
-                style={{
-                  color: "#696963",
-                  fontFamily: "Baskerville",
-                }}
-              >
-                Current Director: {props.item.director}
-              </Typography>
-              <Typography
-                paragraph
-                className="Caption"
-                style={{
-                  color: "#696963",
-                  fontFamily: "Baskerville",
-                }}
-              >
-                Exhibits on Display: {props.item.num_exhibits}
-              </Typography>
-            </CardContent>
-        </Card> */}
+        </CardContent>
       </Paper>,
     ];
     return (
@@ -186,9 +153,7 @@ export const Tours = ({ museums, photos }) => {
               fontFamily: "Baskerville",
               textDecoration: "underline",
               backgroundColor: "#323031",
-              
             }}
-            
           >
             Museums Near You
           </Typography>
