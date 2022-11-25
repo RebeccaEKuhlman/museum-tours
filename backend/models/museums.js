@@ -1,7 +1,7 @@
 const knex = require('../database/knex');
 
-const postMuseum = async (museum_name, photoId, director, num_exhibits) => {
-    const query = knex('museums').insert({ museum_name: museum_name, photoId: photoId, director: director, num_exhibits: num_exhibits });
+const postMuseum = async (museum_name, photoId, director, num_exhibits, whatsNew) => {
+    const query = knex('museums').insert({ museum_name: museum_name, photoId: photoId, director: director, num_exhibits: num_exhibits, whatsNew: whatsNew });
     const results = await query;
     return results;
 }
@@ -42,6 +42,12 @@ const updateMuseumPhotoId = async (museum_name, photoId) => {
     return results;
 }
 
+const updateMuseumWhatsNew = async (museum_name, whatsNew) => {
+    const query = knex('museums').where({ museum_name: museum_name }).update({ whatsNew: whatsNew }).select('whatsNew');
+    const results = await query;
+    return results;
+}
+
 const deleteMuseum = async (museum_name) => {
     const query = knex('museums').where({ museum_name: museum_name }).delete();
     const results = await query;
@@ -56,5 +62,6 @@ module.exports = {
     getMuseumPhoto,
     updateMuseumNum_exhibits,
     updateMuseumPhotoId,
+    updateMuseumWhatsNew,
     deleteMuseum
 }

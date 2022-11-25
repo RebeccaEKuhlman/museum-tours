@@ -92,6 +92,26 @@ export class Repository {
     });
   }
 
+  putMuseumWhatsNew(museum_name, whatsNew) {
+    return new Promise((resolve, reject) => {
+      console.log("Put Museum Whats New");
+      axios
+        .put(`http://${this.url}:8000/museums`, {
+            museum_name: museum_name,
+            whatsNew: whatsNew,
+        })
+        .then((x) => {
+          console.log("x.data", x.data);
+          resolve(x.data);
+        })
+        .catch((err) => {
+          console.log("catch");
+          alert(err);
+          reject(err);
+        });
+    });
+  }
+
   getPhotos() {
     return new Promise((resolve, reject) => {
       console.log("Get Photos");
