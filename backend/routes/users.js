@@ -122,23 +122,27 @@ router.put('/updatePassword', async(request, response, next) => {
     }
 });
 
-router.put('/updateBio', async(request, response, next) => {
+router.put('/updateInfo', async(request, response, next) => {
     try {
-        const username = request.body.username;
-        const newBio = request.body.bio
+        const email = request.body.email;
+        const newPhoto = request.body.photo;
+        const newUni = request.body.uni;
+        const newBio = request.body.bio;
 
-        const results = await request.models.user.updateUserBio(username, newBio);
-        if(results){
+        const uniResults = await request.models.users.updateUserUni(email, newUni);
+        const photoResults = await request.models.users.updateUserPhoto(email, newPhoto);
+        const bioResults = await request.models.user.updateUserBio(email, newBio);
+        if(email){
             console.log('Results of my PUT statement: ', results);
-            const check = await request.models.user.fetchUsersByName(username);
-            response.status(200).json(check);
+            const results = await request.models.user.fetchUsersByEmail(email);
+            response.status(200).json(results);
         }
         else{
-            console.error('There was an error in PUT /users/updateBio');
-            response.status(400).json('There was an error in PUT /users/updateBio');
+            console.error('There was an error in PUT /users/updateInfo');
+            response.status(400).json('There was an error in PUT /users/updateInfo');
         }
     } catch (err) {
-        console.error('There was an error in PUT /users/updateBio', err);
+        console.error('There was an error in PUT /users/updateInfo', err);
         response.status(500).json({ message: err.message });
     }
 });

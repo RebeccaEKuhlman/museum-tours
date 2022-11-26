@@ -31,8 +31,18 @@ const updateUserPassword = async(username, password) =>{
     return results;
 }
 
-const updateUserBio = async(username, bio) =>{
-    const results = await knex('users').where({'username':username}).update({'bio':bio});
+const updateUserPhoto = async(email, photo) =>{
+    const results = await knex('users').where({'email':email}).update({'photoId':photo});
+    return results;
+}
+
+const updateUserUni = async(email, uni) =>{
+    const results = await knex('users').where({'email':email}).update({'uni_affilation':uni});
+    return results;
+}
+
+const updateUserBio = async(email, bio) =>{
+    const results = await knex('users').where({'email':email}).update({'bio':bio});
     return results;
 }
 
@@ -75,6 +85,7 @@ const authenticateUser = async  (username, password) =>{
     throw new Error(`Incorrect creditials`);
 }
      
- module.exports = {addUser, deleteUser, updateUserPassword, updateUserBio, fetchAllUsers, authenticateUser,
-                   fetchUsersByEmail, fetchUsersByName};
+ module.exports = {addUser, deleteUser, updateUserPassword, updateUserPhoto, updateUserUni,
+                    updateUserBio, fetchAllUsers, authenticateUser,
+                    fetchUsersByEmail, fetchUsersByName};
  
