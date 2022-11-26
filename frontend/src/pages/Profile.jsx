@@ -15,7 +15,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { Repository } from "../api/repository";
-import {useNavigate } from "react-router-dom"
 
 import { ScheduleContext } from "../context";
 

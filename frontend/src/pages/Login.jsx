@@ -233,7 +233,7 @@ export function Login() {
               </Grid>
               <Grid item>
                 <Link
-                  href="/Registration"
+                  href="/registration"
                   variant="body2"
                   style={{
                     color: "#7F96FF",

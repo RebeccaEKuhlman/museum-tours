@@ -44,7 +44,7 @@ export const Tours = ({ museums, photos }) => {
               borderRadius: "16px",
             }}
           ></img>
-          <div className="Info" style={{ marginLeft: 30 }}>
+          <div className="Info" style={{ marginLeft: 30, width: 500 }}>
             <Typography
               className="Title"
               style={{
@@ -76,6 +76,7 @@ export const Tours = ({ museums, photos }) => {
             >
               Exhibits on Display: {props.item.num_exhibits}
             </Typography>
+            <hr/>
             <Typography
               className="Description"
               style={{
@@ -84,7 +85,7 @@ export const Tours = ({ museums, photos }) => {
                 fontSize: 20,
               }}
             >
-              Exhibits on Display: {props.item.num_exhibits}
+              {props.item.whatsNew}
             </Typography>
           </div>
 
@@ -97,9 +98,9 @@ export const Tours = ({ museums, photos }) => {
               fontFamily: "Baskerville",
               height: 45,
               width: 200,
-              marginLeft: 250,
               marginTop: 250
             }}
+            href="/bookings"
           >
             View Now
           </Button>
