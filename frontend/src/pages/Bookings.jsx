@@ -14,13 +14,11 @@ import { ScheduleContext } from "../context";
 import { Tour } from "../models";
 
 export const Bookings = () => {
-  const [tour, setTour] = useState(new Tour(0, "", "", 0, "", []));
+  const [tour, setTour] = useState([]);
   const nav = useNavigate();
   const params = useParams();
 
-  var repository = new Repository();
-
-  var tours = repository.getToursByMuseum(params.museum_name);
+  const repository = new Repository();
 
   // get the context from ScheduleContext
   // const { addToTours } = useContext(ScheduleContext).context;
@@ -127,8 +125,8 @@ export const Bookings = () => {
   }
 
   return (
-    <div style={{ marginTop: 10, maxWidth: "100%" }}>
-      <Grid container alignItems="center" justifyContent="center">
+    <div justifyContent="center" alignItems="center" style={{ marginTop: 10, maxWidth: "100%" }}>
+      <Grid container alignItems="center" justifyContent="center" flexDirection="column">
         <Card
           variant="outlined"
           style={{
@@ -150,11 +148,12 @@ export const Bookings = () => {
           >
             Tours at {params.museum_name}
           </Typography>
-          </Card>
-        {tour.map((item, index) => {
-          return <GridItem item={item} key={index} />;
-        })}
-         
+        </Card>
+        <div>
+          {tour.map((item, index) => (
+            <GridItem item={item} key={index} />
+          ))}
+        </div>
       </Grid>
     </div>
   );
