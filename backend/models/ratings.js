@@ -19,6 +19,11 @@ const getAllRatings = async() => {
     return results;
 }
 
+const getRating = async(ratingId) => {
+    const results = await knex(RATINGS_TABLE).select().where( {ratingId: ratingId});
+    return results;
+}
+
 const deleteRating = async(ratingId) => {
     const query = knex(RATINGS_TABLE).where({ ratingId: ratingId }).delete();
     const results = await query;
@@ -28,5 +33,6 @@ const deleteRating = async(ratingId) => {
 module.exports = {
     postRating,
     getAllRatings,
+    getRating,
     deleteRating
 }

@@ -32,6 +32,11 @@ router.get('/', async(request, response, next) => {
             const results = await request.models.comment.fetchCommentsByTourName(request.query.tour_Name);
             response.status(200).json(results);
         }
+        else if(request.query.username && request.query.tour_Name && request.content){
+            const results = await request.models.comment.fetchSpecificComment(request.query.username,
+                                                                        request.query.tour_Name, request.query.content);
+            response.status(200).json(results);
+        }
         else{
             const results = await request.models.comment.fetchAllComments();
             response.status(200).json(results);
@@ -59,7 +64,15 @@ router.post('/', async(request, response, next) => {
 
         const results = await request.models.comment.insertComment(content, username, tour_Name, review_id,
                                                                                       like_sum, overComment);
-        response.status(201).json(results);
+
+        if(results){
+            const check = await request.models.comment.fetchSpecificComment(username, tour_Name, content);
+            response.status(201).json(check); //returns the content
+        }
+        else{
+            console.error('There was an error in POST /comments');
+            response.status(400).json('Make sure all needed data is included');
+        }
         next();
     } catch(err){
         console.error('There was an error in POST /comments', err);

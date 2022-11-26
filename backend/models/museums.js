@@ -30,8 +30,8 @@ const getMuseumPhoto = async (museum_name) => {
     return photo_data[0].photo_data;
 }
 
-const updateMuseumNum_exhibits = async (museum_name, newName) => {
-    const query = knex('museums').where({ museum_name: museum_name }).update({ museum_name: newName }).select('museum_name');
+const updateMuseumNum_exhibits = async (museum_name, num_exhibits) => {
+    const query = knex('museums').where({ museum_name: museum_name }).update({ 'num_exhibits': num_exhibits });
     const results = await query;
     return results;
 }
