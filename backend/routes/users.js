@@ -20,6 +20,7 @@ const express = require('express');
 const router = express.Router();
 
 const bodyParser = require('body-parser');
+const e = require('express');
 router.use(bodyParser.json());
 
 router.post('/registration', async(request, response, next) => {
@@ -29,6 +30,7 @@ router.post('/registration', async(request, response, next) => {
         console.log('Request has params containing:', request.query);
 
         const payload = request.body; // This payload should be an object containing user data
+        console.log(payload);
         const rawPass = payload.password;
         const salt = await bcrypt.genSalt(10);
         const username = payload.username;
@@ -37,12 +39,12 @@ router.post('/registration', async(request, response, next) => {
         const joinDate = new Date();
         const is_director = payload.director;
 
-        const query = request.models.user.addUser(username, hashed, email, joinDate, 1, is_director);
+        const query = request.models.user.addUser(username, hashed, email, joinDate, 25, is_director);
         const results = await query;
 
         console.log('Results of my POST statement:', results);
 
-        const auth = await request.models.user.authenticateUser({username}, rawPass);
+        const auth = await request.models.user.authenticateUser(username, rawPass);
         if(results){
             response.status(201).json({"email": email, "jwt": auth, "is_director": is_director});
             return auth;
@@ -101,16 +103,16 @@ router.post('/login', async(request, response, next) => {
 
 router.put('/updatePassword', async(request, response, next) => {
     try {
-        const username = request.body.email;
+        const email = request.body.email;
         const rawPass = request.body.password;
         const salt = await bcrypt.genSalt(10);
         const hashed = await bcrypt.hash(rawPass, salt);
 
-        const results = await request.models.user.updateUserPassword(username, hashed);
+        const results = await request.models.user.updateUserPassword(email, hashed);
         if(results){
             console.log('Results of my PUT statement: ', results);
-            const check = await request.models.user.fetchUsersByName(username);
-            response.status(200).json({email: username});
+            const check = await request.models.user.fetchUsersByEmail(email);
+            response.status(200).json({email: email});
         }
         else{
             console.error('There was an error in PUT /users/updatePassword');
@@ -129,12 +131,12 @@ router.put('/updateInfo', async(request, response, next) => {
         const newUni = request.body.uni;
         const newBio = request.body.bio;
 
-        const uniResults = await request.models.user.updateUserUni(email, newUni);
-        const photoResults = await request.models.user.updateUserPhoto(email, newPhoto);
-        const bioResults = await request.models.user.updateUserBio(email, newBio);
+        if (newUni) await request.models.user.updateUserUni(email, newUni);
+        await request.models.user.updateUserPhoto(email, newPhoto);
+        await request.models.user.updateUserBio(email, newBio);
         if(email){
-            console.log('Results of my PUT statement: ', results);
             const results = await request.models.user.fetchUsersByEmail(email);
+            console.log('Results of my PUT statement: ', results);
             response.status(200).json(results);
         }
         else{
@@ -152,8 +154,8 @@ router.delete('/', async(request, response, next) => {
         console.log('Initiating DELETE /users request');
         console.log('Request has params containing:', request.query);
 
-        const username = request.query.username;
-        const query = request.models.user.deleteUser(username);
+        const email = request.query.email;
+        const query = request.models.user.deleteUser(email);
         const results = await query;
 
         console.log('Results of my DELETE statement:', results);
@@ -175,8 +177,8 @@ router.get('/', async(request, response, next) => {
             const results = await request.models.user.fetchUsersByEmail(request.query.email);
             response.status(200).json(results);
             console.log("results", results);
-        } else if (payload.username) {
-            const results = await request.models.user.fetchUsersByName(payload.username);
+        } else if (request.query.username) {
+            const results = await request.models.user.fetchUsersByName(request.query.username);
             response.status(200).json(results);
         } else {
             // get all users

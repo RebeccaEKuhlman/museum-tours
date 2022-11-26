@@ -128,7 +128,7 @@ export function Registration() {
       alert("Passwords Must Match!")
     }
     else {
-      repository.postRegristration(email, username, password, director).then(x => {
+      repository.postRegistration(email, username, password, director).then(x => {
         if (typeof x.error != "undefined") {
           alert("Error: Unable To Sign Up")
         } else {

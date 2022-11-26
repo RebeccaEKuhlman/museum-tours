@@ -21,13 +21,14 @@ const addUser = async (username, password, email, joinDate, photoId, is_director
     return results;
 }
 
-const deleteUser = async (username) => {
-    const results = await knex('users').delete().where( {'username':username} );
+const deleteUser = async (email) => {
+    console.log(email)
+    const results = await knex('users').delete().where( {'email':email} );
     return results;
 }
 
-const updateUserPassword = async(username, password) =>{
-    const results = await knex('users').where({'username':username}).update({'password':password});
+const updateUserPassword = async(email, password) =>{
+    const results = await knex('users').where({'email':email}).update({'password':password});
     return results;
 }
 
@@ -52,7 +53,7 @@ const fetchAllUsers = async () => {
 }
 
 const fetchUsersByName = async (username) => {
-    const query = knex.from('users').select().where( {username:username} );
+    const query = knex.from('users').select().where( {'username':username} );
     // const query = knex.select().where({username: username}).from('users');
     const results = await query;
     return results;
@@ -71,7 +72,7 @@ const authenticateUser = async  (username, password) =>{
     const users = await fetchUsersByName(username);
     console.log('Results of users query', users);
     if (users.length === 0) {
-        throw new Error(`No users matched the email`);
+        throw new Error(`No users matched the username`);
     }
 
     const user = users[0];

@@ -22,7 +22,6 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Modal from "@mui/material/Modal";
-import { Repository } from "./repository";
 
 const useStyles = makeStyles((theme) => ({
   typography: {
