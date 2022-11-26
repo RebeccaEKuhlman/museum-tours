@@ -25,12 +25,22 @@ router.post('/', async (req, res, next) => {
             req.body.tour_Name,
             req.body.museum_name
         );
-        res.status(201).json(rating);
+
+        if(rating){
+            const check = await req.models.rating.getRating(rating);
+            res.status(201).json(check);
+        }
+        else{
+            console.error('There was an error in POST /ratings.');
+            res.status(400).json('Make sure all needed data is included');
+        }
+        next();
     } catch(err) {
         console.error('There was an error in POST /ratings', err);
         res.status(500).json({ message: err.message });
     }
 });
+
 router.get('/', async (req, res, next) => {
     try {
         const ratings = await req.models.rating.getAllRatings();
@@ -40,6 +50,7 @@ router.get('/', async (req, res, next) => {
         response.status(500).json({ message: err.message });
     }
 });
+
 router.delete('/', async (req, res, next) => {
     try {
         const rating = await req.models.rating.deleteRating(req.query.ratingId);

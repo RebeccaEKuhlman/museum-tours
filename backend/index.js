@@ -38,11 +38,11 @@ app.get('/health', (request, response, next) => {
    next();
 });
 
-users(app, logger);
+// users(app, logger);
 
 app.use('/photos', photos)
 app.use('/bookings', bookings);
-// app.use('/users', UserRoutes);
+app.use('/users', users);
 app.use('/museums', museums);
 app.use('/tours', tours);
 app.use('/comments', comments);
