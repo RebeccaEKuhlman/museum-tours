@@ -16,8 +16,8 @@ const jwt = require('jsonwebtoken' );
 const bcrypt = require('bcryptjs');
 const knex = require('../database/knex');
 
-const addUser = async (username, password, email, joinDate, photoId) => {
-    const results = await knex('users').insert( {username, password, email, joinDate, photoId} );
+const addUser = async (username, password, email, joinDate, photoId, is_director) => {
+    const results = await knex('users').insert( {username, password, email, joinDate, photoId, is_director} );
     return results;
 }
 
@@ -61,7 +61,7 @@ const authenticateUser = async  (username, password) =>{
     const users = await fetchUsersByName(username);
     console.log('Results of users query', users);
     if (users.length === 0) {
-        throw new Error(`No users matched the email: ${email}`);
+        throw new Error(`No users matched the email`);
     }
 
     const user = users[0];
