@@ -6,9 +6,10 @@ import {
   CardActions,
   Typography,
   Paper,
+  Grid
 } from "@material-ui/core";
 import axios from "axios";
-import { Repository } from "../api/repository";
+import { Repository } from "../api";
 import { ScheduleContext } from "../context";
 import { Tour } from "../models";
 
@@ -17,21 +18,50 @@ export const Bookings = () => {
   const nav = useNavigate();
   const params = useParams();
 
+  var repository = new Repository();
+
   // get the context from ScheduleContext
-  const { addToTours } = useContext(ScheduleContext).context;
+  // const { addToTours } = useContext(ScheduleContext).context;
 
   useEffect(() => {
     console.log("PARAMS.MUSEUM = " + params.museum_name);
-    Repository.getToursBy(params.museum_name).then((response) => {
+    repository.getToursByMuseum(params.museum_name).then((response) => {
       setTour(response);
     });
   }, []);
 
-  const addToTourHandler = () => {
-    console.log("Added to My Tours");
-    addToTours(tour);
-    nav("/profile");
-  };
+  // const addToTourHandler = () => {
+  //   console.log("Added to My Tours");
+  //   addToTours(tour);
+  //   nav("/profile");
+  // };
 
-  return <div>bitch</div>;
+  return (
+    <div style={{ marginTop: 10, maxWidth: "100%" }}>
+      <Grid container alignItems="center" justifyContent="center">
+        <Card
+          variant="outlined"
+          style={{
+            display: "inline-block",
+            backgroundcolor: "#F6F7EB",
+            border: "none",
+          }}
+          width="50%"
+        >
+          <Typography
+            className="h3"
+            variant="h3"
+            style={{
+              color: "#F6F7EB",
+              fontFamily: "Baskerville",
+              textDecoration: "underline",
+              backgroundColor: "#323031",
+            }}
+          >
+            Tours at {params.museum_name}
+          </Typography>
+        </Card>
+      </Grid>
+    </div>
+  );
 };

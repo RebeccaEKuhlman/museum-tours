@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Grid,
   Card,
   CardContent,
-  CardMedia,
-  CardActions,
-  CardHeader,
   Typography,
   Paper,
   Dialog,
   Box,
 } from "@material-ui/core";
 import Button from "@mui/material/Button";
-import { maxHeight } from "@mui/system";
+
 
 export const Tours = ({ museums, photos }) => {
   // const [museum, setMuseum] = useState({});
+
+  const nav = useNavigate();
 
   function GridItem(props) {
     let items = [
@@ -100,7 +100,9 @@ export const Tours = ({ museums, photos }) => {
               width: 200,
               marginTop: 250
             }}
-            href="/bookings"
+            onClick={() => {
+              nav(`/bookings/${props.item.museum_name}`);
+            }}
           >
             View Now
           </Button>
