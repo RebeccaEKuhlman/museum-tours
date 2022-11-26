@@ -17,10 +17,6 @@ import { maxHeight } from "@mui/system";
 export const Tours = ({ museums, photos }) => {
   // const [museum, setMuseum] = useState({});
 
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
   function GridItem(props) {
     let items = [
       <Paper
@@ -80,6 +76,16 @@ export const Tours = ({ museums, photos }) => {
             >
               Exhibits on Display: {props.item.num_exhibits}
             </Typography>
+            <Typography
+              className="Description"
+              style={{
+                color: "#696963",
+                fontFamily: "Baskerville",
+                fontSize: 20,
+              }}
+            >
+              Exhibits on Display: {props.item.num_exhibits}
+            </Typography>
           </div>
 
           <Button
@@ -94,35 +100,11 @@ export const Tours = ({ museums, photos }) => {
               marginLeft: 250,
               marginTop: 250
             }}
-            onClick={handleOpen}
           >
             View Now
           </Button>
           {/* Need a use state to handle what goes in the Dialog, rip from Lawrimore*/}
-          <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Card
-              style={{
-                width: 1000,
-                height: 500,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#F6F7EB",
-              }}
-            >
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-                {props.item.museum_name}
-              </Typography>
-              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                {props.item.museum_name}
-              </Typography>
-            </Card>
-          </Dialog>
+          
         </CardContent>
       </Paper>,
     ];

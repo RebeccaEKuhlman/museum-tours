@@ -35,7 +35,7 @@ export class Repository {
     // });
   }
 
-    postRegristration(email, username, password) {
+    postRegistration(email, username, password) {
         return new Promise((resolve, reject) => {
             console.log("Post Registration");
             axios.post( `http://${ this.url }:8000/users/registration`, {
@@ -155,4 +155,24 @@ export class Repository {
         });
     });
   }
+
+  getToursByMuseum(museum_name) {
+    return new Promise((resolve, reject) => {
+      console.log("Get Tours by Museum");
+      axios.get(`http://${this.url}:8000/tours`, {
+          params: {
+            museum_name: museum_name,
+          },
+        })
+        .then((x) => {
+          resolve(x.data);
+          console.log("x.data", x.data);
+        })
+        .catch((err) => {
+          alert(err);
+          reject(err);
+        });
+    });
+  }
+
 }
