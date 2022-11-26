@@ -9,7 +9,6 @@ CREATE TABLE photos(
 	is_profile BOOL DEFAULT False
 );
 
-
 CREATE TABLE users(
 	username VARCHAR(30) NOT NULL PRIMARY KEY,
 	password VARCHAR(100) NOT NULL,
@@ -28,7 +27,8 @@ CREATE TABLE museums(
 	director VARCHAR(30) NOT NULL,
 	FOREIGN KEY (director) REFERENCES users(username),
 	num_exhibits int NOT NULL DEFAULT 0,
-	FOREIGN KEY (photoId) REFERENCES photos(photoId)
+	FOREIGN KEY (photoId) REFERENCES photos(photoId),
+	whatsNew VARCHAR(150)
 );
 
 CREATE TABLE tours(

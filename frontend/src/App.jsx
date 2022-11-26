@@ -11,6 +11,7 @@ import { Profile } from './pages/Profile';
 import { Tours } from './pages/Tours';
 import { Registration } from './pages/Registration';
 import { Bookings } from './pages/Bookings';
+import { Director } from './pages/Director';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -74,14 +75,9 @@ export const App = () => {
     return <></>;
   }
 
-  const requireAuth = (nextState, replace, next) => {
-    // if (!authenticated) {
-    //   replace({
-    //     pathname: "/login",
-    //     state: {nextPathname: nextState.location.pathname}
-    //   });
-    // }
-    // next();
+  const requireAuth = () => {
+    if (sessionStorage.jwt) window.location.href = "/profile"
+    else window.location.href = "/login"
   };
 
   return (
@@ -104,8 +100,8 @@ export const App = () => {
           </Typography>
           <Avatar 
             className={classes.profile}
-            component="a"
-            href="/login" // Should Route To Profile After Login
+            onClick={requireAuth}
+            style={{ cursor: "pointer" }}
             src="/broken-image.jpg"
           />
         </Toolbar>
@@ -114,10 +110,11 @@ export const App = () => {
         <Route path="*" element={< NoPage />} />
         <Route exact path='/' element={< Home museums={museums} photos={photos} />}></Route>
         <Route exact path='/login' element={< Login />}></Route>
-        <Route exact path='/profile' element={< Profile />} onEnter={requireAuth}></Route>
+        <Route exact path='/profile' element={< Profile />}></Route>
         <Route exact path='/tours' element={< Tours museums={museums} photos={photos} />}></Route>
-        <Route exact path='/Registration' element={< Registration />}></Route>
+        <Route exact path='/registration' element={< Registration />}></Route>
         <Route exact path='/bookings' element = {<Bookings />}></Route>
+        <Route path='profile/director' element = {<Director />}></Route>
       </Routes>
     </Router>
   );

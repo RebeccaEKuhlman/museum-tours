@@ -1,22 +1,36 @@
-class Comment {
-    constructor(_DBQuery, _disconnect) {
-        this.DBQuery = _DBQuery;
-        this.disconnect = _disconnect;
-    }
-    close () {
-        this.disconnect();
-    }
-    async fetchAllComments () {
-        const results = await this.DBQuery('SELECT * FROM comments');
-        return results;
-    }
-    async fetchCommentsByOvercomment(overComment) {
-        const results = await this.DBQuery('SELECT * FROM comments WHERE overComment = ?', [overComment]);
-        return results;
-    }
-    async fetchCommentssByTourname (tour_Name) {
-        const results = await this.DBQuery('SELECT * FROM comments WHERE tour_Name = ?', [tour_Name]);
-        return results;
-    }
- }
- module.exports = Comment;
+const knex = require('../database/knex');
+const COMMENT_TABLE = 'comments';
+
+const fetchAllComments = async () => {
+    const results = await knex(COMMENT_TABLE).select();
+    return results;
+}
+
+const fetchCommentsByOverComment = async (overComment) => {
+    const results = await knex(COMMENT_TABLE).select().where( {overComment} );
+    return results;
+}
+
+const fetchCommentsByTourName = async (tour_Name) => {
+    const results = await knex(COMMENT_TABLE).select().where( {tour_Name} );
+    return results;
+}
+
+const insertComment = async (content, username, tour_Name, review_id, like_sum, overComment) => {
+    const query = knex(COMMENT_TABLE).insert({content, username, tour_Name, review_id, like_sum, overComment});
+    const results = await query;
+    return results;
+}
+
+const deleteComment = async (commNum) => {
+    const results = await knex(COMMENT_TABLE).delete().where({'commNum':commNum});
+    return results;
+}
+
+module.exports = {
+    fetchAllComments,
+    fetchCommentsByTourName,
+    fetchCommentsByOverComment,
+    insertComment,
+    deleteComment
+}

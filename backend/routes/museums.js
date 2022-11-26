@@ -9,7 +9,11 @@ router.use(bodyParser.json());
 
 router.post('/', async (req, res, next) => {
     try {
-        const museum = await req.models.museum.postMuseum(req.body.museum_name, req.body.photoId, req.body.director, req.body.num_exhibits);
+        var whatsNew = null;
+        if (req.body.whatsNew) {
+            whatsNew = req.body.whatsNew;
+        }
+        const museum = await req.models.museum.postMuseum(req.body.museum_name, req.body.photoId, req.body.director, req.body.num_exhibits, whatsNew);
         res.status(201).json(museum);
         next();
     } catch (err) {
@@ -50,6 +54,10 @@ router.put('/', async (req, res, next) => {
             next();
         } else if (req.body.num_exhibits) {
             const museum = await req.models.museum.updateMuseumNum_exhibits(req.body.museum_name, req.body.newName);
+            res.status(200).json(museum);
+            next();
+        } else if (req.body.whatsNew) {
+            const museum = await req.models.museum.updateMuseumWhatsNew(req.body.museum_name, req.body.whatsNew);
             res.status(200).json(museum);
             next();
         }
