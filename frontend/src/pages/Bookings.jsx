@@ -14,7 +14,7 @@ import { ScheduleContext } from "../context";
 import { Tour } from "../models";
 
 export const Bookings = () => {
-  const [tour, setTour] = useState(new Tour(0, "", "", 0, "", []));
+  const [tour, setTour] = useState([]);
   const nav = useNavigate();
   const params = useParams();
 
