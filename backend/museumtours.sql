@@ -27,7 +27,8 @@ CREATE TABLE museums(
 	director VARCHAR(30) NOT NULL,
 	FOREIGN KEY (director) REFERENCES users(username),
 	num_exhibits int NOT NULL DEFAULT 0,
-	FOREIGN KEY (photoId) REFERENCES photos(photoId)
+	FOREIGN KEY (photoId) REFERENCES photos(photoId),
+	whatsNew VARCHAR(150)
 );
 
 CREATE TABLE tours(

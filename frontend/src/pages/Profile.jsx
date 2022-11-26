@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
@@ -73,6 +74,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function Profile() {
+  const navigate = useNavigate();
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
@@ -82,6 +84,7 @@ export function Profile() {
   const [newpass, setNewPass] = useState("");
   const [oldpass, setOldPass] = useState("");
   const [newPhotoId, setNewPhotoId] = useState("");
+  const [user, setUser] = useState("");
   const [photos, setPhotos] = useState("");
   const [university, setUniversity] = useState("");
   const [bio, setBio] = useState("");
@@ -94,9 +97,10 @@ export function Profile() {
   useEffect(() => {
     var repository = new Repository();
     repository.getPhoto().then((x) => setPhotos(x));
+    repository.getUser(sessionStorage.email).then((x) => setUser(x));
   }, []);
 
-  if (!photos) {
+  if (!photos || !user) {
     return <></>;
   }
 
@@ -105,17 +109,22 @@ export function Profile() {
     e.preventDefault();
     console.log("HERE");
     var repository = new Repository();
-    repository.postUser(photos, university, bio).then((x) => {
-      // if (typeof x.error != "undefined") {
-      //   alert("Invalid Credentials")
-      // } else {
-      //   window.location.href = "/profile";
-      // }
-      alert("Updated");
+    repository.updateUser(sessionStorage.email, newPhotoId, university, bio).then((x) => setUser(x));
+  };
+  
+  const handleDelete = () => {
+    var repository = new Repository();
+    repository.deleteUser(sessionStorage.email).then((x) => {
+      console.log("Deleted!");
     });
+    sessionStorage.email = "";
+    sessionStorage.jwt = "";
+    sessionStorage.director = "";
+    window.location.href = "/"
   };
 
   const Logout = (e) => {
+    sessionStorage.email = "";
     sessionStorage.jwt = "";
     sessionStorage.director = "";
     window.location.href = "/"
@@ -189,7 +198,7 @@ export function Profile() {
               component="img"
               height="500vh"
               width="auto"
-              image={photos[13].photo_data}
+              image={photos[user[0].photoId - 1].photo_data}
               alt="profile"
             />
             <div style={{ marginTop: 10, marginBottom: 20 }}>
@@ -199,30 +208,52 @@ export function Profile() {
                 variant="h4"
                 component="div"
               >
-                <b className={classes.typography}>{photos[2].caption}</b>
+                {/* {photos[user[0].photoId - 1].caption} */}
+                <b className={classes.typography}>{user[0].username}</b>
               </Typography>
               <Typography className={classes.typography} variant="body1">
-                <b className={classes.typography}>University:</b> Southern
-                Methodist University
+                <b className={classes.typography}>University:</b>
+                {' '}{user[0].uni_affilation}
               </Typography>
               <Typography className={classes.typography} variant="body1">
-                <b className={classes.typography}>Bio:</b> This is a sentence
-                about the person.
+                <b className={classes.typography}>Bio:</b>
+                {' '}{user[0].bio}
               </Typography>
-              <Button
-                type="submit"
-                style={{
-                  marginTop: 12,
-                  color: "#F6F7EB",
-                  backgroundColor: "cornflowerblue",
-                  fontFamily: "Baskerville",
-                }}
-                variant="contained"
-                className={classes.submit}
-                onClick={Logout}
-              >
-                Log Out
-              </Button>
+              { 
+                sessionStorage.director &&
+                (<div>
+                  <Button
+                    type="submit"
+                    style={{
+                      marginTop: 12,
+                      color: "#F6F7EB",
+                      backgroundColor: "cornflowerblue",
+                      fontFamily: "Baskerville",
+                    }}
+                    variant="contained"
+                    className={classes.submit}
+                    onClick={() => { navigate('director'); }}
+                  >
+                    Your Museum
+                  </Button>
+                </div>)
+              }
+              <div>
+                <Button
+                  type="submit"
+                  style={{
+                    marginTop: 12,
+                    color: "#F6F7EB",
+                    backgroundColor: "cornflowerblue",
+                    fontFamily: "Baskerville",
+                  }}
+                  variant="contained"
+                  className={classes.submit}
+                  onClick={Logout}
+                >
+                  Log Out
+                </Button>
+              </div>
             </div>
           </Card>
         </Grid>
@@ -316,6 +347,35 @@ export function Profile() {
             </CardContent>
           </Card>
         </Grid>
+        <Card
+          sx={{ height: 200, width: 300, backgroundcolor: "#FFFFFF", marginTop: 12, }}
+        >
+          <Typography
+            className={classes.typography}
+            gutterBottom
+            variant="h4"
+            component="div"
+            style={{
+              marginTop: 50,
+            }}
+          >
+            <b className={classes.typography}>Delete Account</b>
+          </Typography>
+          <Button
+            type="submit"
+            style={{
+              marginTop: 5,
+              color: "#F6F7EB",
+              backgroundColor: "cornflowerblue",
+              fontFamily: "Baskerville",
+            }}
+            variant="contained"
+            className={classes.submit}
+            onClick={handleDelete}
+          >
+            Delete
+          </Button>
+        </Card>
         <Grid item xs={9}>
           <Card>
             <CardContent sx={{ maxWidth: 400, backgroundcolor: "#FFFFFF" }}>
