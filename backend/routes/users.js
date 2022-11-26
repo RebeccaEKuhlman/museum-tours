@@ -29,30 +29,28 @@ router.post('/registration', async(request, response, next) => {
         console.log('Request has params containing:', request.query);
 
         const payload = request.body; // This payload should be an object containing user data
-        const rawPass = request.body.password;
+        const rawPass = payload.password;
         const salt = await bcrypt.genSalt(10);
         const username = payload.username;
         const email = payload.email;
         const hashed = await bcrypt.hash(rawPass, salt);
         const joinDate = new Date();
+        const is_director = payload.director;
 
-        const query = request.models.user.addUser(username, hashed, email, joinDate, 1);
+        const query = request.models.user.addUser(username, hashed, email, joinDate, 1, is_director);
         const results = await query;
 
         console.log('Results of my POST statement:', results);
 
+        const auth = await request.models.user.authenticateUser({username}, rawPass);
         if(results){
-            const check = await request.models.user.fetchUsersByName(username);
-            response.status(201).json(check);
+            response.status(201).json({"email": email, "jwt": auth, "is_director": is_director});
+            return auth;
         }
         else{
             console.error('There was an error in POST /users');
             response.status(400).json('Make sure all needed data is included');
         }
-
-        next();
-        const auth = await request.models.user.authenticateUser({username}, rawPass);
-        return auth;
     } catch (err) {
         console.error('There was an error in POST /users', err);
         response.status(500).json({ message: err.message });
@@ -89,10 +87,10 @@ router.post('/login', async(request, response, next) => {
         if (auth !== null) {
             // if user exists
             delete user.password;
-            response.status(200).json({"jwt": auth, user});
+            response.status(200).json({"email": email, "jwt": auth, "is_director": user.is_director});
             return auth;
         } else
-            response.status(400).json({ "error": "Invalid Credentials" });
+            response.status(200).json({ "error": "Invalid Credentials" });
 
         next();
     } catch (err) {
@@ -103,7 +101,7 @@ router.post('/login', async(request, response, next) => {
 
 router.put('/updatePassword', async(request, response, next) => {
     try {
-        const username = request.body.username;
+        const username = request.body.email;
         const rawPass = request.body.password;
         const salt = await bcrypt.genSalt(10);
         const hashed = await bcrypt.hash(rawPass, salt);
@@ -112,7 +110,7 @@ router.put('/updatePassword', async(request, response, next) => {
         if(results){
             console.log('Results of my PUT statement: ', results);
             const check = await request.models.user.fetchUsersByName(username);
-            response.status(200).json(check);
+            response.status(200).json({email: username});
         }
         else{
             console.error('There was an error in PUT /users/updatePassword');

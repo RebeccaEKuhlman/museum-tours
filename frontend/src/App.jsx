@@ -11,6 +11,7 @@ import { Profile } from './pages/Profile';
 import { Tours } from './pages/Tours';
 import { Registration } from './pages/Registration';
 import { Bookings } from './pages/Bookings';
+import { Director } from './pages/Director';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -113,6 +114,7 @@ export const App = () => {
         <Route exact path='/tours' element={< Tours museums={museums} photos={photos} />}></Route>
         <Route exact path='/registration' element={< Registration />}></Route>
         <Route exact path='/bookings' element = {<Bookings />}></Route>
+        <Route path='profile/director' element = {<Director />}></Route>
       </Routes>
     </Router>
   );

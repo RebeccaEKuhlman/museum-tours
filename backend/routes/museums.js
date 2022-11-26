@@ -9,8 +9,12 @@ router.use(bodyParser.json());
 
 router.post('/', async (req, res, next) => {
     try {
+        var whatsNew = null;
+        if (req.body.whatsNew) {
+            whatsNew = req.body.whatsNew;
+        }
         const museum = await req.models.museum.postMuseum(req.body.museum_name, req.body.photoId, req.body.director,
-                                                                                                req.body.num_exhibits);
+                                                                                                req.body.num_exhibits, whatsNew);
         if(museum){
             const check = await req.models.museum.getByMuseumName(req.body.museum_name);
             res.status(201).json(check);
@@ -57,6 +61,9 @@ router.put('/', async (req, res, next) => {
         }
         else if (req.body.num_exhibits){
             const museum = await req.models.museum.updateMuseumNum_exhibits(req.body.museum_name, req.body.num_exhibits);
+        }
+        else if (req.body.whatsNew) {
+            const museum = await req.models.museum.updateMuseumWhatsNew(req.body.museum_name, req.body.whatsNew);
         }
         else{
             console.error('There was an error in PUT /museums');
