@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Card,
   CardContent,
   CardActions,
   Typography,
+  Grid,
   Paper,
 } from "@material-ui/core";
+import CardMedia from "@mui/material/CardMedia";
 import Carousel from "react-material-ui-carousel";
 import Button from "@mui/material/Button";
 import autoBind from "auto-bind";
@@ -14,73 +17,115 @@ import "./Home.css";
 
 // React Functional Component
 export const Home = ({ museums, photos }) => {
+
+  const nav = useNavigate();
+
   function Project(props) {
     let items = [
       <Paper
         className="Project"
         style={{
-          backgroundColor: "#696963",
+          backgroundColor: "ivory",
           alignItems: "center",
+          marginBottom: 10,
           display: "flex",
-          justifyContent: "center",
-          mt: 10
+          overflow: 'auto',
+          overflowY: 'hidden',
         }}
         elevation={10}
         key={props.item.museum_name}
       >
-        <CardContent
-          className="Content"
-          style={{ backgroundColor: "#F6F7EB", height: 400, width: 750, mt: 100 }}
-        >
-          <img
-            className="Image"
+        <CardContent className="Content" style={{ display: "flex", alignItems: "center" }}>
+          <CardMedia
+            component="img"
+            style={{
+              marginTop: "8px",
+              height: "35vh",
+              width: "50vh",
+              borderRadius: "16px",
+            }}
+            image={photos.filter((x) => x.photoId === props.item.photoId)[0].photo_data}
             alt="museumlogo"
-            src={
-              photos.filter((x) => x.photoId === props.item.photoId)[0]
-                .photo_data
+          />
+          <div className="Info" style={{ marginLeft: 30, width: 500 }}>
+            <Typography
+              className="Title"
+              style={{
+                color: "#696963",
+                fontFamily: "Baskerville",
+                fontWeight: "bold",
+                fontSize: 30,
+              }}
+            >
+              {props.item.museum_name}
+            </Typography>
+            <hr style={{ margin: "2px" }}/>
+            <Typography
+              className="Caption"
+              style={{
+                color: "#696963",
+                fontFamily: "Baskerville",
+                fontSize: 20,
+                marginTop: "5px",
+              }}
+            >
+              Current Director: {props.item.director}
+            </Typography>
+            <Typography
+              className="Caption"
+              style={{
+                color: "#696963",
+                fontFamily: "Baskerville",
+                fontSize: 20,
+                marginBottom: "5px"
+              }}
+            >
+              Exhibits on Display: {props.item.num_exhibits}
+            </Typography>
+            <hr style={{ margin: "2px" }}/>
+            {props.item.whatsNew &&
+              <div>
+                <Typography
+                  className="Description"
+                  style={{
+                    color: "#696963",
+                    fontFamily: "Baskerville",
+                    fontSize: 20,
+                    marginTop: "5px",
+                    marginBottom: "5px"
+                  }}
+                >
+                  {props.item.whatsNew}
+                </Typography>
+                <hr style={{ margin: "2px" }}/>
+              </div>
             }
-            style={{ alignItems: "auto", height: 250, width: "auto" }}
-          ></img>
-          <Typography
-            className="Title"
-            style={{
-              color: "#696963",
-              fontFamily: "Baskerville",
-              fontWeight: "bold",
-              fontSize: 25,
-            }}
-          >
-            {props.item.museum_name}
-          </Typography>
-          <br />
-          <Typography
-            className="Caption"
-            style={{
-              color: "#F6F7EB",
-              fontFamily: "Baskerville",
-            }}
-          >
-            {props.item.Caption}
-          </Typography>
-          <Button
-            variant="outlined"
-            className="ViewButton"
-            style={{
-              color: "#F6F7EB",
-              backgroundColor: "#7F96FF",
-              fontFamily: "Baskerville",
-            }}
-          >
-            View Now
-          </Button>
+            <Button
+              fullWidth
+              variant="outlined"
+              className="ViewButton"
+              style={{
+                color: "#F6F7EB",
+                backgroundColor: "cornflowerblue",
+                fontFamily: "Baskerville",
+                marginTop: "10px",
+                alignItems: "center"
+              }}
+              onClick={() => {
+                nav(`/bookings/${props.item.museum_name}`);
+              }}
+            >
+              View Now
+            </Button>
+            {/* Need a use state to handle what goes in the Dialog, rip from Lawrimore*/}
+          </div>
         </CardContent>
       </Paper>,
     ];
-
     return (
-      <Card raised className="Card">
+      <Grid item>
         {items}
-      </Card>
+      </Grid>
     );
   }
 
@@ -130,17 +175,11 @@ export const Home = ({ museums, photos }) => {
           See Bookings
         </Button>
       </header>
-      <main>
+      <main style={{ marginLeft: 30, marginTop: 30, marginRight: 30}}>
         <Carousel
           className="Carousel"
-          autoPlay={state.autoPlay}
-          animation={state.animation}
-          indicators={state.indicators}
-          duration={state.duration}
-          cycleNavigation={state.cycleNavigation}
-          navButtonsAlwaysVisible={state.navButtonsAlwaysVisible}
-          navButtonsAlwaysInvisible={state.navButtonsAlwaysInvisible}
-          fullHeightHover={false}
+          animation={"fade"}
+          navButtonsAlwaysInvisible={true}
           navButtonsProps={{
             style: { backgroundColor: "#7F96FF", borderRadius: 100 },
           }}

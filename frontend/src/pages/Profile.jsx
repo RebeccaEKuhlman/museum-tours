@@ -88,7 +88,7 @@ export function Profile() {
   const [photos, setPhotos] = useState("");
   const [university, setUniversity] = useState("");
   const [bio, setBio] = useState("");
-  const [deleteConfirm, setDeleteConfirm] = useState("Delete");
+  const [deleteConfirm, setDeleteConfirm] = useState("Delete Profile");
   const [showForm, setShowForm] = useState(false);
   const [userForm, setuserForm] = useState({
     userName: "",
@@ -117,14 +117,14 @@ export function Profile() {
   
   const handleDelete = () => {
     console.log(deleteConfirm);
-    if (deleteConfirm === "Delete") {
+    if (deleteConfirm === "Delete Profile") {
       setDeleteConfirm("Click Again To Confirm");
       var remaining = 3;
       var deleteTimer = setInterval(function(){
         console.log(remaining);
         if (remaining <= 0) {
           clearInterval(deleteTimer);
-          setDeleteConfirm("Delete");
+          setDeleteConfirm("Delete Profile");
         }
         remaining -= 1;
       }, 1000);
@@ -132,7 +132,7 @@ export function Profile() {
     if (deleteConfirm === "Click Again To Confirm") {
       var repository = new Repository();
       repository.deleteUser(sessionStorage.email).then((x) => {
-        console.log("Deleted!");
+        console.log("Deleted");
       });
       sessionStorage.clear();
       window.location.href = "/"
@@ -186,11 +186,12 @@ export function Profile() {
       <Grid
         container
         className={classes.root}
-        spacing={0}
+        spacing={2}
         direction="column"
         alignItems="center"
         justifyContent="center"
         style={{ padding: "0" }}
+        sx={{ flexGrow: 1 }}
       >
         <Grid item xs={false}>
           <Card
@@ -348,7 +349,7 @@ export function Profile() {
                 <Button
                   type="submit"
                   style={{
-                    marginTop: 5,
+                    marginTop: 6,
                     color: "#F6F7EB",
                     backgroundColor: "#EC0B43",
                     fontFamily: "Baskerville",
