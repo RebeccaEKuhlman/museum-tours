@@ -22,18 +22,21 @@ module.exports = function users(app, logger) {
             console.log('Initiating POST /registration request');
             console.log('Request has a body / payload containing:', request.body);
             console.log('Request has params containing:', request.query);
+
             const payload = request.body; // This payload should be an object containing user data
-            const rawPass = request.body.password;
+            const rawPass = payload.password;
             const salt = await bcrypt.genSalt(10);
             const username = payload.username;
             const email = payload.email;
             const hashed = await bcrypt.hash(rawPass, salt);;
             const joinDate = new Date();
-            const query = knex('users').insert({ username, password: hashed, email, joinDate, photoId: 1})
+            const is_director = payload.director;
+
+            const query = knex('users').insert({ username, password: hashed, email, joinDate, photoId: 1, is_director})
             const results = await query;
             console.log('Results of my POST statement:', results);
-            response.status(201).json({"is_director" : user.is_director});
             const auth = await authenticateUser({username}, rawPass); 
+            response.status(200).json({"email": email, "jwt": auth, "is_director": is_director});
             return auth; 
         } catch (err) {
             console.error('There was an error in POST /users', err);
@@ -69,7 +72,7 @@ module.exports = function users(app, logger) {
             if (auth !== null) {
                 // if user exists
                 delete user.password;
-                response.status(200).json({"jwt": auth, "is_director" : user.is_director});
+                response.status(200).json({"email": email, "jwt": auth, "is_director" : user.is_director});
                 return auth;
             } else {
                 response.status(200).json({
@@ -84,7 +87,7 @@ module.exports = function users(app, logger) {
     });
     app.put('/users/updatePassword', async (request, response) => {
         try {
-            const username = request.body.username
+            const username = request.body.email
             const rawPass = request.body.password;
             const salt = await bcrypt.genSalt(10);
             const hashed = await bcrypt.hash(rawPass, salt);;
@@ -93,22 +96,24 @@ module.exports = function users(app, logger) {
                 .update({ password: hashed })
             const results = await query;
             console.log('Results of my PUT statement: ', results);
-            response.status(200).json({ username: username});
+            response.status(200).json({ email: email });
         } catch (err) {
             console.error('There was an error in PUT /users/updatePassword', err);
             response.status(500).json({ message: err.message });
         }
     })
-    app.put('/users/updateBio', async (request, response) => {
+    app.put('/users/updateInfo', async (request, response) => {
         try {
-            const username = request.body.username
-            const newBio = request.body.bio
-            const query = knex('users')
-                .where({ username: username })
-                .update({ bio: newBio })
-        const results = await query;
-        console.log('Results of my PUT statement: ', results);
-        response.status(200).json({ username: username, bio: newBio});
+            const payload = request.body;
+            const email = payload.email;
+            const newPhoto = payload.photo;
+            const newUni = payload.uni;
+            const newBio = payload.bio
+            const query = await knex('users')
+                .where({email})
+                .update({ photoId: newPhoto, uni_affilation: newUni, bio: newBio });
+            const results = await knex('users').select().where({email});
+            response.status(200).json(results);
         } catch (err) {
             console.error('There was an error in PUT /users/updateBio', err);
             response.status(500).json({ message: err.message });
@@ -119,8 +124,8 @@ module.exports = function users(app, logger) {
             console.log('Initiating DELETE /users request');
             console.log('Request has a body / payload containing:', request.body);
             console.log('Request has params containing:', request.query);
-            const username = request.body.username
-            const query = knex('users').delete().where({username});
+            const email = request.query.email;
+            const query = knex('users').delete().where({email});
             const results = await query;
             console.log('Results of my DELETE statement:', results);
             response.status(200).json(results);
@@ -133,17 +138,17 @@ module.exports = function users(app, logger) {
         try {
             const bodyParser = require('body-parser');
             app.use(bodyParser.json());
-
-            if(request.body.username){
-                const results = await knex('users').select().where( {'username':request.body.username} );
+            
+            if(request.query.email){
+                const results = await knex('users').select().where( {'email': request.query.email} );
                 response.status(200).json(results);
             }
-            else if(request.body.uni_affilation){
-                const results = await knex('users').select().where( {'uni_affilation':request.body.uni_affilation} );
+            else if(request.query.uni_affilation){
+                const results = await knex('users').select().where( {'uni_affilation':request.query.uni_affilation} );
                 response.status(200).json(results);
             }
-            else if(request.body.is_director){
-                const results = await knex('users').select().where( {'is_director':request.body.is_director} );
+            else if(request.query.is_director){
+                const results = await knex('users').select().where( {'is_director':request.query.is_director} );
                 response.status(200).json(results);
             }
             else{
