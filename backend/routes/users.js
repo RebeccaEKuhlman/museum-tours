@@ -87,6 +87,7 @@ module.exports = function users(app, logger) {
     });
     app.put('/users/updatePassword', async (request, response) => {
         try {
+            console.log("email", request.body.email);
             const username = request.body.email
             const rawPass = request.body.password;
             const salt = await bcrypt.genSalt(10);
@@ -96,7 +97,7 @@ module.exports = function users(app, logger) {
                 .update({ password: hashed })
             const results = await query;
             console.log('Results of my PUT statement: ', results);
-            response.status(200).json({ email: email });
+            response.status(200).json({ email: username });
         } catch (err) {
             console.error('There was an error in PUT /users/updatePassword', err);
             response.status(500).json({ message: err.message });

@@ -127,7 +127,7 @@ export function Profile() {
 
   const handleConfirm = (e) => {
     e.preventDefault();
-    repository.putPassword(sessionStorage.jwt, newpass).then(x => {
+    repository.putPassword(sessionStorage.email, newpass).then(x => {
       if (typeof x.error != "undefined") {
         alert("error: unable to sign up")
       } else {

@@ -57,14 +57,12 @@ export class Repository {
   
   }
 
-    putPassword(jwt, newPass) {
+    putPassword(email, newPass) {
         return new Promise((resolve, reject) => {
             console.log("Put Password");
-            axios.post( `http://${ this.url }:8000/users/updatePassword`, {
-                data: {
-                    jwt: jwt,
-                    newPass: newPass
-                }
+            axios.put( `http://${ this.url }:8000/users/updatePassword`, {
+                    email: email,
+                    password: newPass
             })
                 .then(x => {
                     console.log("x.data", x.data);
