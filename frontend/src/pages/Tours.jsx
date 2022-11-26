@@ -115,7 +115,7 @@ export const Tours = ({ museums, photos }) => {
             >
               View Now
             </Button>
-            {/* Need a use state to handle what goes in the Dialog, rip from Lawrimore*/}
+            
           </div>
         </CardContent>
       </Paper>,

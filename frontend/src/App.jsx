@@ -114,7 +114,7 @@ export const App = () => {
         <Route exact path='/profile' element={< Profile />}></Route>
         <Route exact path='/tours' element={< Tours museums={museums} photos={photos} />}></Route>
         <Route exact path='/registration' element={< Registration />}></Route>
-        <Route exact path='/bookings' element = {<Bookings />}></Route>
+        <Route exact path='/bookings/:museum_name' element = {<Bookings />}></Route>
         <Route path='profile/director' element = {< Director museums={museums} />}></Route>
       </Routes>
     </Router>
