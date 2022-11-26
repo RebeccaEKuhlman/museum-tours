@@ -87,6 +87,7 @@ export function Registration() {
   const [password, setPassword] = useState('');
   const [confirmpassword, setConfirmPassword] = useState('');
   const [director, setDirector] = useState('');
+  const [validity, setValidity] = useState("");
 
   // ENTER YOUR EC2 PUBLIC IP/URL HERE
   const ec2_url = "";
@@ -124,21 +125,25 @@ export function Registration() {
   // handle input form submission to backend via POST request
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password !== confirmpassword) {
-      alert("Passwords Must Match!")
+    if (!email || !username || !password || !confirmpassword) {
+      setValidity("Please Fill Out All Fields.")
+    }
+    else if (password !== confirmpassword) {
+      setValidity("Passwords Don't Match. Please Try Again.");
     }
     else {
       repository.postRegistration(email, username, password, director).then(x => {
-        if (typeof x.error != "undefined") {
-          alert("Error: Unable To Sign Up")
-        } else {
+        if (typeof x.error === "undefined") {
           sessionStorage.email = x.email;
           sessionStorage.jwt = x.jwt;
           sessionStorage.director = x.is_director;
           window.location.href = "/profile";
         }
+      }).catch((x) => {
+        setValidity("User Already Exists. Please Try Again.")
       });
     }
+
     // axios
     // .get(`http://${url}:8000/login`, {
     //   data: {
@@ -229,9 +234,20 @@ export function Registration() {
             />
             <FormControlLabel
               control={<Checkbox value={director} fontFamily="Baskerville" onChange={() => setDirector(!director)} />}
-              style={{ color: "#323031" }}
+              style={{ color: "#323031", marginTop: "4px", marginBottom: "6px" }}
               label="Museum Director?"
             />
+            {validity &&
+              <p style={{
+                color: "#EC0B43",
+                fontFamily: "Baskerville",
+                fontSize: "16px",
+                marginTop: 0,
+                marginBottom: 0
+              }}>
+                {validity}
+              </p>
+            }
             <Button
               style={{ color: "#FFFFFF", backgroundColor: "#7F96FF", marginTop: "6px", marginBottom: "4px" }}
               type="submit"
@@ -261,6 +277,7 @@ export function Registration() {
                   style={{
                     color: "#7F96FF",
                     fontFamily: "Baskerville",
+                    fontSize: "16px"
                   }}
                 >
                   {"Have an account? Log in"}

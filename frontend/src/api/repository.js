@@ -17,7 +17,6 @@ export class Repository {
                 })
                 .catch(err => {
                     console.log("catch");
-                    alert(err);
                     reject(err);
                 })
         });
@@ -70,7 +69,6 @@ export class Repository {
         })
         .catch((err) => {
           console.log("catch");
-          alert(err);
           reject(err);
         });
     });
@@ -90,7 +88,6 @@ export class Repository {
         })
         .catch((err) => {
           console.log("catch");
-          alert(err);
           reject(err);
         });
     });
@@ -111,7 +108,6 @@ export class Repository {
         })
         .catch((err) => {
           console.log("catch");
-          alert(err);
           reject(err);
         });
     });
@@ -131,7 +127,6 @@ export class Repository {
         })
         .catch((err) => {
           console.log("catch");
-          alert(err);
           reject(err);
         });
     });
@@ -146,7 +141,6 @@ export class Repository {
           resolve(x.data);
         })
         .catch((err) => {
-          alert(err);
           reject(err);
         });
     });
@@ -166,7 +160,6 @@ export class Repository {
         })
         .catch((err) => {
           console.log("catch");
-          alert(err);
           reject(err);
         });
     });
@@ -181,7 +174,6 @@ export class Repository {
           resolve(x.data);
         })
         .catch((err) => {
-          alert(err);
           reject(err);
         });
     });
@@ -196,7 +188,6 @@ export class Repository {
           resolve(x.data);
         })
         .catch((err) => {
-          alert(err);
           reject(err);
         });
     });
@@ -211,7 +202,6 @@ export class Repository {
           resolve(x.data);
         })
         .catch((err) => {
-          alert(err);
           reject(err);
         });
     });
@@ -230,7 +220,6 @@ export class Repository {
           console.log("x.data", x.data);
         })
         .catch((err) => {
-          alert(err);
           reject(err);
         });
     });
@@ -249,7 +238,6 @@ export class Repository {
           console.log("x.data", x.data);
         })
         .catch((err) => {
-          alert(err);
           reject(err);
         });
     });

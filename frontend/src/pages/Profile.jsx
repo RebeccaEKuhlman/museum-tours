@@ -88,6 +88,7 @@ export function Profile() {
   const [photos, setPhotos] = useState("");
   const [university, setUniversity] = useState("");
   const [bio, setBio] = useState("");
+  const [deleteConfirm, setDeleteConfirm] = useState("Delete");
   const [showForm, setShowForm] = useState(false);
   const [userForm, setuserForm] = useState({
     userName: "",
@@ -115,12 +116,27 @@ export function Profile() {
   };
   
   const handleDelete = () => {
-    var repository = new Repository();
-    repository.deleteUser(sessionStorage.email).then((x) => {
-      console.log("Deleted!");
-    });
-    sessionStorage.clear();
-    window.location.href = "/"
+    console.log(deleteConfirm);
+    if (deleteConfirm === "Delete") {
+      setDeleteConfirm("Click Again To Confirm");
+      var remaining = 3;
+      var deleteTimer = setInterval(function(){
+        console.log(remaining);
+        if (remaining <= 0) {
+          clearInterval(deleteTimer);
+          setDeleteConfirm("Delete");
+        }
+        remaining -= 1;
+      }, 1000);
+    }
+    if (deleteConfirm === "Click Again To Confirm") {
+      var repository = new Repository();
+      repository.deleteUser(sessionStorage.email).then((x) => {
+        console.log("Deleted!");
+      });
+      sessionStorage.clear();
+      window.location.href = "/"
+    }
   };
 
   const Logout = (e) => {
@@ -329,39 +345,24 @@ export function Profile() {
                 >
                   Change Password
                 </Button>
+                <Button
+                  type="submit"
+                  style={{
+                    marginTop: 5,
+                    color: "#F6F7EB",
+                    backgroundColor: "#EC0B43",
+                    fontFamily: "Baskerville",
+                  }}
+                  variant="contained"
+                  className={classes.submit}
+                  onClick={handleDelete}
+                >
+                  {deleteConfirm}
+                </Button>
               </FormControl>
             </CardContent>
           </Card>
         </Grid>
-        <Card
-          sx={{ height: 200, width: 300, backgroundcolor: "#FFFFFF", marginTop: 12, }}
-        >
-          <Typography
-            className={classes.typography}
-            gutterBottom
-            variant="h4"
-            component="div"
-            style={{
-              marginTop: 50,
-            }}
-          >
-            <b className={classes.typography}>Delete Account</b>
-          </Typography>
-          <Button
-            type="submit"
-            style={{
-              marginTop: 5,
-              color: "#F6F7EB",
-              backgroundColor: "cornflowerblue",
-              fontFamily: "Baskerville",
-            }}
-            variant="contained"
-            className={classes.submit}
-            onClick={handleDelete}
-          >
-            Delete
-          </Button>
-        </Card>
         <Grid item xs={9}>
           <Card>
             <CardContent sx={{ maxWidth: 400, backgroundcolor: "#FFFFFF" }}>

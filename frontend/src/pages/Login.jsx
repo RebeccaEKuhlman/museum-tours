@@ -92,6 +92,7 @@ export function Login() {
   // const [values, setValues] = useState([]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [validity, setValidity] = useState("");
 
   // ENTER YOUR EC2 PUBLIC IP/URL HERE
   const ec2_url = "";
@@ -130,14 +131,14 @@ export function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     repository.postLogin(email, password).then((x) => {
-      if (typeof x.error != "undefined") {
-        alert("Invalid Credentials");
-      } else {
+      if (typeof x.error === "undefined") {
         sessionStorage.email = x.email;
         sessionStorage.jwt = x.jwt;
         sessionStorage.director = x.is_director;
         window.location.href = "/profile";
       }
+    }).catch((x) => {
+      setValidity("Invalid Credentials. Please Try Again.")
     });
     // axios
     // .get(`http://${url}:8000/login`, {
@@ -202,14 +203,25 @@ export function Login() {
               value={password}
               onInput={(e) => setPassword(e.target.value)}
               autoComplete="current-password"
-              style={{ fontFamily: "Baskerville" }}
+              style={{ fontFamily: "Baskerville", marginBottom: "21px" }}
             />
+            {validity &&
+              <p style={{
+                color: "#EC0B43",
+                fontFamily: "Baskerville",
+                fontSize: "16px",
+                marginTop: 0,
+                marginBottom: 0
+              }}>
+                {validity}
+              </p>
+            }
             <Button
               style={{
                 color: "#FFFFFF",
                 backgroundColor: "#7F96FF",
                 fontFamily: "Baskerville",
-                marginTop: "16px",
+                marginTop: "4px",
                 marginBottom: "4px"
               }}
               type="submit"
@@ -238,6 +250,7 @@ export function Login() {
                   style={{
                     color: "#7F96FF",
                     fontFamily: "Baskerville",
+                    fontSize: "16px"
                   }}
                 >
                   {"Don't have an account? Sign Up"}
