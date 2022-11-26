@@ -1,28 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext} from "react";
 import { useNavigate } from "react-router-dom";
 import { Typography } from "@material-ui/core";
-import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import Checkbox from "@material-ui/core/Checkbox";
 import Card from "@mui/material/Card";
-import Input from "@mui/material/Input";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@mui/material/Box";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
 import Modal from "@mui/material/Modal";
-import { Repository } from "./repository";
+import { Repository } from "../api/repository";
+
+import { ScheduleContext } from "../context";
 
 function generate(element) {
   return [0, 1, 2].map((value) =>
@@ -93,6 +87,9 @@ export function Profile() {
     userName: "",
     password: "",
   });
+
+  const nav = useNavigate();
+  const { tours } = useContext(ScheduleContext).context;
 
   useEffect(() => {
     var repository = new Repository();
@@ -386,17 +383,31 @@ export function Profile() {
               </h2>
               <hr />
               <Typography className={classes.typography} variant="body2">
-                {/* <List dense={false}>
-                  {generate(
-                    <ListItem>
-                      <ListItemText
-                        className={classes.typography}
-                        primary="Tour Name"
-                        secondary="Date"
-                      />
-                    </ListItem>
-                  )}
-                </List> */}
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Museums</th>
+                      <th scope="col">Date</th>
+                      <th scope="col">Time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {console.log("tours", tours)}
+                    {tours.items.map((item, index) => {
+                      return (
+                        <tr>
+                          <td>{item.tour.name}</td>
+                          <td>{item.tour.museum_name}</td>
+                          <td>{item.tour.date}</td>
+                        </tr>
+                      );
+                    })}
+                    <tr>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
               </Typography>
             </CardContent>
           </Card>
