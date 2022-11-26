@@ -9,6 +9,7 @@ import {
   Dialog,
   Box,
 } from "@material-ui/core";
+import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 
 
@@ -26,24 +27,24 @@ export const Tours = ({ museums, photos }) => {
           alignItems: "center",
           marginBottom: 10,
           display: "flex",
+          overflow: 'auto',
+          overflowY: 'hidden'
         }}
         elevation={10}
         key={props.item.museum_name}
       >
-        <CardContent className="Content" style={{ display: "flex" }}>
-          <img
-            className="Image"
-            alt="museumlogo"
-            src={
-              photos.filter((x) => x.photoId === props.item.photoId)[0]
-                .photo_data
-            }
+        <CardContent className="Content" style={{ display: "flex", alignItems: "center" }}>
+          <CardMedia
+            component="img"
             style={{
-              height: 300,
-              width: 500,
+              marginTop: "8px",
+              height: "35vh",
+              width: "50vh",
               borderRadius: "16px",
             }}
-          ></img>
+            image={photos.filter((x) => x.photoId === props.item.photoId)[0].photo_data}
+            alt="museumlogo"
+          />
           <div className="Info" style={{ marginLeft: 30, width: 500 }}>
             <Typography
               className="Title"
@@ -56,12 +57,14 @@ export const Tours = ({ museums, photos }) => {
             >
               {props.item.museum_name}
             </Typography>
+            <hr style={{ margin: "2px" }}/>
             <Typography
               className="Caption"
               style={{
                 color: "#696963",
                 fontFamily: "Baskerville",
                 fontSize: 20,
+                marginTop: "5px",
               }}
             >
               Current Director: {props.item.director}
@@ -72,42 +75,48 @@ export const Tours = ({ museums, photos }) => {
                 color: "#696963",
                 fontFamily: "Baskerville",
                 fontSize: 20,
+                marginBottom: "5px"
               }}
             >
               Exhibits on Display: {props.item.num_exhibits}
             </Typography>
-            <hr/>
-            <Typography
-              className="Description"
+            <hr style={{ margin: "2px" }}/>
+            {props.item.whatsNew &&
+              <div>
+                <Typography
+                  className="Description"
+                  style={{
+                    color: "#696963",
+                    fontFamily: "Baskerville",
+                    fontSize: 20,
+                    marginTop: "5px",
+                    marginBottom: "5px"
+                  }}
+                >
+                  {props.item.whatsNew}
+                </Typography>
+                <hr style={{ margin: "2px" }}/>
+              </div>
+            }
+            <Button
+              fullWidth
+              variant="outlined"
+              className="ViewButton"
               style={{
-                color: "#696963",
+                color: "#F6F7EB",
+                backgroundColor: "cornflowerblue",
                 fontFamily: "Baskerville",
-                fontSize: 20,
+                marginTop: "10px",
+                alignItems: "center"
+              }}
+              onClick={() => {
+                nav(`/bookings/${props.item.museum_name}`);
               }}
             >
-              {props.item.whatsNew}
-            </Typography>
+              View Now
+            </Button>
+            {/* Need a use state to handle what goes in the Dialog, rip from Lawrimore*/}
           </div>
-
-          <Button
-            variant="outlined"
-            className="ViewButton"
-            style={{
-              color: "#F6F7EB",
-              backgroundColor: "cornflowerblue",
-              fontFamily: "Baskerville",
-              height: 45,
-              width: 200,
-              marginTop: 250
-            }}
-            onClick={() => {
-              nav(`/bookings/${props.item.museum_name}`);
-            }}
-          >
-            View Now
-          </Button>
-          {/* Need a use state to handle what goes in the Dialog, rip from Lawrimore*/}
-          
         </CardContent>
       </Paper>,
     ];
@@ -136,8 +145,11 @@ export const Tours = ({ museums, photos }) => {
             style={{
               color: "#F6F7EB",
               fontFamily: "Baskerville",
-              textDecoration: "underline",
+              fontWeight: "bold",
               backgroundColor: "#323031",
+              paddingTop: "10px",
+              paddingBottom: "20px",
+              textAlign: "center"
             }}
           >
             Museums Near You

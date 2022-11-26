@@ -74,22 +74,28 @@ export function Profile() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const handleCloseConfirm = () => {
+    var repository = new Repository();
+    repository.putPassword(sessionStorage.email, newpass).then((x) => setUser(x));
+    setOpen(false);
+    sessionStorage.clear();
+    window.location.href = "/"
+  }
 
   const [newpass, setNewPass] = useState("");
-  const [oldpass, setOldPass] = useState("");
   const [newPhotoId, setNewPhotoId] = useState("");
   const [user, setUser] = useState("");
   const [photos, setPhotos] = useState("");
   const [university, setUniversity] = useState("");
   const [bio, setBio] = useState("");
+  const [deleteConfirm, setDeleteConfirm] = useState("Delete Profile");
   const [showForm, setShowForm] = useState(false);
   const [userForm, setuserForm] = useState({
     userName: "",
     password: "",
   });
 
-  const nav = useNavigate();
-  const { tours } = useContext(ScheduleContext).context;
+  // const { tours } = useContext(ScheduleContext).context;
 
   useEffect(() => {
     var repository = new Repository();
@@ -104,26 +110,37 @@ export function Profile() {
   // handle input form submission to backend via POST request
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("HERE");
+    console.log("Update User");
     var repository = new Repository();
     repository.updateUser(sessionStorage.email, newPhotoId, university, bio).then((x) => setUser(x));
   };
   
   const handleDelete = () => {
-    var repository = new Repository();
-    repository.deleteUser(sessionStorage.email).then((x) => {
-      console.log("Deleted!");
-    });
-    sessionStorage.email = "";
-    sessionStorage.jwt = "";
-    sessionStorage.director = "";
-    window.location.href = "/"
+    console.log(deleteConfirm);
+    if (deleteConfirm === "Delete Profile") {
+      setDeleteConfirm("Click Again To Confirm");
+      var remaining = 3;
+      var deleteTimer = setInterval(function(){
+        console.log(remaining);
+        if (remaining <= 0) {
+          clearInterval(deleteTimer);
+          setDeleteConfirm("Delete Profile");
+        }
+        remaining -= 1;
+      }, 1000);
+    }
+    if (deleteConfirm === "Click Again To Confirm") {
+      var repository = new Repository();
+      repository.deleteUser(sessionStorage.email).then((x) => {
+        console.log("Deleted");
+      });
+      sessionStorage.clear();
+      window.location.href = "/"
+    }
   };
 
   const Logout = (e) => {
-    sessionStorage.email = "";
-    sessionStorage.jwt = "";
-    sessionStorage.director = "";
+    sessionStorage.clear();
     window.location.href = "/"
   };
 
@@ -149,17 +166,6 @@ export function Profile() {
             variant="outlined"
             margin="normal"
             fullWidth
-            name="oldpass"
-            label="Old Password"
-            type="oldpass"
-            id="oldpass"
-            value={oldpass}
-            onInput={(e) => setOldPass(e.target.value)}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            fullWidth
             name="newpass"
             label="New Password"
             type="newpass"
@@ -168,7 +174,7 @@ export function Profile() {
             onInput={(e) => setNewPass(e.target.value)}
           />
           <div style={{ margin: 12, textAlign: "center" }}>
-            <Button onClick={handleClose} type="submit" variant="contained">
+            <Button onClick={handleCloseConfirm} type="submit" variant="contained">
               Confirm
             </Button>
           </div>
@@ -180,11 +186,12 @@ export function Profile() {
       <Grid
         container
         className={classes.root}
-        spacing={0}
+        spacing={2}
         direction="column"
         alignItems="center"
         justifyContent="center"
         style={{ padding: "0" }}
+        sx={{ flexGrow: 1 }}
       >
         <Grid item xs={false}>
           <Card
@@ -195,7 +202,7 @@ export function Profile() {
               component="img"
               height="500vh"
               width="auto"
-              image={photos[user[0].photoId - 1].photo_data}
+              image={photos.filter(photo => { return (photo.photoId === user[0].photoId) })[0].photo_data}
               alt="profile"
             />
             <div style={{ marginTop: 10, marginBottom: 20 }}>
@@ -205,7 +212,6 @@ export function Profile() {
                 variant="h4"
                 component="div"
               >
-                {/* {photos[user[0].photoId - 1].caption} */}
                 <b className={classes.typography}>{user[0].username}</b>
               </Typography>
               <Typography className={classes.typography} variant="body1">
@@ -283,7 +289,7 @@ export function Profile() {
                     onChange={(event) => setNewPhotoId(event.target.value)}
                   >
                     {photos.map((photo, index) => {
-                      if (photo.is_profile) {
+                      if (photo.is_profile && photo.caption) {
                         return (
                           <MenuItem key={index} value={photo.photoId}>
                             {photo.caption}
@@ -340,39 +346,24 @@ export function Profile() {
                 >
                   Change Password
                 </Button>
+                <Button
+                  type="submit"
+                  style={{
+                    marginTop: 6,
+                    color: "#F6F7EB",
+                    backgroundColor: "#EC0B43",
+                    fontFamily: "Baskerville",
+                  }}
+                  variant="contained"
+                  className={classes.submit}
+                  onClick={handleDelete}
+                >
+                  {deleteConfirm}
+                </Button>
               </FormControl>
             </CardContent>
           </Card>
         </Grid>
-        <Card
-          sx={{ height: 200, width: 300, backgroundcolor: "#FFFFFF", marginTop: 12, }}
-        >
-          <Typography
-            className={classes.typography}
-            gutterBottom
-            variant="h4"
-            component="div"
-            style={{
-              marginTop: 50,
-            }}
-          >
-            <b className={classes.typography}>Delete Account</b>
-          </Typography>
-          <Button
-            type="submit"
-            style={{
-              marginTop: 5,
-              color: "#F6F7EB",
-              backgroundColor: "cornflowerblue",
-              fontFamily: "Baskerville",
-            }}
-            variant="contained"
-            className={classes.submit}
-            onClick={handleDelete}
-          >
-            Delete
-          </Button>
-        </Card>
         <Grid item xs={9}>
           <Card>
             <CardContent sx={{ maxWidth: 400, backgroundcolor: "#FFFFFF" }}>
@@ -382,33 +373,31 @@ export function Profile() {
                 My Tours
               </h2>
               <hr />
-              <Typography className={classes.typography} variant="body2">
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th scope="col">Museums</th>
-                      <th scope="col">Date</th>
-                      <th scope="col">Time</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {console.log("tours", tours)}
-                    {tours.items.map((item, index) => {
-                      return (
-                        <tr>
-                          <td>{item.tour.name}</td>
-                          <td>{item.tour.museum_name}</td>
-                          <td>{item.tour.date}</td>
-                        </tr>
-                      );
-                    })}
-                    <tr>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </Typography>
+              <table className="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Museums</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {/* {console.log("tours", tours)}
+                  {tours.items.map((item, index) => {
+                    return (
+                      <tr>
+                        <td>{item.tour.name}</td>
+                        <td>{item.tour.museum_name}</td>
+                        <td>{item.tour.date}</td>
+                      </tr>
+                    );
+                  })} */}
+                  <tr>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
             </CardContent>
           </Card>
         </Grid>

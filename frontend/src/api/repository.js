@@ -17,7 +17,6 @@ export class Repository {
                 })
                 .catch(err => {
                     console.log("catch");
-                    alert(err);
                     reject(err);
                 })
         });
@@ -35,14 +34,14 @@ export class Repository {
     // });
   }
 
-    postRegistration(email, username, password) {
+    postRegistration(email, username, password, director) {
         return new Promise((resolve, reject) => {
             console.log("Post Registration");
             axios.post( `http://${ this.url }:8000/users/registration`, {
                 email: email,
                 username: username,
                 password: password,
-                //director: director
+                director: director
             })
                 .then(x => {
                     console.log("x.data", x.data);
@@ -60,11 +59,9 @@ export class Repository {
     return new Promise((resolve, reject) => {
       console.log("Put Password");
       axios
-        .post(`http://${this.url}:8000/users/updatePassword`, {
-          data: {
-            email: email,
-            newPass: newPass,
-          },
+        .put(`http://${this.url}:8000/users/updatePassword`, {
+          email: email,
+          password: newPass,
         })
         .then((x) => {
           console.log("x.data", x.data);
@@ -72,7 +69,6 @@ export class Repository {
         })
         .catch((err) => {
           console.log("catch");
-          alert(err);
           reject(err);
         });
     });
@@ -92,7 +88,6 @@ export class Repository {
         })
         .catch((err) => {
           console.log("catch");
-          alert(err);
           reject(err);
         });
     });
@@ -113,7 +108,6 @@ export class Repository {
         })
         .catch((err) => {
           console.log("catch");
-          alert(err);
           reject(err);
         });
     });
@@ -133,7 +127,6 @@ export class Repository {
         })
         .catch((err) => {
           console.log("catch");
-          alert(err);
           reject(err);
         });
     });
@@ -148,7 +141,6 @@ export class Repository {
           resolve(x.data);
         })
         .catch((err) => {
-          alert(err);
           reject(err);
         });
     });
@@ -168,7 +160,6 @@ export class Repository {
         })
         .catch((err) => {
           console.log("catch");
-          alert(err);
           reject(err);
         });
     });
@@ -183,7 +174,6 @@ export class Repository {
           resolve(x.data);
         })
         .catch((err) => {
-          alert(err);
           reject(err);
         });
     });
@@ -198,7 +188,6 @@ export class Repository {
           resolve(x.data);
         })
         .catch((err) => {
-          alert(err);
           reject(err);
         });
     });
@@ -213,7 +202,6 @@ export class Repository {
           resolve(x.data);
         })
         .catch((err) => {
-          alert(err);
           reject(err);
         });
     });
@@ -232,7 +220,6 @@ export class Repository {
           console.log("x.data", x.data);
         })
         .catch((err) => {
-          alert(err);
           reject(err);
         });
     });
@@ -251,7 +238,6 @@ export class Repository {
           console.log("x.data", x.data);
         })
         .catch((err) => {
-          alert(err);
           reject(err);
         });
     });
