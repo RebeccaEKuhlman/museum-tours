@@ -204,6 +204,31 @@ export function Director({ museums }) {
             Change Museum
           </Button>
         </Card>
+        <Grid item xs={9}>
+          <Card>
+            <CardContent sx={{ maxWidth: 400, backgroundcolor: "#FFFFFF" }}>
+              <h2
+                style={{ fontSize: 50, fontFamily: "Baskerville", margin: 10 }}
+              >
+                {museum} Tours
+              </h2>
+              <hr />
+              <Typography className={classes.typography} variant="body2">
+                {/* <List dense={false}>
+                  {generate(
+                    <ListItem>
+                      <ListItemText
+                        className={classes.typography}
+                        primary="Tour Name"
+                        secondary="Date"
+                      />
+                    </ListItem>
+                  )}
+                </List> */}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
       </Grid>
     </div>
   );
