@@ -3,7 +3,7 @@ import React, { useEffect, useState }from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { AppBar, Toolbar, Typography, makeStyles, Box, Avatar } from "@material-ui/core";
-import { Repository } from './pages/repository';
+import { Repository } from './api';
 import { NoPage } from './pages/NoPage';
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
@@ -64,6 +64,7 @@ export const App = () => {
 
   const [ museums, setMuseums ] = useState(undefined);
   const [ photos, setPhotos ] = useState(undefined);
+  
 
   useEffect(() => {
     var repository = new Repository();

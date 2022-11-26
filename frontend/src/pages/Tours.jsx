@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Grid,
   Card,
   CardContent,
-  CardMedia,
-  CardActions,
-  CardHeader,
   Typography,
   Paper,
   Dialog,
   Box,
 } from "@material-ui/core";
 import Button from "@mui/material/Button";
-import { maxHeight } from "@mui/system";
+
 
 export const Tours = ({ museums, photos }) => {
   // const [museum, setMuseum] = useState({});
 
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const nav = useNavigate();
 
   function GridItem(props) {
     let items = [
@@ -48,7 +44,7 @@ export const Tours = ({ museums, photos }) => {
               borderRadius: "16px",
             }}
           ></img>
-          <div className="Info" style={{ marginLeft: 30 }}>
+          <div className="Info" style={{ marginLeft: 30, width: 500 }}>
             <Typography
               className="Title"
               style={{
@@ -80,6 +76,17 @@ export const Tours = ({ museums, photos }) => {
             >
               Exhibits on Display: {props.item.num_exhibits}
             </Typography>
+            <hr/>
+            <Typography
+              className="Description"
+              style={{
+                color: "#696963",
+                fontFamily: "Baskerville",
+                fontSize: 20,
+              }}
+            >
+              {props.item.whatsNew}
+            </Typography>
           </div>
 
           <Button
@@ -91,38 +98,16 @@ export const Tours = ({ museums, photos }) => {
               fontFamily: "Baskerville",
               height: 45,
               width: 200,
-              marginLeft: 250,
               marginTop: 250
             }}
-            onClick={handleOpen}
+            onClick={() => {
+              nav(`/bookings/${props.item.museum_name}`);
+            }}
           >
             View Now
           </Button>
           {/* Need a use state to handle what goes in the Dialog, rip from Lawrimore*/}
-          <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Card
-              style={{
-                width: 1000,
-                height: 500,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#F6F7EB",
-              }}
-            >
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-                {props.item.museum_name}
-              </Typography>
-              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                {props.item.museum_name}
-              </Typography>
-            </Card>
-          </Dialog>
+          
         </CardContent>
       </Paper>,
     ];

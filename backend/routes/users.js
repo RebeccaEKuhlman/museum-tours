@@ -129,8 +129,8 @@ router.put('/updateInfo', async(request, response, next) => {
         const newUni = request.body.uni;
         const newBio = request.body.bio;
 
-        const uniResults = await request.models.users.updateUserUni(email, newUni);
-        const photoResults = await request.models.users.updateUserPhoto(email, newPhoto);
+        const uniResults = await request.models.user.updateUserUni(email, newUni);
+        const photoResults = await request.models.user.updateUserPhoto(email, newPhoto);
         const bioResults = await request.models.user.updateUserBio(email, newBio);
         if(email){
             console.log('Results of my PUT statement: ', results);
@@ -165,8 +165,29 @@ router.delete('/', async(request, response, next) => {
     }
 });
 
-// router.get('/', async(request, response, next) => {
-// });
+router.get('/', async(request, response, next) => {
+    try {
+        console.log('Initiating GET /users request');
+        console.log('Request has params containing:', request.query);
+        console.log("email", request.query.email);
+
+        if (request.query.email) {
+            const results = await request.models.user.fetchUsersByEmail(request.query.email);
+            response.status(200).json(results);
+            console.log("results", results);
+        } else if (payload.username) {
+            const results = await request.models.user.fetchUsersByName(payload.username);
+            response.status(200).json(results);
+        } else {
+            // get all users
+            const results = await request.models.user.fetchAllUsers();
+            response.status(200).json(results);
+        }
+    } catch (err) {
+        console.error('There was an error in GET /users', err);
+        response.status(500).json({ message: err.message });
+    }
+});
 
 module.exports = router;
 
