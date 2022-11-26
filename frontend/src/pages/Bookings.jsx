@@ -20,7 +20,7 @@ export const Bookings = () => {
 
   var repository = new Repository();
 
-  var tours = repository.getToursByMuseum(params.museum_name);
+  var { toursList } = repository.getToursByMuseum(params.museum_name);
 
   // get the context from ScheduleContext
   // const { addToTours } = useContext(ScheduleContext).context;
@@ -150,11 +150,13 @@ export const Bookings = () => {
           >
             Tours at {params.museum_name}
           </Typography>
-          </Card>
-        {tour.map((item, index) => {
-          return <GridItem item={item} key={index} />;
-        })}
-         
+        </Card>
+        <div>
+          {toursList.map((item, index) => (
+            <GridItem item={item} key={index} />
+          ))}
+          ;
+        </div>
       </Grid>
     </div>
   );
