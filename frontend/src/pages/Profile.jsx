@@ -127,7 +127,7 @@ export function Profile() {
 
   const handleConfirm = (e) => {
     e.preventDefault();
-    repository.postPassoword(sessionStorage.jwt, newpass).then(x => {
+    repository.putPassword(sessionStorage.jwt, newpass).then(x => {
       if (typeof x.error != "undefined") {
         alert("error: unable to sign up")
       } else {
@@ -135,11 +135,6 @@ export function Profile() {
         alert("password has been changed.")
       }
     });
-  }
-
-  const handleAcctDel = (e) => {
-    e.preventDefault();
-    alert("account deleted (doesnt do anything yet)")
   }
   
   const Logout = (e) => {
@@ -358,7 +353,7 @@ export function Profile() {
                       backgroundColor: "#EC0B43",
                       fontFamily: "Baskerville",
                     }}
-                    onClick={handleAcctDel}
+                    onClick={handleDelete}
                     variant="contained"
                     className={classes.submit}
                   >
@@ -368,35 +363,6 @@ export function Profile() {
             </CardContent>
           </Card>
         </Grid>
-        <Card
-          sx={{ height: 200, width: 300, backgroundcolor: "#FFFFFF", marginTop: 12, }}
-        >
-          <Typography
-            className={classes.typography}
-            gutterBottom
-            variant="h4"
-            component="div"
-            style={{
-              marginTop: 50,
-            }}
-          >
-            <b className={classes.typography}>Delete Account</b>
-          </Typography>
-          <Button
-            type="submit"
-            style={{
-              marginTop: 5,
-              color: "#F6F7EB",
-              backgroundColor: "cornflowerblue",
-              fontFamily: "Baskerville",
-            }}
-            variant="contained"
-            className={classes.submit}
-            onClick={handleDelete}
-          >
-            Delete
-          </Button>
-        </Card>
         <Grid item xs={9}>
           <Card>
             <CardContent sx={{ maxWidth: 400, backgroundcolor: "#FFFFFF", alignItems: "center" }}>
