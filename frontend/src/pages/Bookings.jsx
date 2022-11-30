@@ -175,6 +175,7 @@ export const Bookings = () => {
           >
             Tours at {params.museum_name}
           </Typography>
+          <div></div>
         </Card>
         <div>
           {tour.map((item, index) => (

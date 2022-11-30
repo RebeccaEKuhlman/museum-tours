@@ -3,8 +3,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
@@ -88,8 +86,6 @@ export function Login() {
   const classes = useStyles();
 
   // state for storage of the information on the webpage of forms and list, uses hooks
-  // const [number, setNumber] = useState("");
-  // const [values, setValues] = useState([]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [validity, setValidity] = useState("");
@@ -102,31 +98,7 @@ export function Login() {
   const url = ec2 ? ec2_url : "localhost";
 
   var repository = new Repository();
-  // handle input field state change
-  // const handleChange = (e) => {
-  //   setNumber(e.target.value);
-  // };
-
-  // const fetchBase = () => {
-  //   axios.get(`http://${url}:8000/`).then((res) => {
-  //     alert(res.data);
-  //   });
-  // };
-
-  // fetches vals of db via GET request
-  // const fetchVals = () => {
-  //   axios
-  //     .get(`http://${url}:8000/values`)
-  //     .then((res) => {
-  //       const values = res.data.data;
-  //       console.log(values);
-  //       setValues(values);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
+  
   // handle input form submission to backend via POST request
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -140,22 +112,7 @@ export function Login() {
     }).catch((x) => {
       setValidity("Invalid Credentials. Please Try Again.")
     });
-    // axios
-    // .get(`http://${url}:8000/login`, {
-    //   data: {
-    //     username: username,
-    //     password: password
-    //   }
-    // })
-    // .then((res) => {
-    //   console.log("res");
-    //   console.log(res);
-    // })
-    // .catch((err) => {
-    //   console.log("logging error");
-    //   console.log(err);
-    // });
-    // Do Something With Result (Route to New Location)
+
   };
 
   return (
@@ -232,16 +189,6 @@ export function Login() {
             </Button>
             <Grid container>
               <Grid item xs>
-                {/* <Link
-                  href="#"
-                  variant="body2"
-                  style={{
-                    color: "#7F96FF",
-                    fontFamily: "Baskerville",
-                  }}
-                >
-                  Forgot password?
-                </Link> */}
               </Grid>
               <Grid item>
                 <Link

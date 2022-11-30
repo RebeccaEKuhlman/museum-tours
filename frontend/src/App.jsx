@@ -1,8 +1,6 @@
-import { sizeHeight } from '@mui/system';
 import React, { useEffect, useState }from 'react';
-import { render } from 'react-dom';
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { AppBar, Toolbar, Typography, makeStyles, Box, Avatar } from "@material-ui/core";
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import { AppBar, Toolbar, Typography, makeStyles, Avatar } from "@material-ui/core";
 import { Repository } from './api';
 import { NoPage } from './pages/NoPage';
 import { Home } from './pages/Home';
@@ -12,7 +10,7 @@ import { Tours } from './pages/Tours';
 import { Registration } from './pages/Registration';
 import { Bookings } from './pages/Bookings';
 import { Director } from './pages/Director';
-import { ScheduleContext, ScheduleContextProvider } from './context';
+import { ScheduleContextProvider } from './context';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -97,9 +95,6 @@ export const App = () => {
             <img style = {{height: "45px", marginTop: "15px"}} src={require("./Artt.png")}/>
           </Typography>
           <Typography className={classes.link}>
-            {/* <Link to="/tours" className={classes.link}>
-              Bookings
-            </Link> */}
           </Typography>
           <Avatar 
             className={classes.profile}

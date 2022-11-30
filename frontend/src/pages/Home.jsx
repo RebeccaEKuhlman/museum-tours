@@ -156,15 +156,6 @@ export const Home = ({ museums, photos }) => {
 
   return (
     <div className="Home-body">
-      {/* <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />}>
-            <Route path="*" element={<NoPage />} />
-          </Route>
-          <Route path="/login" element={<Login />}>
-          </Route>
-        </Routes>
-      </BrowserRouter> */}
       <header className="Home-header">
         <Button
           variant="contained"

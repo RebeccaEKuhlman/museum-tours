@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -11,7 +11,7 @@ import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { Repository } from '../api/repository';
+import { Repository } from "../api/repository";
 
 function Copyright() {
   return (
@@ -82,11 +82,11 @@ export function Registration() {
   // state for storage of the information on the webpage of forms and list, uses hooks
   // const [number, setNumber] = useState("");
   // const [values, setValues] = useState([]);
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmpassword, setConfirmPassword] = useState('');
-  const [director, setDirector] = useState('');
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmpassword, setConfirmPassword] = useState("");
+  const [director, setDirector] = useState("");
   const [validity, setValidity] = useState("");
 
   // ENTER YOUR EC2 PUBLIC IP/URL HERE
@@ -98,68 +98,30 @@ export function Registration() {
 
   var repository = new Repository();
   // handle input field state change
-  // const handleChange = (e) => {
-  //   setNumber(e.target.value);
-  // };
-
-  // const fetchBase = () => {
-  //   axios.get(`http://${url}:8000/`).then((res) => {
-  //     alert(res.data);
-  //   });
-  // };
-
-  // fetches vals of db via GET request
-  // const fetchVals = () => {
-  //   axios
-  //     .get(`http://${url}:8000/values`)
-  //     .then((res) => {
-  //       const values = res.data.data;
-  //       console.log(values);
-  //       setValues(values);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
 
   // handle input form submission to backend via POST request
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!email || !username || !password || !confirmpassword) {
-      setValidity("Please Fill Out All Fields.")
-    }
-    else if (password !== confirmpassword) {
+      setValidity("Please Fill Out All Fields.");
+    } else if (password !== confirmpassword) {
       setValidity("Passwords Don't Match. Please Try Again.");
-    }
-    else {
-      repository.postRegistration(email, username, password, director).then(x => {
-        if (typeof x.error === "undefined") {
-          sessionStorage.email = x.email;
-          sessionStorage.jwt = x.jwt;
-          sessionStorage.director = x.is_director;
-          window.location.href = "/profile";
-        }
-      }).catch((x) => {
-        setValidity("User Already Exists. Please Try Again.")
-      });
+    } else {
+      repository
+        .postRegistration(email, username, password, director)
+        .then((x) => {
+          if (typeof x.error === "undefined") {
+            sessionStorage.email = x.email;
+            sessionStorage.jwt = x.jwt;
+            sessionStorage.director = x.is_director;
+            window.location.href = "/profile";
+          }
+        })
+        .catch((x) => {
+          setValidity("User Already Exists. Please Try Again.");
+        });
     }
 
-    // axios
-    // .get(`http://${url}:8000/login`, {
-    //   data: {
-    //     username: username, 
-    //     password: password
-    //   }
-    // })
-    // .then((res) => {
-    //   console.log("res");
-    //   console.log(res);
-    // })
-    // .catch((err) => {
-    //   console.log("logging error");
-    //   console.log(err);
-    // });
-    // Do Something With Result (Route to New Location)
   };
 
   return (
@@ -174,10 +136,7 @@ export function Registration() {
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}></Avatar>
-          <Typography
-            component="h1"
-            className="title"
-          >
+          <Typography component="h1" className="title">
             REGISTER
           </Typography>
           <form className={classes.form} noValidate onSubmit={handleSubmit}>
@@ -233,23 +192,40 @@ export function Registration() {
               onInput={(e) => setConfirmPassword(e.target.value)}
             />
             <FormControlLabel
-              control={<Checkbox value={director} fontFamily="Baskerville" onChange={() => setDirector(!director)} />}
-              style={{ color: "#323031", marginTop: "4px", marginBottom: "6px" }}
+              control={
+                <Checkbox
+                  value={director}
+                  fontFamily="Baskerville"
+                  onChange={() => setDirector(!director)}
+                />
+              }
+              style={{
+                color: "#323031",
+                marginTop: "4px",
+                marginBottom: "6px",
+              }}
               label="Museum Director?"
             />
-            {validity &&
-              <p style={{
-                color: "#EC0B43",
-                fontFamily: "Baskerville",
-                fontSize: "16px",
-                marginTop: 0,
-                marginBottom: 0
-              }}>
+            {validity && (
+              <p
+                style={{
+                  color: "#EC0B43",
+                  fontFamily: "Baskerville",
+                  fontSize: "16px",
+                  marginTop: 0,
+                  marginBottom: 0,
+                }}
+              >
                 {validity}
               </p>
-            }
+            )}
             <Button
-              style={{ color: "#FFFFFF", backgroundColor: "#7F96FF", marginTop: "6px", marginBottom: "4px" }}
+              style={{
+                color: "#FFFFFF",
+                backgroundColor: "#7F96FF",
+                marginTop: "6px",
+                marginBottom: "4px",
+              }}
               type="submit"
               fullWidth
               variant="contained"
@@ -259,16 +235,7 @@ export function Registration() {
             </Button>
             <Grid container>
               <Grid item xs>
-                {/* <Link
-                  href="#"
-                  variant="body2"
-                  style={{
-                    color: "#7F96FF",
-                    fontFamily: "Baskerville",
-                  }}
-                >
-                  Forgot password?
-                </Link> */}
+                
               </Grid>
               <Grid item>
                 <Link
@@ -277,7 +244,7 @@ export function Registration() {
                   style={{
                     color: "#7F96FF",
                     fontFamily: "Baskerville",
-                    fontSize: "16px"
+                    fontSize: "16px",
                   }}
                 >
                   {"Have an account? Log in"}

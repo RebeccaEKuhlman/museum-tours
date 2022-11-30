@@ -14,7 +14,6 @@ import Button from "@mui/material/Button";
 
 
 export const Tours = ({ museums, photos }) => {
-  // const [museum, setMuseum] = useState({});
 
   const nav = useNavigate();
 
@@ -163,4 +162,3 @@ export const Tours = ({ museums, photos }) => {
   );
 };
 
-//apisdjhfladk
