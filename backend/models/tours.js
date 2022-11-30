@@ -1,18 +1,3 @@
-/**
- * tours(
-	tour_Name VARCHAR(30) NOT NULL PRIMARY KEY,
-	tourDate Date NOT NULL,
-	tourTime Time NOT NULL,
-	num_spaces_available int NOT NULL,
-	total_space int NOT NULL,
-	tour_description VARCHAR(30),
-	price int,
-	museum_name varchar(30) NOT NULL,
-	FOREIGN KEY (museum_name) REFERENCES museums(museum_name),
-	theme VARCHAR(30) NOT NULL
-);
- **/
-
 const knex = require('../database/knex');
 const TOUR_TABLE = 'tours';
 

@@ -1,15 +1,3 @@
-/**
- * rating INT NOT NULL,
-	username VARCHAR(30) NOT NULL,
-	tour_Name VARCHAR(30) NOT NULL,
-	museum_name VARCHAR(30) NOT NULL,
-	FOREIGN KEY (username) REFERENCES users(username),
-  	FOREIGN KEY (tour_Name) REFERENCES tours(tour_Name),
-	FOREIGN KEY (museum_name) REFERENCES museums(museum_name),
-	ratingID int NOT NULL,
-	PRIMARY KEY (ratingID)
- */
-
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
@@ -54,7 +42,7 @@ router.get('/', async (req, res, next) => {
 router.delete('/', async (req, res, next) => {
     try {
         const rating = await req.models.rating.deleteRating(req.query.ratingId);
-        res.status(200).json(rating);
+        res.status(200).json();
         next();
     } catch(err) {
         console.error('There was an error in DELETE /ratings', err);

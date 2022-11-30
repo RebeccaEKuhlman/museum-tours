@@ -90,7 +90,7 @@ router.get('/museums', async (req, res, next) => {
 router.delete('/', async (req, res, next) => {
     try {
         const photoId = await req.models.photo.deletePhoto(req.query.photoId);
-        res.status(200).json(photoId);
+        res.status(200).json();
         next();
     } catch(err) {
         console.error('There was an error in DELETE /photos', err);

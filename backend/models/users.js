@@ -1,16 +1,3 @@
-/**const { nextTick } = require('process');
-
-
-const jwt = require('jsonwebtoken' );
-class User {
-    constructor(_DBQuery, _disconnect) {
-        this.DBQuery = _DBQuery;
-        this.disconnect = _disconnect;
-    }const getAllPhotos = async () => 
-    close () {
-        this.disconnect();
-    }**/// GIVES USER BASED OFF OF TOKEN
-
 const accessTokenSecret  = 'accessToken' ;
 const jwt = require('jsonwebtoken' );
 const bcrypt = require('bcryptjs');

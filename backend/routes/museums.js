@@ -87,7 +87,7 @@ router.put('/', async (req, res, next) => {
 router.delete('/', async (req, res, next) => {
     try {
         const museum = await req.models.museum.deleteMuseum(req.query.museum_name);
-        res.status(200).json(museum);
+        res.status(200).json();
         next();
     } catch(err) {
         console.error('There was an error in DELETE /museums', err);
