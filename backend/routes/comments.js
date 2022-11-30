@@ -1,18 +1,3 @@
-/**
- * TABLE comments(
-	commNum int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	content VARCHAR(100) NOT NULL,
-	username VARCHAR(30) NOT NULL,
-	tour_Name VARCHAR(30) NOT NULL,
-	review_id INT NOT NULL,
-	FOREIGN KEY (username) REFERENCES users(username),
-   	FOREIGN KEY (tour_Name) REFERENCES tours(tour_Name),
-   	like_sum int DEFAULT 0,
-   	overComment int,
-	FOREIGN KEY(review_id) REFERENCES ratings(ratingID)
-);
- */
-
 const express = require('express');
 const router = express.Router();
 
@@ -87,7 +72,7 @@ router.delete('/', async (request, response, next) => {
 
        const results = await request.models.comment.deleteComment(request.query.commNum);
        console.log('Results of my DELETE statement:', results);
-       response.status(200).json(results);
+       response.status(200).json();
        next();
     } catch (err) {
         console.error('There was an error in DELETE /comments', err);
