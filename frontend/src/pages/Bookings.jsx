@@ -143,17 +143,8 @@ export const Bookings = () => {
   }
 
   return (
-    <div
-      justifyContent="center"
-      alignItems="center"
-      style={{ marginTop: 10, maxWidth: "100%" }}
-    >
-      <Grid
-        container
-        alignItems="center"
-        justifyContent="center"
-        flexDirection="column"
-      >
+    <div style={{ marginTop: 10, maxWidth: "100%" }}>
+      <Grid container alignItems="center" justifyContent="center">
         <Card
           variant="outlined"
           style={{
@@ -169,20 +160,21 @@ export const Bookings = () => {
             style={{
               color: "#F6F7EB",
               fontFamily: "Baskerville",
-              textDecoration: "underline",
+              fontWeight: "bold",
               backgroundColor: "#323031",
+              paddingTop: "10px",
+              paddingBottom: "20px",
+              textAlign: "center"
             }}
           >
-            Tours at {params.museum_name}
+            Upcoming Tours at {params.museum_name}
           </Typography>
-          <div></div>
         </Card>
-        <div>
-          {tour.map((item, index) => (
-            <GridItem item={item} key={index} />
-          ))}
-        </div>
+        {tour.map((item, index) => {
+          return <GridItem item={item} key={index} />;
+        })}
       </Grid>
     </div>
   );
 };
+

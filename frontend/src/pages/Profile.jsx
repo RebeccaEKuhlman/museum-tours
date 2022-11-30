@@ -205,19 +205,30 @@ export function Profile() {
               onClick={handleCloseConfirm}
               type="submit"
               variant="contained"
+              style={{
+                backgroundColor: "cornflowerblue",
+                fontFamily: "Baskerville",
+              }}
             >
               Confirm
             </Button>
           </div>
           <div style={{ marginTop: 16, textAlign: "center" }}>
-            <Button onClick={handleClose}>Cancel</Button>
+            <Button
+              style={{
+                color: "cornflowerblue",
+                fontFamily: "Baskerville",
+              }}
+              onClick={handleClose}
+            >
+              Cancel
+            </Button>
           </div>
         </Card>
       </Modal>
       <Grid
         container
         className={classes.root}
-        spacing={2}
         direction="column"
         alignItems="center"
         justifyContent="center"
@@ -227,7 +238,7 @@ export function Profile() {
         <Grid item xs={false}>
           <Card
             className={classes.card}
-            sx={{ maxWidth: 400, backgroundcolor: "#FFFFFF" }}
+            sx={{ maxWidth: 400, backgroundcolor: "#FFFFFF", marginTop: 20 }}
           >
             <CardMedia
               component="img"
@@ -298,7 +309,7 @@ export function Profile() {
         <Grid item xs={false}>
           <Card
             className={classes.card}
-            sx={{ maxWidth: 400, backgroundcolor: "#FFFFFF" }}
+            sx={{ maxWidth: 400, backgroundcolor: "#FFFFFF", marginTop: -15 }}
           >
             <CardContent
               className={classes.card}
@@ -400,7 +411,7 @@ export function Profile() {
           </Card>
         </Grid>
         <Grid item xs={9}>
-          <Card>
+          <Card sx={{ marginTop: -4 }}>
             <CardContent sx={{ maxWidth: 400, backgroundcolor: "#FFFFFF" }}>
               <h2
                 style={{ fontSize: 50, fontFamily: "Baskerville", margin: 10 }}
@@ -412,16 +423,68 @@ export function Profile() {
               <table className="table table-striped">
                 <thead>
                   <tr>
-                    <th scope="col">Museums</th>
-                    <th scope="col">ID</th>
+                    <th
+                      scope="col"
+                      style={{
+                        paddingTop: 12,
+                        paddingBottom: 12,
+                        paddingLeft: 10,
+                        textAlign: "left",
+                        backgroundColor: "cornflowerblue",
+                        color: "white",
+                        fontFamily: "Baskerville",
+                        width: 125,
+                      }}
+                    >
+                      Museums
+                    </th>
+                    <th
+                      scope="col"
+                      style={{
+                        paddingTop: 12,
+                        paddingBottom: 12,
+                        paddingLeft: 10,
+                        textAlign: "left",
+                        backgroundColor: "cornflowerblue",
+                        color: "white",
+                        fontFamily: "Baskerville",
+                        width: 125,
+                      }}
+                    >
+                      ID
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {tours.map((item, index) => {
                     return (
                       <tr>
-                        <td>{item.tour_Name}</td>
-                        <td>{item.bookingID}</td>
+                        <td
+                          style={{
+                            paddingTop: 12,
+                            paddingBottom: 12,
+                            paddingLeft: 10,
+                            textAlign: "left",
+                            color: "black",
+                            fontFamily: "Baskerville",
+                            width: "50%",
+                          }}
+                        >
+                          {item.tour_Name}
+                        </td>
+                        <td
+                          style={{
+                            paddingTop: 12,
+                            paddingBottom: 12,
+                            paddingLeft: 10,
+                            textAlign: "left",
+                            color: "black",
+                            fontFamily: "Baskerville",
+                            width: "50%",
+                          }}
+                        >
+                          {item.bookingID}
+                        </td>
                       </tr>
                     );
                   })}
