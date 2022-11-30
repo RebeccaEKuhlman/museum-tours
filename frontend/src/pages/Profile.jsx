@@ -16,7 +16,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { Repository } from "../api/repository";
 
-import { ScheduleContext } from "../context";
+
 
 function generate(element) {
   return [0, 1, 2].map((value) =>
@@ -85,6 +85,7 @@ export function Profile() {
   const [newpass, setNewPass] = useState("");
   const [newPhotoId, setNewPhotoId] = useState("");
   const [user, setUser] = useState("");
+  const [tours, setTours] = useState("");
   const [photos, setPhotos] = useState("");
   const [university, setUniversity] = useState("");
   const [bio, setBio] = useState("");
@@ -101,6 +102,7 @@ export function Profile() {
     var repository = new Repository();
     repository.getPhoto().then((x) => setPhotos(x));
     repository.getUser(sessionStorage.email).then((x) => setUser(x));
+    repository.getBookingsByUser(sessionStorage.email).then((x) => setTours(x));
   }, []);
 
   if (!photos || !user) {
@@ -382,7 +384,7 @@ export function Profile() {
                   </tr>
                 </thead>
                 <tbody>
-                  {/* {console.log("tours", tours)}
+                  {console.log("tours", tours)}
                   {tours.items.map((item, index) => {
                     return (
                       <tr>
@@ -391,7 +393,7 @@ export function Profile() {
                         <td>{item.tour.date}</td>
                       </tr>
                     );
-                  })} */}
+                  })}
                   <tr>
                     <td></td>
                     <td></td>
