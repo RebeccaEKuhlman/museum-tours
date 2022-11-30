@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   },
   table: {
     width: "100%",
-    borderCollapse: "collapse",
+    borderCollapse: "collapse"
   },
   td: {
     border: "1px solid #dddddd",
@@ -95,14 +95,14 @@ export function Director({ museums }) {
     setOpen(false);
   }
 
-  const [museum, setMuseum] = useState(sessionStorage.museum || "");
+  const [museum, setMuseum] = useState(sessionStorage.museum || "Dallas Museum");
   const [tours, setTours] = useState("");
   const [musphoto, setMusPhoto] = useState("");
 
   useEffect(() => {
     repository.getToursByMuseum(museum).then(x => setTours(x));
     repository.getPhotoByMuseum(museum).then(x => setMusPhoto(x));
-  }, []);
+  }, [museum]);
 
   function GridItem(props){
     let items = [
@@ -111,7 +111,7 @@ export function Director({ museums }) {
                 {props.item.tour_Name}
               </td>
               <td>
-                {props.item.tourDate.split(' ').slice(1).join(' ')}
+                {props.item.tourDate.split('T').slice(0)[0]}
               </td>
               <td>
                 {props.item.tourTime}
@@ -119,9 +119,9 @@ export function Director({ museums }) {
           </tr>
     ];
     return (
-      <table>
+      <tbody>
               {items}
-      </table>
+      </tbody>
   );
   }
 
@@ -250,7 +250,7 @@ export function Director({ museums }) {
         </Card>
         <Grid item xs={9}>
           <Card>
-            <CardContent sx={{ maxWidth: "90%", backgroundcolor: "#FFFFFF", textAlign: "center" }}>
+            <CardContent sx={{ maxWidth: "100%", backgroundcolor: "#FFFFFF", textAlign: "center" }}>
               <h2
                 style={{ fontSize: 50, fontFamily: "Baskerville", margin: 10 }}
               >
@@ -258,19 +258,18 @@ export function Director({ museums }) {
               </h2>
               <hr />
               <Typography className={classes.typography} variant="body2" >
-                <table>
-                <tr>
-          <th>
-            Tour Name
-          </th>
-          <th>
-            Tour Date
-          </th>
-          <th>
-            Tour Time
-          </th>
-        </tr>
-                </table>
+                <table className={classes.table}>
+                  <tr>
+                    <th>
+                      Tour Name
+                    </th>
+                    <th>
+                      Tour Date
+                    </th>
+                    <th>
+                      Tour Time
+                    </th>
+                  </tr>
                 {tours.map((item,index) => {
                   return <GridItem item={item} key={index} style={{}} />;
                 })
@@ -285,6 +284,7 @@ export function Director({ museums }) {
                     </ListItem>
                   )}
                 </List> */}
+                </table>
               </Typography>
             </CardContent>
           </Card>
