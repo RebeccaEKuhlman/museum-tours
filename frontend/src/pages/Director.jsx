@@ -95,7 +95,7 @@ export function Director({ museums }) {
   };
 
   const [museum, setMuseum] = useState(
-    sessionStorage.museum || "Dallas Museum"
+    sessionStorage.museum || "Dallas Museum of Art"
   );
   const [tours, setTours] = useState("");
   const [musphoto, setMusPhoto] = useState("");
