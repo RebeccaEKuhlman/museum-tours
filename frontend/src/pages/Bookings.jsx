@@ -126,7 +126,11 @@ export const Bookings = () => {
                 alignItems: "center",
               }}
               onClick={() => {
-                addToTourHandler(props.item.tour_Name);
+                if(sessionStorage.email){
+                addToTourHandler(props.item.tour_Name);}
+                else {
+                  nav("/login");
+                }
               }}
             >
               Book Now
