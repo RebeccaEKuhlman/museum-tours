@@ -490,6 +490,19 @@ export function Profile() {
                   })}
                 </tbody>
               </table>
+              <Button
+                  sx={{ color: "cornflowerblue", mt: 1 }}
+                  style={{
+                    backgroundColor: "cornflowerblue",
+                    color: "white",
+                    fontFamily: "Baskerville",
+                  }}
+                  onClick={() => {
+                    navigate("/tours");
+                  }}
+                >
+                  Book A Tour
+                </Button>
             </CardContent>
           </Card>
         </Grid>
