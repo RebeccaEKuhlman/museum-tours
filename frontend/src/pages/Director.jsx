@@ -165,7 +165,17 @@ export function Director({ museums }) {
               })}
             </Select>
             <div style={{ margin: 12, textAlign: "center" }}>
-              <Button onClick={handleClose} type="submit" variant="contained">
+              <Button
+                style={{
+                  marginTop: 5,
+                  color: "#F6F7EB",
+                  backgroundColor: "cornflowerblue",
+                  fontFamily: "Baskerville",
+                }}
+                onClick={handleClose}
+                type="submit"
+                variant="contained"
+              >
                 Confirm Museum
               </Button>
             </div>
@@ -214,13 +224,18 @@ export function Director({ museums }) {
             width: "90%",
             backgroundColor: "#F6F7EB",
             marginTop: 2,
-            marginBottom: 2
+            marginBottom: 2,
           }}
         >
           <img
             src={musphoto}
             alt={museum}
-            style={{ maxHeight: 400, maxWidth: 700, float: "left", margin: "15px" }}
+            style={{
+              maxHeight: 400,
+              maxWidth: 700,
+              float: "left",
+              margin: "15px",
+            }}
           />
           <Typography
             className={classes.typography}
