@@ -12,6 +12,7 @@ import { Tours } from './pages/Tours';
 import { Registration } from './pages/Registration';
 import { Bookings } from './pages/Bookings';
 import { Director } from './pages/Director';
+import { ScheduleContext, ScheduleContextProvider } from './context';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -82,6 +83,7 @@ export const App = () => {
   };
 
   return (
+    <ScheduleContextProvider>
     <Router>
       <AppBar position="static" style={{ backgroundColor: "#323031" }}>
         <Toolbar disableGutters className={classes.toolbar}>
@@ -115,8 +117,9 @@ export const App = () => {
         <Route exact path='/tours' element={< Tours museums={museums} photos={photos} />}></Route>
         <Route exact path='/registration' element={< Registration />}></Route>
         <Route exact path='/bookings/:museum_name' element = {<Bookings />}></Route>
-        <Route path='profile/director' element = {< Director museums={museums} />}></Route>
+        <Route path='/profile/director' element = {< Director museums={museums} />}></Route>
       </Routes>
     </Router>
+    </ScheduleContextProvider>
   );
 }
