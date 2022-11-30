@@ -458,7 +458,7 @@ export function Profile() {
                 <tbody>
                   {tours.map((item, index) => {
                     return (
-                      <tr>
+                      <tr key={index}>
                         <td
                           style={{
                             paddingTop: 12,
