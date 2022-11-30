@@ -1,12 +1,12 @@
 import axios from "axios";
 
 export class Repository {
-  url = "localhost";
+  url = "http://localhost:8000";
 
     postLogin(email, password) {
         return new Promise((resolve, reject) => {
             console.log("Post Login");
-            axios.post( `http://${ this.url }:8000/users/login`, {
+            axios.post( `${ this.url }/users/login`, {
                     email: email,
                     password: password
                 
@@ -37,7 +37,7 @@ export class Repository {
     postRegistration(email, username, password, director) {
         return new Promise((resolve, reject) => {
             console.log("Post Registration");
-            axios.post( `http://${ this.url }:8000/users/registration`, {
+            axios.post( `${ this.url }/users/registration`, {
                 email: email,
                 username: username,
                 password: password,
@@ -59,7 +59,7 @@ export class Repository {
     return new Promise((resolve, reject) => {
       console.log("Put Password");
       axios
-        .put(`http://${this.url}:8000/users/updatePassword`, {
+        .put(`${ this.url }/users/updatePassword`, {
           email: email,
           password: newPass,
         })
@@ -77,7 +77,7 @@ export class Repository {
   getUser(email) {
     return new Promise((resolve, reject) => {
         console.log("Update User");
-        axios.get(`http://${this.url}:8000/users`, { 
+        axios.get(`${ this.url }/users`, { 
             params: {
                 email: email
             },
@@ -96,7 +96,7 @@ export class Repository {
   updateUser(email, photo, uni, bio) {
     return new Promise((resolve, reject) => {
         console.log("Update User");
-        axios.put(`http://${this.url}:8000/users/updateInfo`, { 
+        axios.put(`${ this.url }/users/updateInfo`, { 
             email: email,
             photo: photo,
             uni: uni,
@@ -116,7 +116,7 @@ export class Repository {
   deleteUser(email) {
     return new Promise((resolve, reject) => {
         console.log("Delete User");
-        axios.delete(`http://${this.url}:8000/users`, { 
+        axios.delete(`${ this.url }/users`, { 
             params: {
                 email: email
             },
@@ -136,7 +136,7 @@ export class Repository {
     return new Promise((resolve, reject) => {
       console.log("Get Museums");
       axios
-        .get(`http://${this.url}:8000/museums/`)
+        .get(`${ this.url }/museums/`)
         .then((x) => {
           resolve(x.data);
         })
@@ -150,7 +150,7 @@ export class Repository {
     return new Promise((resolve, reject) => {
       console.log("Put Museum Whats New");
       axios
-        .put(`http://${this.url}:8000/museums`, {
+        .put(`${ this.url }/museums`, {
             museum_name: museum_name,
             whatsNew: whatsNew,
         })
@@ -169,7 +169,7 @@ export class Repository {
     return new Promise((resolve, reject) => {
       console.log("Get Photos");
       axios
-        .get(`http://${this.url}:8000/photos`)
+        .get(`${ this.url }/photos`)
         .then((x) => {
           resolve(x.data);
         })
@@ -183,7 +183,7 @@ export class Repository {
     return new Promise((resolve, reject) => {
       console.log("Get Tours");
       axios
-        .get(`http://${this.url}:8000/tours`)
+        .get(`${ this.url }/tours`)
         .then((x) => {
           resolve(x.data);
         })
@@ -197,7 +197,7 @@ export class Repository {
     return new Promise((resolve, reject) => {
       console.log("Get Photo");
       axios
-        .get(`http://${this.url}:8000/photos/`)
+        .get(`${ this.url }/photos/`)
         .then((x) => {
           resolve(x.data);
         })
@@ -210,7 +210,7 @@ export class Repository {
   getPhotoByMuseum(museum_name) {
     return new Promise((resolve, reject) => {
       console.log("Get Photo by Museum");
-      axios.get(`http://${this.url}:8000/photos/museums`, {
+      axios.get(`${ this.url }/photos/museums`, {
             params: {
                 museum_name: museum_name,
             },
@@ -228,7 +228,7 @@ export class Repository {
   getToursByMuseum(museum_name) {
     return new Promise((resolve, reject) => {
       console.log("Get Tours by Museum");
-      axios.get(`http://${this.url}:8000/tours`, {
+      axios.get(`${ this.url }/tours`, {
           params: {
             museum_name: museum_name,
           },
@@ -246,7 +246,7 @@ export class Repository {
   getBookingsByUser(username) {
     return new Promise((resolve, reject) => {
       console.log("Get Bookings By User");
-      axios.get(`http://${this.url}:8000/bookings`, {
+      axios.get(`${ this.url }/bookings`, {
           params: {
             username: username
           },
@@ -265,7 +265,7 @@ export class Repository {
     return new Promise((resolve, reject) => {
       console.log("Get Bookings Info");
       console.log(tourName);
-      axios.get(`http://${this.url}:8000/tours`, {
+      axios.get(`${ this.url }/tours`, {
           params: {
             tour_Name: tourName
           },
@@ -285,7 +285,7 @@ export class Repository {
     return new Promise((resolve, reject) => {
         console.log("Post Booking");
         console.log(username, tour);
-        axios.post( `http://${ this.url }:8000/bookings`, {
+        axios.post( `${ this.url }/bookings`, {
             username: username,
             tourName: tour
         })
