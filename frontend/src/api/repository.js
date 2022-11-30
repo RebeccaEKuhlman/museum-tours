@@ -243,4 +243,28 @@ export class Repository {
     });
   }
 
+
+  postBooking(username, tour) {
+    return new Promise((resolve, reject) => {
+        console.log("Post Booking");
+        console.log(username, tour);
+        axios.post( `http://${ this.url }:8000/bookings`, {
+            username: username,
+            tourName: tour
+        })
+            .then(x => {
+                console.log("x.data", x.data);
+                resolve(x.data);
+            })
+            .catch(err => {
+                console.log("catch");
+                reject(err);
+            })
+    });
+
+}
+
+
+
+
 }
