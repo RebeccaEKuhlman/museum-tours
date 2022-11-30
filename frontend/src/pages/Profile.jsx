@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext} from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 import Button from "@mui/material/Button";
@@ -15,8 +15,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { Repository } from "../api/repository";
-
-
 
 function generate(element) {
   return [0, 1, 2].map((value) =>
@@ -76,11 +74,13 @@ export function Profile() {
   const handleClose = () => setOpen(false);
   const handleCloseConfirm = () => {
     var repository = new Repository();
-    repository.putPassword(sessionStorage.email, newpass).then((x) => setUser(x));
+    repository
+      .putPassword(sessionStorage.email, newpass)
+      .then((x) => setUser(x));
     setOpen(false);
     sessionStorage.clear();
-    window.location.href = "/"
-  }
+    window.location.href = "/";
+  };
 
   const [newpass, setNewPass] = useState("");
   const [newPhotoId, setNewPhotoId] = useState("");
@@ -98,14 +98,37 @@ export function Profile() {
 
   // const { tours } = useContext(ScheduleContext).context;
 
+  var repository = new Repository();
+
   useEffect(() => {
-    var repository = new Repository();
     repository.getPhoto().then((x) => setPhotos(x));
     repository.getUser(sessionStorage.email).then((x) => setUser(x));
     repository.getBookingsByUser(sessionStorage.email).then((x) => setTours(x));
+    // const fetch = async () => {
+    //   let temp;
+    //   await repository.getBookingsByUser(sessionStorage.email).then((x) => {
+    //     temp = x;
+    //     setTours(x);
+    //   });
+
+    //   console.log("fuck");
+    //   let temp1 = [];
+    //   temp.filter((item, index) => {
+    //     console.log(item);
+    //     repository.getBookingInfo(item.tour_Name).then((x) => {
+    //       // let _myTours = { ...myTours };
+    //       // console.log(x);
+    //       // _myTours.push(x[0]);
+    //       temp1.push(x[0]);
+    //     });
+    //   });
+    //   console.log(temp1);
+    //   setMyTours(temp1);
+    // };
+    // fetch();
   }, []);
 
-  if (!photos || !user) {
+  if (!photos || !user || !tours) {
     return <></>;
   }
 
@@ -114,15 +137,17 @@ export function Profile() {
     e.preventDefault();
     console.log("Update User");
     var repository = new Repository();
-    repository.updateUser(sessionStorage.email, newPhotoId, university, bio).then((x) => setUser(x));
+    repository
+      .updateUser(sessionStorage.email, newPhotoId, university, bio)
+      .then((x) => setUser(x));
   };
-  
+
   const handleDelete = () => {
     console.log(deleteConfirm);
     if (deleteConfirm === "Delete Profile") {
       setDeleteConfirm("Click Again To Confirm");
       var remaining = 3;
-      var deleteTimer = setInterval(function(){
+      var deleteTimer = setInterval(function () {
         console.log(remaining);
         if (remaining <= 0) {
           clearInterval(deleteTimer);
@@ -137,13 +162,13 @@ export function Profile() {
         console.log("Deleted");
       });
       sessionStorage.clear();
-      window.location.href = "/"
+      window.location.href = "/";
     }
   };
 
   const Logout = (e) => {
     sessionStorage.clear();
-    window.location.href = "/"
+    window.location.href = "/";
   };
 
   return (
@@ -176,7 +201,11 @@ export function Profile() {
             onInput={(e) => setNewPass(e.target.value)}
           />
           <div style={{ margin: 12, textAlign: "center" }}>
-            <Button onClick={handleCloseConfirm} type="submit" variant="contained">
+            <Button
+              onClick={handleCloseConfirm}
+              type="submit"
+              variant="contained"
+            >
               Confirm
             </Button>
           </div>
@@ -204,7 +233,11 @@ export function Profile() {
               component="img"
               height="500vh"
               width="auto"
-              image={photos.filter(photo => { return (photo.photoId === user[0].photoId) })[0].photo_data}
+              image={
+                photos.filter((photo) => {
+                  return photo.photoId === user[0].photoId;
+                })[0].photo_data
+              }
               alt="profile"
             />
             <div style={{ marginTop: 10, marginBottom: 20 }}>
@@ -217,16 +250,14 @@ export function Profile() {
                 <b className={classes.typography}>{user[0].username}</b>
               </Typography>
               <Typography className={classes.typography} variant="body1">
-                <b className={classes.typography}>University:</b>
-                {' '}{user[0].uni_affilation}
+                <b className={classes.typography}>University:</b>{" "}
+                {user[0].uni_affilation}
               </Typography>
               <Typography className={classes.typography} variant="body1">
-                <b className={classes.typography}>Bio:</b>
-                {' '}{user[0].bio}
+                <b className={classes.typography}>Bio:</b> {user[0].bio}
               </Typography>
-              { 
-                sessionStorage.director &&
-                (<div>
+              {sessionStorage.director && (
+                <div>
                   <Button
                     type="submit"
                     style={{
@@ -237,12 +268,14 @@ export function Profile() {
                     }}
                     variant="contained"
                     className={classes.submit}
-                    onClick={() => { navigate('director'); }}
+                    onClick={() => {
+                      navigate("director");
+                    }}
                   >
                     Your Museum
                   </Button>
-                </div>)
-              }
+                </div>
+              )}
               <div>
                 <Button
                   type="submit"
@@ -375,29 +408,23 @@ export function Profile() {
                 My Tours
               </h2>
               <hr />
+
               <table className="table table-striped">
                 <thead>
                   <tr>
                     <th scope="col">Museums</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Time</th>
+                    <th scope="col">ID</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {console.log("tours", tours)}
-                  {tours.items.map((item, index) => {
+                  {tours.map((item, index) => {
                     return (
                       <tr>
-                        <td>{item.tour.name}</td>
-                        <td>{item.tour.museum_name}</td>
-                        <td>{item.tour.date}</td>
+                        <td>{item.tour_Name}</td>
+                        <td>{item.bookingID}</td>
                       </tr>
                     );
                   })}
-                  <tr>
-                    <td></td>
-                    <td></td>
-                  </tr>
                 </tbody>
               </table>
             </CardContent>

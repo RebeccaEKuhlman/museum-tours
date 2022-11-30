@@ -246,9 +246,28 @@ export class Repository {
   getBookingsByUser(username) {
     return new Promise((resolve, reject) => {
       console.log("Get Bookings By User");
-      axios.get(`http://${this.url}:8000/booking`, {
+      axios.get(`http://${this.url}:8000/bookings`, {
           params: {
             username: username
+          },
+        })
+        .then((x) => {
+          resolve(x.data);
+          console.log("x.data", x.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  }
+
+  getBookingInfo(tourName) {
+    return new Promise((resolve, reject) => {
+      console.log("Get Bookings Info");
+      console.log(tourName);
+      axios.get(`http://${this.url}:8000/tours`, {
+          params: {
+            tour_Name: tourName
           },
         })
         .then((x) => {
