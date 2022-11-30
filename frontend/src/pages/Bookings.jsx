@@ -3,15 +3,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import {
   Card,
   CardContent,
-  CardActions,
+  Button,
   Typography,
   Paper,
   Grid,
 } from "@material-ui/core";
-import axios from "axios";
 import { Repository } from "../api";
 import { ScheduleContext } from "../context";
-import { Tour } from "../models";
 
 export const Bookings = () => {
   const [tour, setTour] = useState([]);
@@ -21,7 +19,8 @@ export const Bookings = () => {
   const repository = new Repository();
 
   // get the context from ScheduleContext
-  // const { addToTours } = useContext(ScheduleContext).context;
+  const context = useContext(ScheduleContext).context;
+  console.log(context);
 
   useEffect(() => {
     console.log("PARAMS.MUSEUM = " + params.museum_name);
@@ -30,11 +29,13 @@ export const Bookings = () => {
     });
   }, []);
 
-  // const addToTourHandler = () => {
-  //   console.log("Added to My Tours");
-  //   addToTours(tour);
-  //   nav("/profile");
-  // };
+  const addToTourHandler = (bookingToAdd) => {
+    console.log("Added to My Tours");
+    context.addToSchedule(tour);
+    console.log(sessionStorage, bookingToAdd);
+    repository.postBooking(sessionStorage.email, bookingToAdd);
+    nav("/profile");
+  };
 
   function GridItem(props) {
     let items = [
@@ -113,6 +114,23 @@ export const Bookings = () => {
             >
               Available Space: {props.item.num_spaces_available}
             </Typography>
+            <Button
+              fullWidth
+              variant="outlined"
+              className="ViewButton"
+              style={{
+                color: "#F6F7EB",
+                backgroundColor: "cornflowerblue",
+                fontFamily: "Baskerville",
+                marginTop: "10px",
+                alignItems: "center",
+              }}
+              onClick={() => {
+                addToTourHandler(props.item.tour_Name);
+              }}
+            >
+              Book Now
+            </Button>
           </div>
         </CardContent>
       </Paper>,
@@ -125,8 +143,17 @@ export const Bookings = () => {
   }
 
   return (
-    <div justifyContent="center" alignItems="center" style={{ marginTop: 10, maxWidth: "100%" }}>
-      <Grid container alignItems="center" justifyContent="center" flexDirection="column">
+    <div
+      justifyContent="center"
+      alignItems="center"
+      style={{ marginTop: 10, maxWidth: "100%" }}
+    >
+      <Grid
+        container
+        alignItems="center"
+        justifyContent="center"
+        flexDirection="column"
+      >
         <Card
           variant="outlined"
           style={{
