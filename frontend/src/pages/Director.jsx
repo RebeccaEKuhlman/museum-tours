@@ -22,6 +22,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Modal from "@mui/material/Modal";
+import {Repository} from "../api/repository.js";
 
 const useStyles = makeStyles((theme) => ({
   typography: {
@@ -48,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
   card: {
     fontFamily: "Baskerville",
     backgroundColor: "#F6F7EB",
+    margin: "10px"
   },
   form: {
     position: "absolute",
@@ -63,11 +65,26 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "left",
     textAlign: "left",
   },
+  table: {
+    width: "100%",
+    borderCollapse: "collapse"
+  },
+  td: {
+    border: "1px solid #dddddd",
+    padding: "8px"
+  },
+  th: {
+    border: "1px solid #dddddd",
+    padding: "8px"
+  },
+
 }));
 
 export function Director({ museums }) {
   const navigate = useNavigate();
   const classes = useStyles();
+  
+  var repository = new Repository();
 
   const [open, setOpen] = useState(!sessionStorage.museum);
   const handleOpen = () => setOpen(true);
@@ -78,9 +95,37 @@ export function Director({ museums }) {
     setOpen(false);
   }
 
-  const [museum, setMuseum] = useState(sessionStorage.museum || "");
+  const [museum, setMuseum] = useState(sessionStorage.museum || "Dallas Museum");
+  const [tours, setTours] = useState("");
+  const [musphoto, setMusPhoto] = useState("");
 
-  if (!museums) {
+  useEffect(() => {
+    repository.getToursByMuseum(museum).then(x => setTours(x));
+    repository.getPhotoByMuseum(museum).then(x => setMusPhoto(x));
+  }, [museum]);
+
+  function GridItem(props){
+    let items = [
+      <tr>
+              <td>
+                {props.item.tour_Name}
+              </td>
+              <td>
+                {props.item.tourDate.split('T').slice(0)[0]}
+              </td>
+              <td>
+                {props.item.tourTime}
+              </td>
+          </tr>
+    ];
+    return (
+      <tbody>
+              {items}
+      </tbody>
+  );
+  }
+
+  if (!museums || !tours || !musphoto) {
     return <></>;
   }
 
@@ -141,12 +186,11 @@ export function Director({ museums }) {
         container
         className={classes.root}
         spacing={0}
-        direction="column"
         alignItems="center"
         justifyContent="center"
         style={{ padding: "0" }}
       >
-        <Grid item xs={false}>
+        {/* <Grid item xs={false}>
           <Card
             className={classes.card}
             sx={{ maxWidth: 400, backgroundcolor: "#FFFFFF" }}
@@ -173,10 +217,11 @@ export function Director({ museums }) {
               </Typography>
             </CardContent>
           </Card>
-        </Grid>
+        </Grid> */}
         <Card
-          sx={{ height: 200, width: 300, backgroundcolor: "#FFFFFF", marginTop: 12, }}
+          sx={{ maxHeight: "40%", maxWidth: "90%", backgroundcolor: "#FFFFFF", marginTop: 12, marginBottom: 12 }}
         >
+          <img src={musphoto} alt={museum} style= {{maxWidth: "50%",float: "left", margin: "15px"}}/>
           <Typography
             className={classes.typography}
             gutterBottom
@@ -186,7 +231,7 @@ export function Director({ museums }) {
               marginTop: 50,
             }}
           >
-            <b className={classes.typography}>Delete Account</b>
+            <b className={classes.typography}>{museum}</b>
           </Typography>
           <Button
             type="submit"
@@ -205,15 +250,30 @@ export function Director({ museums }) {
         </Card>
         <Grid item xs={9}>
           <Card>
-            <CardContent sx={{ maxWidth: 400, backgroundcolor: "#FFFFFF" }}>
+            <CardContent sx={{ maxWidth: "100%", backgroundcolor: "#FFFFFF", textAlign: "center" }}>
               <h2
                 style={{ fontSize: 50, fontFamily: "Baskerville", margin: 10 }}
               >
                 {museum} Tours
               </h2>
               <hr />
-              <Typography className={classes.typography} variant="body2">
-                {/* <List dense={false}>
+              <Typography className={classes.typography} variant="body2" >
+                <table className={classes.table}>
+                  <tr>
+                    <th>
+                      Tour Name
+                    </th>
+                    <th>
+                      Tour Date
+                    </th>
+                    <th>
+                      Tour Time
+                    </th>
+                  </tr>
+                {tours.map((item,index) => {
+                  return <GridItem item={item} key={index} style={{}} />;
+                })
+                /* <List dense={false}>
                   {generate(
                     <ListItem>
                       <ListItemText
@@ -224,6 +284,7 @@ export function Director({ museums }) {
                     </ListItem>
                   )}
                 </List> */}
+                </table>
               </Typography>
             </CardContent>
           </Card>
