@@ -22,7 +22,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Modal from "@mui/material/Modal";
-import {Repository} from "../api/repository.js";
+import { Repository } from "../api/repository.js";
 
 const useStyles = makeStyles((theme) => ({
   typography: {
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   card: {
     fontFamily: "Baskerville",
     backgroundColor: "#F6F7EB",
-    margin: "10px"
+    margin: "10px",
   },
   form: {
     position: "absolute",
@@ -67,23 +67,22 @@ const useStyles = makeStyles((theme) => ({
   },
   table: {
     width: "100%",
-    borderCollapse: "collapse"
+    borderCollapse: "collapse",
   },
   td: {
     border: "1px solid #dddddd",
-    padding: "8px"
+    padding: "8px",
   },
   th: {
     border: "1px solid #dddddd",
-    padding: "8px"
+    padding: "8px",
   },
-
 }));
 
 export function Director({ museums }) {
   const navigate = useNavigate();
   const classes = useStyles();
-  
+
   var repository = new Repository();
 
   const [open, setOpen] = useState(!sessionStorage.museum);
@@ -93,36 +92,28 @@ export function Director({ museums }) {
     sessionStorage.museum = museum;
     console.log(museum);
     setOpen(false);
-  }
+  };
 
-  const [museum, setMuseum] = useState(sessionStorage.museum || "Dallas Museum");
+  const [museum, setMuseum] = useState(
+    sessionStorage.museum || "Dallas Museum"
+  );
   const [tours, setTours] = useState("");
   const [musphoto, setMusPhoto] = useState("");
 
   useEffect(() => {
-    repository.getToursByMuseum(museum).then(x => setTours(x));
-    repository.getPhotoByMuseum(museum).then(x => setMusPhoto(x));
+    repository.getToursByMuseum(museum).then((x) => setTours(x));
+    repository.getPhotoByMuseum(museum).then((x) => setMusPhoto(x));
   }, [museum]);
 
-  function GridItem(props){
+  function GridItem(props) {
     let items = [
       <tr>
-              <td>
-                {props.item.tour_Name}
-              </td>
-              <td>
-                {props.item.tourDate.split('T').slice(0)[0]}
-              </td>
-              <td>
-                {props.item.tourTime}
-              </td>
-          </tr>
+        <td>{props.item.tour_Name}</td>
+        <td>{props.item.tourDate.split("T").slice(0)[0]}</td>
+        <td>{props.item.tourTime}</td>
+      </tr>,
     ];
-    return (
-      <tbody>
-              {items}
-      </tbody>
-  );
+    return <tbody>{items}</tbody>;
   }
 
   if (!museums || !tours || !musphoto) {
@@ -132,7 +123,6 @@ export function Director({ museums }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("HERE");
-    
   };
 
   return (
@@ -143,7 +133,7 @@ export function Director({ museums }) {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-        sx={{ outline: 'solid' }}
+        sx={{ outline: "solid" }}
       >
         <Card className={classes.form}>
           <h2
@@ -219,16 +209,26 @@ export function Director({ museums }) {
           </Card>
         </Grid> */}
         <Card
-          sx={{ maxHeight: "40%", maxWidth: "90%", backgroundcolor: "#FFFFFF", marginTop: 12, marginBottom: 12 }}
+          sx={{
+            maxHeight: "70%",
+            width: "90%",
+            backgroundColor: "#F6F7EB",
+            marginTop: 2,
+            marginBottom: 2
+          }}
         >
-          <img src={musphoto} alt={museum} style= {{maxWidth: "50%",float: "left", margin: "15px"}}/>
+          <img
+            src={musphoto}
+            alt={museum}
+            style={{ maxHeight: 400, maxWidth: 700, float: "left", margin: "15px" }}
+          />
           <Typography
             className={classes.typography}
             gutterBottom
             variant="h4"
             component="div"
             style={{
-              marginTop: 50,
+              marginTop: 150,
             }}
           >
             <b className={classes.typography}>{museum}</b>
@@ -250,30 +250,31 @@ export function Director({ museums }) {
         </Card>
         <Grid item xs={9}>
           <Card>
-            <CardContent sx={{ maxWidth: "100%", backgroundcolor: "#FFFFFF", textAlign: "center" }}>
+            <CardContent
+              sx={{
+                maxWidth: "100%",
+                backgroundColor: "#F6F7EB",
+                textAlign: "center",
+              }}
+            >
               <h2
                 style={{ fontSize: 50, fontFamily: "Baskerville", margin: 10 }}
               >
                 {museum} Tours
               </h2>
               <hr />
-              <Typography className={classes.typography} variant="body2" >
+              <Typography className={classes.typography} variant="body2">
                 <table className={classes.table}>
                   <tr>
-                    <th>
-                      Tour Name
-                    </th>
-                    <th>
-                      Tour Date
-                    </th>
-                    <th>
-                      Tour Time
-                    </th>
+                    <th>Tour Name</th>
+                    <th>Tour Date</th>
+                    <th>Tour Time</th>
                   </tr>
-                {tours.map((item,index) => {
-                  return <GridItem item={item} key={index} style={{}} />;
-                })
-                /* <List dense={false}>
+                  {
+                    tours.map((item, index) => {
+                      return <GridItem item={item} key={index} style={{}} />;
+                    })
+                    /* <List dense={false}>
                   {generate(
                     <ListItem>
                       <ListItemText
@@ -283,7 +284,8 @@ export function Director({ museums }) {
                       />
                     </ListItem>
                   )}
-                </List> */}
+                </List> */
+                  }
                 </table>
               </Typography>
             </CardContent>

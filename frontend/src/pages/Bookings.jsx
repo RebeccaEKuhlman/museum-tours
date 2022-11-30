@@ -82,7 +82,7 @@ export const Bookings = () => {
                 fontSize: 20,
               }}
             >
-              {props.item.tourDate} at {props.item.tourTime}
+              {props.item.tourDate.split("T").slice(0)[0]} at {props.item.tourTime}
             </Typography>
             <Typography
               className="Description"
