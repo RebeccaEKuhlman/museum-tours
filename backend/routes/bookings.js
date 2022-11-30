@@ -58,19 +58,19 @@ router.delete('/', async (req, res, next) => {
     try {
         if (req.query.username && req.query.tourName) {
             const updatedUser = await req.models.booking.deleteSpecificBooking(req.query.username, req.query.tourName);
-            res.json(updatedUser);
+            res.status(200).json();
             next();
         } else if (req.query.username) {
             const updatedUser = await req.models.booking.deleteByUsername(req.query.username);
-            res.json(updatedUser);
+            res.status(200).json();
             next();
         } else if (req.query.tourName) {
             const updatedUser = await req.models.booking.deleteByTourName(req.query.tourName);
-            res.json(updatedUser);
+            res.status(200).json();
             next();
         } else {
             const updatedUser = await req.models.booking.deleteBooking();
-            res.json(updatedUser);
+            res.status(200).json();
             next();
         }
     } catch (err) {

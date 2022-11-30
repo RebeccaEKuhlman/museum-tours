@@ -1,16 +1,3 @@
-/** TABLE tours:
-	tour_Name VARCHAR(30) NOT NULL PRIMARY KEY,
-	tourDate Date NOT NULL,
-	tourTime Time NOT NULL,
-	num_spaces_available int NOT NULL,
-	total_space int NOT NULL,
-	tour_description VARCHAR(30),
-	price int,
-	museum_name varchar(30) NOT NULL,
-	FOREIGN KEY (museum_name) REFERENCES museums(museum_name),
-	theme VARCHAR(30) NOT NULL
-**/
-
 const express = require('express');
 const router = express.Router();
 
@@ -304,7 +291,7 @@ router.delete('/', async (request, response, next) => {
 
        const results = await request.models.tour.deleteTour(request.query.tour_Name);
        console.log('Results of my DELETE statement:', results);
-       response.status(200).json(results); //deletes don't return anything
+       response.status(200).json();
        next();
     } catch (err) {
         console.error('There was an error in DELETE /tours', err);
