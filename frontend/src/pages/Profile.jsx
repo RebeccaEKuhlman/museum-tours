@@ -321,7 +321,7 @@ export function Profile() {
                 variant="h4"
                 component="div"
               >
-                <b className={classes.typography}>Change Fields</b>
+                <b className={classes.typography}>Update Profile</b>
               </Typography>
               <FormControl sx={{ mt: 1 }} size="large">
                 <form noValidate onSubmit={handleSubmit}>
